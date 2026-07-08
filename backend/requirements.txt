@@ -1,0 +1,15 @@
+Flask==3.0.3
+flask-cors==4.0.1
+python-dotenv==1.0.1
+pandas==2.2.2
+azure-storage-blob==12.20.0
+azure-cosmos==4.7.0
+bcrypt==4.2.0
+PyJWT==2.9.0
+deltalake==1.6.0
+pyarrow==17.0.0
+
+google-genai==1.2.0
+sentence-transformers==3.3.1
+numpy==1.26.4
+ddgs==9.0.0

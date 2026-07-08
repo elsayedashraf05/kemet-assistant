@@ -1,0 +1,1384 @@
+id,place_name,place_location,photo_url,detail_link,tickets_price_other_nationality,tickets_price_egyptian,opening_hours,booking_link,free_entry_policy,on_map,_ingestion_timestamp,_source_file,location_display,government,tickets_egyptian_adult,tickets_egyptian_student,tickets_other_adult,tickets_other_student,summer_opens,summer_closes,winter_opens,winter_closes,free_entry_children_under_6,free_entry_egyptian_special_needs,free_entry_egyptian_seniors_60,free_entry_photography_mobile,free_entry_spouse_as_egyptian,free_entry_student_id_condition
+TCK-00001,Abu Simbel Temple,Abu Simbel,https://egymonuments.com/storage/events/July2025/YIk4FUQa1c20fmhKUDAf.webp,https://egymonuments.com/details/AbuSimbelTemple,"Adult: EGP 822
+Student: EGP 445.5
+Adult: EGP 1272
+Student: EGP 670.5","Adult: EGP 30.5
+Student: EGP 10.5
+Adult: EGP 60
+Student: EGP 20","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/9,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Abu+Simbel+Temple,+Abu+Simbel,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Abu Simbel,Aswan,30.5,10.5,16.73,9.07,06:00,16:00,06:00,16:00,True,True,True,True,False,False
+TCK-00002,Abydos Temple,Sohag,https://egymonuments.com/storage/events/July2024/OLNW1rvVdH0lEklcxmUR.png,https://egymonuments.com/details/AbydosTemple,"Adult: EGP 260
+Student: EGP 130","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/159,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Abydos+Egypt/@26.1840768,31.9207692,18z/data=!4m10!1m2!2m1!1sAbydos+Temple,+Sohag,+Egypt!3m6!1s0x1448b51c5b023dcb:0xd20480e3c94bf54f!8m2!3d26.183444!4d31.9226391!15sChtBYnlkb3MgVGVtcGxlLCBTb2hhZywgRWd5cHRaGyIZYWJ5ZG9zIHRlbXBsZSBzb2hhZyBlZ3lwdJIBE2hpc3RvcmljYWxfbGFuZG1hcmuaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVUTVNWFJETmtkM0VBReABAPoBBAgAEEw!16s%2Fg%2F11k599z943?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Sohag,Sohag,10.0,5.0,5.29,2.65,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00003,Air Dome,Aswan,https://egymonuments.com/storage/events/July2024/RucVl9mpI7ZBkNdWI2de.png,https://egymonuments.com/details/AirDome,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 20
+Student: EGP 10","Summer Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/114,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Air+Dome,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,20.0,10.0,4.07,2.04,07:00,15:00,07:00,15:00,True,True,True,True,False,False
+TCK-00004,Al Ghuri Dome,Cairo,https://egymonuments.com/storage/events/December2023/zMTMobnWhDpPQP9i224F.jpg,https://egymonuments.com/details/AlGhuriDome,"Adult: EGP 150
+Student: EGP 75","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/100,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Al+Ghuri+Dome,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,3.05,1.53,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00005,Al Matariyyah Obelisk,Cairo,https://egymonuments.com/storage/events/July2024/WwSnPpAf2DXedeoUrHpW.jpg,https://egymonuments.com/details/AlMatariyyahObelisk,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/237,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Heliopolis+Obelisk+-+Obelisk+of+Snosert+I/@30.0619981,31.214469,12z/data=!4m10!1m2!2m1!1sAl+Matariyyah+Obelisk,+Cairo,+Egypt!3m6!1s0x145815a7f85d35c1:0xcf03cf9403ccfb31!8m2!3d30.1294018!4d31.3075858!15sCiNBbCBNYXRhcml5eWFoIE9iZWxpc2ssIENhaXJvLCBFZ3lwdFojIiFhbCBtYXRhcml5eWFoIG9iZWxpc2sgY2Fpcm8gZWd5cHSSARNoaXN0b3JpY2FsX2xhbmRtYXJrmgEjQ2haRFNVaE5NRzluUzBWUE4zcHZjazlKYzJOcFYwRm5FQUXgAQD6AQQIGhBJ!16s%2Fg%2F11g6x26qt2?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,4.07,2.04,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00006,Al-Mualla Tombs,Luxor,https://egymonuments.com/storage/events/July2024/VM1Fs6VDBBD40wf5DVKU.jpg,https://egymonuments.com/details/AlMualla,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 08:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/192,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Al-Mualla+Tombs,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,10.0,5.0,2.04,1.02,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00007,Alexandria National Museum,Alexandria,https://egymonuments.com/storage/events/September2023/XsvXcbKC4IzVBe51PUal.JPG,https://egymonuments.com/details/AlexandriaNationalMuseum,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 20
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/32,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Alexandria+National+Museum,+Alexandria,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Alexandria,Alexandria,20.0,5.0,4.48,2.24,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00008,Alhammamya Tombs,Assuit,https://egymonuments.com/storage/events/July2024/d6JKclZR8Tc91HzGFG6L.png,https://egymonuments.com/details/AlhammamyaTombs,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/201,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Alhammamya+Tombs,+Assuit,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Assuit,Asyut,10.0,5.0,2.04,1.02,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00009,Amarna,Minya,https://egymonuments.com/storage/events/July2024/hd1FXkOKV3mE8EjVOLKb.jpg,https://egymonuments.com/details/Amarna,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 pm Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/135,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Tell+el+Amarna/@27.6445082,30.862575,14z/data=!4m10!1m2!2m1!1sAmarna,+Minya,+Egypt!3m6!1s0x144527802b434fed:0x38caabadefe40cbf!8m2!3d27.6445082!4d30.8986239!15sChRBbWFybmEsIE1pbnlhLCBFZ3lwdFoUIhJhbWFybmEgbWlueWEgZWd5cHSSARNoaXN0b3JpY2FsX2xhbmRtYXJrmgEkQ2hkRFNVaE5NRzluUzBWSlEwRm5TVU0xYW05cWRtMW5SUkFC4AEA-gEECEAQHQ!16s%2Fg%2F11b6gqs908?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Minya,Minya,10.0,5.0,4.07,2.04,08:00,16:00,20:00,16:00,True,True,True,True,False,False
+TCK-00010,Ancient Roman Theatre,Alexandria,https://egymonuments.com/storage/events/September2023/7oYrbG5RsoN95JCQzIPF.jpg,https://egymonuments.com/details/RomanAmphitheatre,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 20
+Student: EGP 10","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/34,,"https://www.google.com/maps/search/Ancient+Roman+Theatre,+Alexandria,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Alexandria,Alexandria,20.0,10.0,4.07,2.04,09:00,16:00,09:00,16:00,False,False,False,False,False,False
+TCK-00011,Bab Zuwaila,Cairo,https://egymonuments.com/storage/events/November2023/MykNdGEghrzXNYEQtD8k.jpg,https://egymonuments.com/details/BabZuweila,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/79,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Bab+Zuwaila,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,2.04,1.02,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00012,Baron Empain Palace,Cairo,https://egymonuments.com/storage/events/September2023/B8rqIvpGeHSJdomm8ZPK.jpg,https://egymonuments.com/details/BaronEmpainPalace,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 60
+Student: EGP 30","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 05:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:30 pm",https://egymonuments.com/book-date/28,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Baron+Empain+Palace,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,60.0,30.0,4.48,2.24,09:00,17:00,09:00,17:00,True,True,True,True,False,False
+TCK-00013,Beni Hassan Tomb,Minya,https://egymonuments.com/storage/events/July2024/Gubh7xS0FIptkoav0vgr.jpg,https://egymonuments.com/details/BeniHassanTomb,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 08:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/174,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Beni+Hassan+Tomb,+Minya,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Minya,Minya,10.0,5.0,4.07,2.04,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00014,Carter House,Luxor,https://egymonuments.com/storage/events/September2023/k8D6EkEsIGTtkfAwD5mf.jpg,https://egymonuments.com/details/CarterHouse,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/38,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Carter+House,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,10.0,5.0,4.48,2.24,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00015,Catacombs,Alexandria,https://egymonuments.com/storage/events/September2023/ruCz6pXngRxaI3Yaa7aZ.jpg,https://egymonuments.com/details/KomelShoqafaCatacombs,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 30
+Student: EGP 10","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/31,"kids -Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Catacombs,+Alexandria,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Alexandria,Alexandria,30.0,10.0,4.07,2.04,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00016,Coptic Museum,Cairo,https://egymonuments.com/storage/events/September2023/bmsILFVNZEZ4EhEQLtiV.jpg,https://egymonuments.com/details/CopticMuseum,"Adult: EGP 280
+Student: EGP 140","Adult: EGP 20
+Student: EGP 10","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 02:00 pm",https://egymonuments.com/book-date/10,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Coptic+Museum,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,20.0,10.0,5.7,2.85,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00017,Dahshur,Giza,https://egymonuments.com/storage/events/September2023/JAFYebEHUVbsZyNIhya7.jpg,https://egymonuments.com/details/Dahshur,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/41,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Dahshur,+Giza,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Giza,Giza,10.0,5.0,4.07,2.04,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00018,Dandarah Temple,Qena,https://egymonuments.com/storage/events/September2023/kzIwepI4uye9DvKyAIZA.jpg,https://egymonuments.com/details/DandarahTemple,"Adult: EGP 300
+Student: EGP 150","Adult: EGP 20
+Student: EGP 10","All Days
+Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/11,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Dandarah+Temple,+Qena,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Qena,Qena,20.0,10.0,6.11,3.05,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00019,Deir El Madina,Luxor,https://egymonuments.com/storage/events/September2023/OYLYknE4miEryNt4qx5E.jpeg,https://egymonuments.com/details/DeirElMadinaTemple,Free,,"All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 05:00 pm",https://egymonuments.com/book-date/12,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Deir+El+Madina,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,,,0.0,0.0,06:00,17:00,06:00,17:00,True,True,True,True,False,False
+TCK-00020,Deir El-shelwit,Luxor,https://egymonuments.com/storage/events/September2023/EG3UlCNACiSeZQFkJNgF.jpg,https://egymonuments.com/details/DeirEl-shelwit,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/40,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Deir+El-shelwit,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,10.0,5.0,2.04,1.02,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00021,Egyptian Museum,Cairo,https://egymonuments.com/storage/events/July2025/YLlX9NpbyBQtySn0XezI.webp,https://egymonuments.com/details/EgyptianMuseum,"Adult: EGP 550
+Student: EGP 275","Adult: EGP 30
+Student: EGP 10","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/3,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Egyptian+Museum,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,30.0,10.0,11.19,5.6,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00022,El Assasif,Luxor,https://egymonuments.com/storage/events/July2024/8c8tkMBjE742eO55vqdF.jpg,https://egymonuments.com/details/ElAssasif,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/183,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/El+Assasif,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,10.0,5.0,4.07,2.04,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00023,El Hawawish,Sohag,https://egymonuments.com/storage/events/July2024/uOTsI5CG9eYUwvnvb9yG.png,https://egymonuments.com/details/ElHawawish,"Adult: EGP 150
+Student: EGP 75","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/147,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/El+Hawawish,+Sohag,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Sohag,Sohag,10.0,5.0,3.05,1.53,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00024,El-Tod Temple,Luxor,https://egymonuments.com/storage/events/July2024/FbNisjnYKkhmshpGusjn.jpg,https://egymonuments.com/details/El-TodTemple,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 07:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/189,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/El-Tod+Temple,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,10.0,5.0,2.04,1.02,07:00,17:00,07:00,16:00,True,True,True,True,False,False
+TCK-00025,Elephantine Island,Aswan,https://egymonuments.com/storage/events/July2024/esh83xKtUzPW3e199hWQ.png,https://egymonuments.com/details/ElephantineIsland,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 20
+Student: EGP 10","Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 08:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/117,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Elephantine+Island,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,20.0,10.0,4.07,2.04,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00026,Elkab Tombs,Aswan,https://egymonuments.com/storage/events/July2024/iR2EvNAVRpf39iG4v5uE.png,https://egymonuments.com/details/ElkabTombs,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/108,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/El-Kab+Tombs/@25.1275295,31.6448762,9z/data=!4m10!1m2!2m1!1sElkab+Tombs,+Aswan,+Egypt!3m6!1s0x144996b7979faf3f:0xe01a2b83d009f499!8m2!3d25.1275295!4d32.7984407!15sChlFbGthYiBUb21icywgQXN3YW4sIEVneXB0WhkiF2Vsa2FiIHRvbWJzIGFzd2FuIGVneXB0kgETaGlzdG9yaWNhbF9sYW5kbWFya5oBRENpOURRVWxSUVVOdlpFTm9kSGxqUmpsdlQyNWtTbEZyWnpOWWVURnhXbTAxVldJd2RGTlZNMVpwV214VmRGZFhZeEFC4AEA-gEECAAQRA!16s%2Fg%2F122dlsm0?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,10.0,5.0,4.07,2.04,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00027,Elmoez street,Cairo,https://egymonuments.com/storage/events/November2023/ZwlTGvLOeCnqzml1pfhc.jpg,https://egymonuments.com/details/Elmoezstreet,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 20
+Student: EGP 10","Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/76,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Elmoez+street,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,20.0,10.0,4.48,2.24,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00028,Esna Temple,Esna,https://egymonuments.com/storage/events/September2023/ZqiC1clUvMZhoET8S2Uq.jpg,https://egymonuments.com/details/EsnaTemple,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 20
+Student: EGP 10","Saturday - Monday - Wednesday - Thursday
+Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Sunday - Tuesday - Friday
+from 07:00 am to 06:00 pm",https://egymonuments.com/book-date/15,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Esna+Temple,+Esna,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Esna,Luxor,20.0,10.0,4.07,2.04,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00029,Fraser Tombs,Minya,https://egymonuments.com/storage/events/July2024/REawbKx4oZyi9W0oo6WU.png,https://egymonuments.com/details/FraserTombs,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/126,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Fraser+Tombs,+Minya,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Minya,Minya,10.0,5.0,2.04,1.02,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00030,Gamal El-Din El-Zahabi house,Cairo,https://egymonuments.com/storage/events/November2023/Iw2u4Ze4NdXQb89Ja6eI.jpg,https://egymonuments.com/details/Gamaleldin,"Adult: EGP 30
+Student: EGP 15","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/97,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Gamal+El-Din+El-Zahabi+house,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,0.61,0.31,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00031,Gayer Anderson Museum,Cairo,https://egymonuments.com/storage/events/December2023/xtsYbIFZAiDeiffMnKAJ.jpg,https://egymonuments.com/details/GayerAndersonMuseum,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 02:00 pm",https://egymonuments.com/book-date/106,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Gayer+Anderson+Museum,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,2.04,1.02,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00032,Gebel al-Silsila,Aswan,https://egymonuments.com/storage/events/July2024/uaDPlsKs95O9xwrH8BwO.png,https://egymonuments.com/details/Gebelal-Silsila,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/198,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Gebel+al-Silsila,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,10.0,5.0,2.04,1.02,07:00,15:00,07:00,15:00,True,True,True,True,False,False
+TCK-00033,Giza plateau,Giza,https://egymonuments.com/storage/events/July2025/QZGh9Yi02klQ6Pb9chmh.webp,https://egymonuments.com/details/Pyramids,"Adult: EGP 700
+Student: EGP 350","Adult: EGP 60
+Student: EGP 30","All Days
+Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 08:00 am Last Entry 03:30 pm",https://egymonuments.com/book-date/2,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Giza+plateau,+Giza,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Giza,Giza,60.0,30.0,14.25,7.12,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00034,Graeco-Roman Museum,Alexandria,https://egymonuments.com/storage/events/October2023/ASYDqy0GZQ308Afobz4l.jpg,https://egymonuments.com/details/GraecoRomanMuseum,"Adult: EGP 400
+Student: EGP 200","Adult: EGP 40
+Student: EGP 20","Sunday - Monday - Tuesday - Wednesday - Thursday
+Summer Working Hours:
+from 09:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm
+Friday - Saturday
+from 09:00 am Last Entry 07:00 pm",https://egymonuments.com/book-date/53,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Graeco-Roman+Museum,+Alexandria,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Alexandria,Alexandria,40.0,20.0,8.14,4.07,09:00,15:00,09:00,15:00,True,True,True,True,False,False
+TCK-00035,Grand Egyptian Museum,Giza,https://egymonuments.com/storage/events/August2024/rJmqfhzIFaWBtHcn3E1Z.jpg,https://visit-gem.com/,Free,,,,,"https://www.google.com/maps/search/Grand+Egyptian+Museum,+Giza,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Giza,Giza,,,0.0,0.0,,,,,False,False,False,False,False,False
+TCK-00036,Hatshepsut Temple,Luxor,https://egymonuments.com/storage/events/July2025/nLD2jN5F3OkPPGlnJ7JT.webp,https://egymonuments.com/details/HatshepsutTemple,"Adult: EGP 440
+Student: EGP 220","Adult: EGP 40
+Student: EGP 20","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/8,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Hatshepsut+Temple,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,40.0,20.0,8.96,4.48,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00037,House of al-Harawy,Cairo,https://egymonuments.com/storage/events/November2023/owligCCZHSdBbuWrCa7S.jpg,https://egymonuments.com/details/Elharawy,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/88,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/House+of+al-Harawy,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,2.04,1.02,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00038,House of suhaym,Cairo,https://egymonuments.com/storage/events/November2023/fetmHdXJCD8wzLG9mYzT.jpg,https://egymonuments.com/details/Houseofsuhaym,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/82,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/House+of+suhaym,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,4.48,2.24,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00039,Hurghada Museum,Hurghada,https://egymonuments.com/storage/events/July2025/ZpYtHmM45CrCeKeJE2p1.webp,https://egymonuments.com/details/HurghadaMuseum,"Adult: EGP 300
+Student: EGP 150","Adult: EGP 80
+Student: EGP 40","All Days
+Summer Working Hours:
+from 10:00 am Last Entry 12:00 pm
+from 05:00 pm Last Entry 10:00 pm
+Winter Working Hours:
+from 10:00 am Last Entry 12:00 pm
+from 05:00 pm Last Entry 10:00 pm
+Ramadan Working Hours:
+from 10:00 am Last Entry 01:00 pm
+from 08:00 pm Last Entry 10:00 pm",https://egymonuments.com/book-date/5,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Hurghada+Museum,+Hurghada,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Hurghada,Red Sea,80.0,40.0,6.11,3.05,10:00,22:00,10:00,22:00,True,True,True,True,False,False
+TCK-00040,Islamic art museum,Cairo,https://egymonuments.com/storage/events/September2023/IwIfc23lim4fQvu1CgYT.jpg,https://egymonuments.com/details/IslamicMuseum,"Adult: EGP 340
+Student: EGP 170","Adult: EGP 20
+Student: EGP 10","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 02:30 pm",https://egymonuments.com/book-date/27,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Islamic+art+museum,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,20.0,10.0,6.92,3.46,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00041,Kafr al-Sheikh Museum,kafr el-shiekh,https://egymonuments.com/storage/events/July2024/gx9pYm6Jz9wPP4cXCh3N.jpg,https://egymonuments.com/details/KafrElshaikh,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 20
+Student: EGP 10","Summer Working Hours:
+from 09:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 02:00 pm",https://egymonuments.com/book-date/246,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Kafr+al-Sheikh+Museum,+kafr+el-shiekh,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Kafr El-shiekh,Kafr El Sheikh,20.0,10.0,4.48,2.24,09:00,15:00,09:00,15:00,True,True,True,True,False,False
+TCK-00042,Karnak Temple,Luxor,https://egymonuments.com/storage/events/July2025/Z3Pf8xidc8te24swCcGx.webp,https://egymonuments.com/details/KarnakTemple,"Adult: EGP 600
+Student: EGP 300","Adult: EGP 40
+Student: EGP 20","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/7,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Karnak+Temple,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,40.0,20.0,12.21,6.11,06:00,16:00,06:00,16:00,True,True,True,True,False,False
+TCK-00043,Kom Ombo Temple,Aswan,https://egymonuments.com/storage/events/September2023/YV4WUaDk0Kecs15zN3Rv.jpg,https://egymonuments.com/details/KomOmboTemple,"Adult: EGP 450
+Student: EGP 225","Adult: EGP 40
+Student: EGP 20","All Days
+Summer Working Hours:
+from 07:00 am Last Entry 08:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 08:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 08:00 pm",https://egymonuments.com/book-date/19,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Kom+Ombo+Temple,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,40.0,20.0,9.16,4.58,07:00,20:00,07:00,20:00,True,True,True,True,False,False
+TCK-00044,Luxor Museum,Luxor,https://egymonuments.com/storage/events/September2023/GRoR6AYpC7i6GKMPzA4y.jpg,https://egymonuments.com/details/LuxorMuseum,"Adult: EGP 400
+Student: EGP 200","Adult: EGP 30
+Student: EGP 10","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 12:00 pm
+from 05:00 pm Last Entry 07:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 01:00 pm
+from 05:00 pm Last Entry 08:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 1:00 pm
+from 05:00 pm Last Entry 07:00 pm",https://egymonuments.com/book-date/14,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Luxor+Museum,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,30.0,10.0,8.14,4.07,09:00,19:00,09:00,20:00,True,True,True,True,False,False
+TCK-00045,Luxor Temple,Luxor,https://egymonuments.com/storage/events/September2023/7NN1VW3xHnDiS8e9tRxy.jpg,https://egymonuments.com/details/LuxorTemple,"Adult: EGP 500
+Student: EGP 250","Adult: EGP 40
+Student: EGP 20","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 07:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 07:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 07:00 pm",https://egymonuments.com/book-date/6,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Luxor+Temple/@25.699502,32.6345448,17z/data=!4m10!1m2!2m1!1sLuxor+Temple,+Luxor,+Egypt!3m6!1s0x144915c41edadf61:0x7693895c346c7d81!8m2!3d25.699502!4d32.6390509!15sChpMdXhvciBUZW1wbGUsIEx1eG9yLCBFZ3lwdFoaIhhsdXhvciB0ZW1wbGUgbHV4b3IgZWd5cHSSARNhcmNoYWVvbG9naWNhbF9zaXRl4AEA!16zL20vMDNwcDd2?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,40.0,20.0,10.18,5.09,06:00,19:00,06:00,19:00,True,True,True,True,False,False
+TCK-00046,Malawy Museum,Minya,https://egymonuments.com/storage/events/July2024/3vIJB76ZkSkzRMyqdT4O.png,https://egymonuments.com/details/MalawyMuseum,"Adult: EGP 120
+Student: EGP 60","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 09:00 am Last Entry 02:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 02:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 02:00 pm",https://egymonuments.com/book-date/141,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Students must present a valid ID and their age must not exceed 24                                                                 
+                                                                                                                             
+                                                                 Egyptian’s Spouse with other nationalities should be treated as Egyptian.","https://www.google.com/maps/place/Mallawi+Museum/@27.7355137,30.5562095,11z/data=!4m10!1m2!2m1!1sMalawy+Museum,+Minya,+Egypt!3m6!1s0x1444d706a21f1721:0x35c23fe6aadc3c5b!8m2!3d27.7355137!4d30.8446006!15sChtNYWxhd3kgTXVzZXVtLCBNaW55YSwgRWd5cHRaGyIZbWFsYXd5IG11c2V1bSBtaW55YSBlZ3lwdJIBFWFyY2hhZW9sb2dpY2FsX211c2V1bZoBJENoZERTVWhOTUc5blMwVk5YM2x1UzBoemRTMWxYMnQzUlJBQuABAPoBBQiLARBH!16s%2Fm%2F0zbxpph?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Minya,Minya,10.0,5.0,2.44,1.22,09:00,14:00,09:00,14:00,True,True,True,False,True,True
+TCK-00047,Mary's Tree,Cairo,https://egymonuments.com/storage/events/July2024/xlvRbDK74tUYXMgc2XbD.jpg,https://egymonuments.com/details/Mary%27sTree,"Adult: EGP 120
+Student: EGP 60","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/234,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Mary's+Tree,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,2.44,1.22,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00048,Medinet Habu,Luxor,https://egymonuments.com/storage/events/September2023/Ux66ts2YoJdV8tBeYMDJ.jpg,https://egymonuments.com/details/MedinetHabu,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 20
+Student: EGP 10","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/17,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Medinet+Habu,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,20.0,10.0,4.48,2.24,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00049,Meir Monumental Tombs,Assuit,https://egymonuments.com/storage/events/July2024/eFBUEwMxlYuHM7AbS1jj.png,https://egymonuments.com/details/MeirMonumentalTombs,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/144,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Meir+Monumental+Tombs,+Assuit,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Assuit,Asyut,10.0,5.0,2.04,1.02,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00050,Memphis,Giza,https://egymonuments.com/storage/events/September2023/Gcr3SKMP5tGPJ45QkkEf.jpg,https://egymonuments.com/details/Memphis,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/42,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/dir/Memphis,+Tennessee,+USA/Giza,+El+Omraniya,+Giza+Governorate/@32.5808185,-29.4215215,3z/data=!3m1!4b1!4m13!4m12!1m5!1m1!1s0x87d57e1eea439745:0xd193f315601ab6fe!2m2!1d-90.0518955!2d35.1485812!1m5!1m1!1s0x1458469235579697:0x4e91d61f9878fc52!2m2!1d31.2088526!2d30.0130557?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Giza,Giza,10.0,5.0,4.07,2.04,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00051,Merit Amun Temple,Sohag,https://egymonuments.com/storage/events/July2024/3CT3ESu9r7UZKsDAUDEx.png,https://egymonuments.com/details/MeritAmunTemple,"Adult: EGP 120
+Student: EGP 60","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/150,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Merit+Amun+Temple,+Sohag,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Sohag,Sohag,10.0,5.0,2.44,1.22,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00052,Mernpetah,Luxor,https://egymonuments.com/storage/events/September2023/QLy9cc756uUS3zNGvg73.jpg,https://egymonuments.com/details/Merenptah,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/39,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Mernpetah,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,10.0,5.0,2.04,1.02,06:00,16:00,06:00,16:00,True,True,True,True,False,False
+TCK-00053,Mosque- Madrassa Sultan Hassan,Cairo,https://egymonuments.com/storage/events/July2024/MV2Y40ooFK9eGOpcB2mc.jpg,https://egymonuments.com/details/Mosque-MadrassaSultanHassan,"Adult: EGP 220
+Student: EGP 110",,"All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/177,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Mosque-+Madrassa+Sultan+Hassan,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,,,4.48,2.24,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00054,Mummification museum,Luxor,https://egymonuments.com/storage/events/September2023/3h2W8EW2zD3NRLyRmnlw.jpeg,https://egymonuments.com/details/MummificationMuseumLuxor,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 20
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 12:00 pm
+from 05:00 pm Last Entry 07:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 01:00 pm
+from 05:00 pm Last Entry 07:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 01:00 pm
+from 05:00 pm Last Entry 07:00 pm",https://egymonuments.com/book-date/20,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Mummification+museum,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,20.0,5.0,4.48,2.24,09:00,19:00,09:00,19:00,True,True,True,True,False,False
+TCK-00055,Mut Temple,Luxor,https://egymonuments.com/storage/events/July2024/ndCH0e4HRnnhtTM2Jr8H.jpg,https://egymonuments.com/details/MutTemple,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/195,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Mut+Temple,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,10.0,5.0,4.07,2.04,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00056,National Museum of Egyptian Civilization,Cairo,https://egymonuments.com/storage/events/March2024/Se3f7e9oUlHyLuqtEDOA.jpg,https://egymonuments.com/nmec,Free,"Adult: 90 EGP
+Student: 45 EGP","Saturday - Sunday - Monday - Tuesday - Wednesday - Thursday
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm
+Friday
+from 09:00 am Last Entry 04:00 pm
+from 06:00 pm Last Entry 08:00 pm",https://egymonuments.com/nmec/tickets,"Free entry for children below 6 years.
+                                                         Free entry for Egyptians & Arabs with special needs.
+                                                         Free entry for Egyptians and Arabs above 60 years.
+                                                         Photography with mobile phone is free of charge.","https://www.google.com/maps/search/National+Museum+of+Egyptian+Civilization,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,90.0,45.0,0.0,0.0,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00057,Nubia Museum,Aswan,https://egymonuments.com/storage/events/September2023/NhY2NYb0iJgl1fKFzXXk.jpeg,https://egymonuments.com/details/NubiaMuseum,"Adult: EGP 400
+Student: EGP 200","Adult: EGP 30
+Student: EGP 10","Saturday - Sunday - Monday - Tuesday - Wednesday
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Thursday - Friday
+from 09:00 am Last Entry 04:00 pm
+from 06:00 pm Last Entry 08:00 pm",https://egymonuments.com/book-date/29,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Nubia+Museum,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,30.0,10.0,8.14,4.07,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00058,Philae Temple,Aswan,https://egymonuments.com/storage/events/September2023/eFOShIL1q9kj1bHPHoZn.jpg,https://egymonuments.com/details/PhilaeTemple,"Adult: EGP 550
+Student: EGP 275","Adult: EGP 40
+Student: EGP 20","All Days
+Summer Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/18,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Philae+Temple,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,40.0,20.0,11.19,5.6,07:00,15:00,07:00,15:00,True,False,True,True,False,False
+TCK-00059,Prince Mohamed Aly Palace,Cairo,https://egymonuments.com/storage/events/September2023/rpmtDWrNBQqugzE0r1hH.jpg,https://egymonuments.com/details/PrinceMohamedAliPalace,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 60
+Student: EGP 20","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/46,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Prince+Mohamed+Ali+Palace+(Manial+Palace)+and+Egyptian+Museum+of+Musical+Instruments/@30.0288053,31.225414,17z/data=!4m10!1m2!2m1!1sPrince+Mohamed+Aly+Palace,+Cairo,+Egypt!3m6!1s0x145847326973319b:0x2bb659e7c0bb809d!8m2!3d30.0288053!4d31.2299201!15sCidQcmluY2UgTW9oYW1lZCBBbHkgUGFsYWNlLCBDYWlybywgRWd5cHRaJyIlcHJpbmNlIG1vaGFtZWQgYWx5IHBhbGFjZSBjYWlybyBlZ3lwdJIBE2hpc3RvcmljYWxfbGFuZG1hcmvgAQA!16zL20vMGJwNF84?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,60.0,20.0,4.48,2.24,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00060,Prince Youssef Palace,Qena,https://egymonuments.com/storage/events/July2024/cETYDCocLQZyJvTW6hNk.png,https://egymonuments.com/details/PrinceYoussefPalace,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 08:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/165,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Prince+Yousef+Kamal+Palace/@26.0499758,27.6305278,7z/data=!4m10!1m2!2m1!1sPrince+Youssef+Palace,+Qena,+Egypt!3m6!1s0x1448d1046b6cc5d5:0x90235fb88e7c41bb!8m2!3d26.0499758!4d32.2447856!15sCiJQcmluY2UgWW91c3NlZiBQYWxhY2UsIFFlbmEsIEVneXB0WiIiIHByaW5jZSB5b3Vzc2VmIHBhbGFjZSBxZW5hIGVneXB0kgEGbXVzZXVtmgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVU5xYlVscVRtUkJFQUXgAQD6AQQIQRBL!16s%2Fg%2F11h_vll4vy?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Qena,Qena,10.0,5.0,2.04,1.02,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00061,Qaitbay Citadel,Alexandria,https://egymonuments.com/storage/events/September2023/ZmhtF9SMd3BLRwxF0gqF.jpg,https://egymonuments.com/details/CitadelofQaitbay,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 60
+Student: EGP 30","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 07:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 05:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/33,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.","https://www.google.com/maps/place/Qaitbay+Citadel/@31.212501,29.8838841,18z/data=!4m10!1m2!2m1!1sQaitbay+Citadel,+Alexandria,+Egypt!3m6!1s0x14f5c352282911bb:0xe59f8308f8b23d1f!8m2!3d31.2136987!4d29.8853921!15sCiJRYWl0YmF5IENpdGFkZWwsIEFsZXhhbmRyaWEsIEVneXB0WiIiIHFhaXRiYXkgY2l0YWRlbCBhbGV4YW5kcmlhIGVneXB0kgEGY2FzdGxlmgFEQ2k5RFFVbFJRVU52WkVOb2RIbGpSamx2VDI1YVVsSkZjM2RNVmxvelpWUnJkMWg2WkdGYVZFNDJUVVY0UzJKdFl4QULgAQD6AQUIsAEQPQ!16s%2Fg%2F11pwrly5n4?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Alexandria,Alexandria,60.0,30.0,4.07,2.04,09:00,19:00,09:00,17:00,True,True,True,True,False,False
+TCK-00062,Ramesseum,Luxor,https://egymonuments.com/storage/events/September2023/kFNYhhPNkvp5WdUcDsX8.jpg,https://egymonuments.com/details/Ramesseum,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 20
+Student: EGP 10","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/21,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Ramesseum,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,20.0,10.0,4.48,2.24,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00063,Rawda Island Nilometer,Cairo,https://egymonuments.com/storage/events/July2024/mI23X1r4OrzllzgbhGqL.jpg,https://egymonuments.com/details/RawdaIslandNilometer,"Adult: EGP 120
+Student: EGP 60","Adult: EGP 20
+Student: EGP 10","Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/240,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Rawda+Island+Nilometer,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,20.0,10.0,2.44,1.22,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00064,Rosetta City Monuments,El-bahira,https://egymonuments.com/storage/events/July2024/Ti6O2nMyCoUz1h7iPmRU.jpg,https://egymonuments.com/details/RosettaCityMonuments,"Adult: EGP 120
+Student: EGP 60","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 08:30 am Last Entry 03:00 pm
+Winter Working Hours:
+from 08:30 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/243,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Rosetta,+Rasheed,+Rosetta,+Beheira+Governorate/@31.4010486,30.3960885,14z/data=!3m1!4b1!4m10!1m2!2m1!1sRosetta+City+Monuments,+El-bahira,+Egypt!3m6!1s0x14f6894884d8cd2b:0x6819963310c9f16b!8m2!3d31.3939878!4d30.4148309!15sCihSb3NldHRhIENpdHkgTW9udW1lbnRzLCBFbC1iYWhpcmEsIEVneXB0kgEIbG9jYWxpdHngAQA!16zL20vMDIwOGhw?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,El-bahira,Beheira,10.0,5.0,2.44,1.22,08:30,15:00,08:30,15:00,True,True,True,True,False,False
+TCK-00065,Royal Chariots Museum,Cairo,https://egymonuments.com/storage/events/September2023/Csj7nTfN3tpsNxstf6De.jpg,https://egymonuments.com/details/RoyalChariotsMuseum,"Adult: EGP 300
+Student: EGP 150","Adult: EGP 30
+Student: EGP 10","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 02:00 pm",https://egymonuments.com/book-date/50,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Royal+Chariots+Museum,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,30.0,10.0,6.11,3.05,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00066,Royal Jewellery Museum,Alexandria,https://egymonuments.com/storage/events/September2023/CDSZxWtwtP5zJccVVSUI.jpg,https://egymonuments.com/details/RoyalJewelleryMuseum,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 30
+Student: EGP 10","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 02:00 pm",https://egymonuments.com/book-date/35,"Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.                                                                 
+                                                                                                                             
+                                                                 Free entry for children below 6 years.","https://www.google.com/maps/search/Royal+Jewellery+Museum,+Alexandria,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Alexandria,Alexandria,30.0,10.0,4.48,2.24,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00067,Sabiel Nafesa Al-Bayda,Cairo,https://egymonuments.com/storage/events/November2023/vAOkATvmEUUw5Le0BNvp.jpg,https://egymonuments.com/details/SabielOfNafesa,"Adult: EGP 60
+Student: EGP 30","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/91,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/%D8%B3%D8%A8%D9%8A%D9%84+%D9%88+%D9%83%D8%AA%D8%A7%D8%A8+%D9%86%D9%81%D9%8A%D8%B3%D8%A9+%D8%A7%D9%84%D8%A8%D9%8A%D8%B6%D8%A7%D8%A1%E2%80%AD/@30.0430839,31.2399771,15z/data=!4m10!1m2!2m1!1sSabiel+Nafesa+Al-Bayda,+Cairo,+Egypt!3m6!1s0x1458414274b5574d:0x7b96a64b0c7a1057!8m2!3d30.0430839!4d31.2580015!15sCiRTYWJpZWwgTmFmZXNhIEFsLUJheWRhLCBDYWlybywgRWd5cHRaJCIic2FiaWVsIG5hZmVzYSBhbCBiYXlkYSBjYWlybyBlZ3lwdJIBE2hpc3RvcmljYWxfbGFuZG1hcmuaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVTk9OM0Y1VTFSQkVBReABAPoBBAgAEBU!16s%2Fg%2F11bz0yrtv2?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,1.22,0.61,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00068,Salah Eldin Citadel,Cairo,https://egymonuments.com/storage/events/September2023/6G06Ci1tlIj8A5P1zwFn.jpg,https://egymonuments.com/details/SalahEldinCitadel,"Adult: EGP 550
+Student: EGP 275","Adult: EGP 60
+Student: EGP 30","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 08:00 am Last Entry 03:30 pm",https://egymonuments.com/book-date/16,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Salah+Eldin+Citadel,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,60.0,30.0,11.19,5.6,09:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00069,Samaan Monastery,Aswan,https://egymonuments.com/storage/events/July2024/6cMYBcWwUkMIj1WZWM1s.png,https://egymonuments.com/details/SamaanMonastery,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/111,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Samaan+Monastery,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,10.0,5.0,2.04,1.02,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00070,Saqqara Monuments,Giza,https://egymonuments.com/storage/events/September2023/RsyFF21djRVea0QW4cXF.jpg,https://egymonuments.com/details/SaqqaraMonuments,"Adult: EGP 600
+Student: EGP 300","Adult: EGP 30
+Student: EGP 10","All Days
+Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 08:00 am Last Entry 03:30 pm",https://egymonuments.com/book-date/22,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Saqqara+Pyramid/@29.8684624,31.072629,12z/data=!4m10!1m2!2m1!1sSaqqara+Monuments,+Giza,+Egypt!3m6!1s0x14584bd4cd4a2873:0xe08c36415baeee76!8m2!3d29.8684624!4d31.2168246!15sCh5TYXFxYXJhIE1vbnVtZW50cywgR2l6YSwgRWd5cHRaHiIcc2FxcWFyYSBtb251bWVudHMgZ2l6YSBlZ3lwdJIBDWhpc3RvcmljX3NpdGWaASNDaFpEU1VoTk1HOW5TMFZKUTBGblNVTm1OM0I1WmxGM0VBReABAPoBBAgAECU!16zL20vMHBjdzk?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Giza,Giza,30.0,10.0,12.21,6.11,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00071,Sehel Island,Aswan,https://egymonuments.com/storage/events/July2024/BGzJwtPOQZIGjLULXKlR.png,https://egymonuments.com/details/SehelIsland,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/120,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Sehel+Island,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,10.0,5.0,2.04,1.02,07:00,15:00,07:00,15:00,True,True,True,True,False,False
+TCK-00072,Serapeum of Alexandria,Alexandria,https://egymonuments.com/storage/events/September2023/DTCl1g7Cc5OQhY86MAYw.jpg,https://egymonuments.com/details/SerapeumofAlexandria,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 20
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/30,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Serapeum+of+Alexandria,+Alexandria,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Alexandria,Alexandria,20.0,5.0,4.07,2.04,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00073,Sharm El Sheikh Museum,Sharm El Sheikh,https://egymonuments.com/storage/events/July2025/ucl2a6ibkrtPw6ZDcIWd.webp,https://egymonuments.com/details/SharmElSheikhMuseum,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 40
+Student: EGP 20","All Days
+Summer Working Hours:
+from 10:00 am Last Entry 12:00 pm
+from 05:00 pm Last Entry 10:00 pm
+Winter Working Hours:
+from 10:00 am Last Entry 12:00 pm
+from 05:00 pm Last Entry 10:00 pm
+Ramadan Working Hours:
+from 10:00 am Last Entry 01:00 pm
+from 08:00 pm Last Entry 10:00 pm",https://egymonuments.com/book-date/4,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Sharm+El+Sheikh+Museum,+Sharm+El+Sheikh,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Sharm El Sheikh,South Sinai,40.0,20.0,4.07,2.04,10:00,22:00,10:00,22:00,True,True,True,True,False,False
+TCK-00074,Sheikh Hamad Area,Sohag,https://egymonuments.com/storage/events/July2024/8FxIOT4BiX273eJrG7Zb.png,https://egymonuments.com/details/ElSheikhHamad,"Adult: EGP 150
+Student: EGP 75","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/156,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Sheikh+Hamad+Area,+Sohag,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Sohag,Sohag,10.0,5.0,3.05,1.53,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00075,Shunet El Zebib,Sohag,https://egymonuments.com/storage/events/August2024/EX6OXi2zfXgmjPl6E8Xp.PNG,https://egymonuments.com/details/ShunetElZebib,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/162,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Shunet+El+Zebib,+Sohag,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Sohag,Sohag,10.0,5.0,2.04,1.02,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00076,Sohag National Museum,Sohag,https://egymonuments.com/storage/events/July2024/IPlfgBEYTVnRRdkd8zRj.png,https://egymonuments.com/details/SohagNationalMuseum,"Adult: EGP 150
+Student: EGP 75","Adult: EGP 20
+Student: EGP 10","Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 02:30 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 02:00 pm",https://egymonuments.com/book-date/153,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Sohag+National+Museum,+Sohag,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Sohag,Sohag,20.0,10.0,3.05,1.53,09:00,16:00,09:00,14:30,True,True,True,True,False,False
+TCK-00077,Suez canal Museum,Ismailia,https://egymonuments.com/storage/events/July2024/RJuPHBGO8vCdve0WlslZ.jpg,https://egymonuments.com/details/SuezcanalMuseum,"Adult: EGP 400
+Student: EGP 200","Adult: EGP 40
+Student: EGP 20","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 02:00 pm",https://egymonuments.com/book-date/171,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Suez+canal+Museum,+Ismailia,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Ismailia,Ismailia,40.0,20.0,8.14,4.07,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00078,Tanis (San al-Hagar),Al-Sharqia,https://egymonuments.com/storage/events/September2024/H2v3c2ZFa7qfBlQX6S50.jpg,https://egymonuments.com/details/Tanis%28Sanal-Hagar%29,"Adult: EGP 120
+Student: EGP 60","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 09:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/249,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Tanis+(San+al-Hagar),+Al-Sharqia,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Al-sharqia,Sharqia,10.0,5.0,2.44,1.22,09:00,17:00,09:00,16:00,True,True,True,True,False,False
+TCK-00079,Temple Of Amada,Aswan,https://egymonuments.com/storage/events/November2023/wbW6LVgoo2pRI31KcdT9.jpg,https://egymonuments.com/details/TempleOfAmada,"Adult: EGP 150
+Student: EGP 75","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/57,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Temple+Of+Amada,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,10.0,5.0,3.05,1.53,07:00,15:00,07:00,15:00,True,True,True,True,False,False
+TCK-00080,Temple Of Wadi El-Sebua,Aswan,https://egymonuments.com/storage/events/November2023/6QCfcyQ1ztUigDeV1mh5.jpg,https://egymonuments.com/details/TempleOfWadiEl-Sebua,"Adult: EGP 150
+Student: EGP 75","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/60,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Temple+Of+Wadi+El-Sebua,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,10.0,5.0,3.05,1.53,07:00,15:00,07:00,15:00,True,True,True,True,False,False
+TCK-00081,Temple of Aghurmi in Siwa,Siwa,https://egymonuments.com/storage/events/January2025/ni06oUV13SN42ne0MWTr.jpg,https://egymonuments.com/details/TempleofAghurmiinSiwa,"Adult: EGP 120
+Student: EGP 60","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 05:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/256,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Amon+Temple/@29.20892,25.5332937,15z/data=!4m10!1m2!2m1!1sTemple+of+Aghurmi+in+Siwa,+Siwa,+Egypt!3m6!1s0x147aae426d9a9811:0x38864c49686b1ab!8m2!3d29.2052917!4d25.5435028!15sCiZUZW1wbGUgb2YgQWdodXJtaSBpbiBTaXdhLCBTaXdhLCBFZ3lwdFomIiR0ZW1wbGUgb2YgYWdodXJtaSBpbiBzaXdhIHNpd2EgZWd5cHSSARNoaXN0b3JpY2FsX2xhbmRtYXJrmgEjQ2haRFNVaE5NRzluUzBWSlEwRm5TVVF4TUhKeExWTkJFQUXgAQD6AQQIABBM!16s%2Fg%2F122v3jm7?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Siwa,Matrouh,10.0,5.0,2.44,1.22,09:00,17:00,09:00,17:00,True,True,True,True,False,False
+TCK-00082,Temple of Kalabsha,Aswan,https://egymonuments.com/storage/events/November2023/tL1pmVDaeCRw4B2TL9Pu.jpg,https://egymonuments.com/details/TempleofKalabsha,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/63,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Temple+of+Kalabsha,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,10.0,5.0,4.07,2.04,07:00,15:00,07:00,15:00,True,True,True,True,False,False
+TCK-00083,The Pyramids of Meidum,Beni Suef,https://egymonuments.com/storage/events/July2024/kEQhR7v5IMoQAIGFGgvW.png,https://egymonuments.com/details/ThePyramidsofMeidum,"Adult: EGP 150
+Student: EGP 75","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/123,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/The+Pyramids+of+Meidum,+Beni+Suef,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Beni Suef,Beni Suef,10.0,5.0,3.05,1.53,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00084,The Temple Of Horus,Edfu,https://egymonuments.com/storage/events/September2023/fieRTrHzebhO9iwbZxuJ.jpg,https://egymonuments.com/details/TheTempleOfHorusAtEdfu,"Adult: EGP 550
+Student: EGP 275","Adult: EGP 40
+Student: EGP 20","Saturday - Monday -Tuesday - Thursday- Friday
+Summer Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 04:00 pm
+Sunday - Wednesday
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/23,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/The+Temple+Of+Horus,+Edfu,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Edfu,Aswan,40.0,20.0,11.19,5.6,07:00,16:00,07:00,16:00,True,True,True,True,False,False
+TCK-00085,Tomb of pabasa,Luxor,https://egymonuments.com/storage/events/July2024/9069LaGEsGVJtstlXTrL.jpg,https://egymonuments.com/details/Tombofpabasa,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/186,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Tomb+of+pabasa,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,10.0,5.0,2.04,1.02,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00086,Tombs Of The Nobles,Luxor,https://egymonuments.com/storage/events/September2023/C17czOHWGA9b89TJL85g.jpg,https://egymonuments.com/details/TombsOfTheNobles,Free,,"All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/24,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Tombs+Of+The+Nobles,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,,,0.0,0.0,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00087,Tombs of Gabal al-Mawta,Siwa,https://egymonuments.com/storage/events/January2025/CSP5eML9Gs7PLu8iYhiY.jpeg,https://egymonuments.com/details/TombsofGabalal-Mawta,"Adult: EGP 120
+Student: EGP 60","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 05:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/259,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Tombs+of+Gabal+al-Mawta,+Siwa,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Siwa,Matrouh,10.0,5.0,2.44,1.22,09:00,17:00,09:00,17:00,True,True,True,True,False,False
+TCK-00088,Tuna el-Gebel,Minya,https://egymonuments.com/storage/events/July2024/fvrMlrguAkQxbk48ZITF.png,https://egymonuments.com/details/Tunael-Gebel,"Adult: EGP 200
+Student: EGP 100","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/219,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Tuna+el-Gebel,+Minya,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Minya,Minya,10.0,5.0,4.07,2.04,08:00,16:00,08:00,16:00,True,True,True,True,False,False
+TCK-00089,Unfinished Obelisk,Aswan,https://egymonuments.com/storage/events/September2023/jf9sHVM7uMPtyL0KdIpN.jpg,https://egymonuments.com/details/UnfinishedObelisk,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 20
+Student: EGP 10","All Days
+Summer Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Winter Working Hours:
+from 07:00 am Last Entry 03:00 pm
+Ramadan Working Hours:
+from 07:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/25,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Unfinished+Obelisk,+Aswan,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Aswan,Aswan,20.0,10.0,4.48,2.24,07:00,15:00,07:00,15:00,True,True,True,True,False,False
+TCK-00090,Valley Of Kings,Luxor,https://egymonuments.com/storage/events/September2023/mF04gJHG737pSSkJxyGQ.jpg,https://egymonuments.com/details/ValleyOfKings,"Adult: EGP 750
+Student: EGP 375","Adult: EGP 60
+Student: EGP 30","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/13,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/place/Valley+of+the+Kings/@25.7401643,32.5833866,15z/data=!4m10!1m2!2m1!1sValley+Of+Kings,+Luxor,+Egypt!3m6!1s0x14493d8ab5defed7:0x718fccf6a2e3a9da!8m2!3d25.7401643!4d32.601411!15sCh1WYWxsZXkgT2YgS2luZ3MsIEx1eG9yLCBFZ3lwdFodIht2YWxsZXkgb2Yga2luZ3MgbHV4b3IgZWd5cHSSARNhcmNoYWVvbG9naWNhbF9zaXRlmgFEQ2k5RFFVbFJRVU52WkVOb2RIbGpSamx2VDIxdk1HRkZTa2xoYWs1SFdtNWFhRlZJVGxkbFZXaFFXak5TYlZwSFl4QULgAQD6AQUIhAEQOQ!16zL20vMDhtOHc2?hl=en&entry=ttu&g_ep=EgoyMDI2MDYyOS4wIKXMDSoASAFQAw%3D%3D",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,60.0,30.0,15.27,7.63,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00091,Valley Of The Queens,Luxor,https://egymonuments.com/storage/events/April2024/WNAlxazTQZKF6S4E6V2b.jpg,https://egymonuments.com/details/ValleyOfTheQueens,"Adult: EGP 220
+Student: EGP 110","Adult: EGP 30
+Student: EGP 10","All Days
+Summer Working Hours:
+from 06:00 am Last Entry 05:00 pm
+Winter Working Hours:
+from 06:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 06:00 am Last Entry 04:00 pm",https://egymonuments.com/book-date/26,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Valley+Of+The+Queens,+Luxor,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Luxor,Luxor,30.0,10.0,4.48,2.24,06:00,17:00,06:00,16:00,True,True,True,True,False,False
+TCK-00092,Wasila Historical House,Cairo,https://egymonuments.com/storage/events/November2023/7SsujldJufdF4rUF36vl.jpg,https://egymonuments.com/details/Wasilahouse,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/85,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Wasila+Historical+House,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,2.04,1.02,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00093,Wikala Of Al-Guri,Cairo,https://egymonuments.com/storage/events/December2023/vVBsgWrOtQnzChxUD0Eq.jpg,https://egymonuments.com/details/WikalaOfAl-Guri,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","All Days
+Summer Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 09:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/103,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Wikala+Of+Al-Guri,+Cairo,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Cairo,Cairo,10.0,5.0,2.04,1.02,09:00,16:00,09:00,16:00,True,True,True,True,False,False
+TCK-00094,Zawyet Sultan,Minya,https://egymonuments.com/storage/events/July2024/PqPzM6W6ONfzKD57l6Sk.png,https://egymonuments.com/details/ZawyetSultan,"Adult: EGP 100
+Student: EGP 50","Adult: EGP 10
+Student: EGP 5","Summer Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Winter Working Hours:
+from 08:00 am Last Entry 04:00 pm
+Ramadan Working Hours:
+from 09:00 am Last Entry 03:00 pm",https://egymonuments.com/book-date/129,"Free entry for children below 6 years.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians with special needs.                                                                 
+                                                                                                                             
+                                                                 Free entry for Egyptians above 60 years.                                                                 
+                                                                                                                             
+                                                                 Photography with mobile phone is free of charge.","https://www.google.com/maps/search/Zawyet+Sultan,+Minya,+Egypt?hl=en",2026-07-05 17:07:44.076781,egymonuments_tickets.csv,Minya,Minya,10.0,5.0,2.04,1.02,08:00,16:00,08:00,16:00,True,True,True,True,False,False
