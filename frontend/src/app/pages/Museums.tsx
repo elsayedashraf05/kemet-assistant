@@ -9,7 +9,7 @@ import {
   Landmark,
   ExternalLink,
 } from "lucide-react";
-import { API_BASE_URL } from "@/app/lib/api";
+import { API_BASE_URL } from "../lib/api";
 
 const API_URL = `${API_BASE_URL}/api/museums`;
 

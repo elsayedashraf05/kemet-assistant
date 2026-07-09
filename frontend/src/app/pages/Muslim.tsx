@@ -13,7 +13,7 @@ import {
   Landmark,
   ChevronDown,
 } from "lucide-react";
-import { API_BASE_URL } from "@/app/lib/api";
+import { API_BASE_URL } from "../lib/api";
 
 const BASE_URL = API_BASE_URL;
 const PRAYER_TIMES_URL = `${BASE_URL}/api/muslim/prayer-times`;

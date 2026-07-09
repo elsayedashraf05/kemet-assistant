@@ -4,9 +4,9 @@ import {
   Check, ArrowLeft,
   LogOut, Camera,
   Loader2, AlertCircle,
-  FileText, Bookmark, Heart, MessageCircle, Trash2,
+  FileText, Bookmark, Heart, MessageCircle, Trash2, Map, Calendar,
 } from "lucide-react";
-import { API_BASE_URL } from "@/app/lib/api";
+import { API_BASE_URL } from "../lib/api";
 
 // عنوان الـ Flask backend
 const API_BASE = API_BASE_URL;
@@ -97,6 +97,33 @@ const apiSavedPosts = () => postsApiRequest("/saved").then((d) => d.posts as Pos
 const apiDeletePost = (owner: string, idx: number) => postsApiRequest(`/${owner}/${idx}`, { method: "DELETE" });
 const apiToggleSave = (owner: string, idx: number) =>
   postsApiRequest(`/${owner}/${idx}/save`, { method: "POST" }) as Promise<{ saved_by_me: boolean; saves: number }>;
+
+// -- Trip Planner API (same backend, different blueprint: /api/trip-planner) --
+async function tripsApiRequest(path: string, options: RequestInit = {}) {
+  const token = getToken();
+  const res = await fetch(`${API_BASE}/api/trip-planner${path}`, {
+    ...options,
+    headers: {
+      ...(options.body ? { "Content-Type": "application/json" } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(options.headers || {}),
+    },
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error || "Something went wrong.");
+  }
+  return data;
+}
+
+interface TripPlanSummary {
+  id: string;
+  CreatedAt: string;
+  Preferences: { cities?: string[]; destination?: string; days?: number; budget?: string };
+}
+
+const apiTripPlans = () => tripsApiRequest("/plans").then((d) => d.plans as TripPlanSummary[]);
+const apiDeleteTripPlan = (id: string) => tripsApiRequest(`/plans/${id}`, { method: "DELETE" });
 
 async function apiRegister(username: string, email: string, password: string) {
   const data = await apiRequest("/register", {
@@ -1079,13 +1106,115 @@ function SavedPostsTab({ isLoggedIn, username }: { isLoggedIn: boolean; username
 
 // --- Tab bar shell ---
 
-type MainTab = "account" | "posts" | "saved";
+// --- "My Trips" tab: itineraries saved from the Trip Planner. ---
+
+function formatTripDate(iso: string) {
+  try {
+    return new Date(iso).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+  } catch {
+    return iso;
+  }
+}
+
+function MyTripsTab({ isLoggedIn }: { isLoggedIn: boolean }) {
+  const [plans, setPlans] = useState<TripPlanSummary[] | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setError("");
+    apiTripPlans()
+      .then(setPlans)
+      .catch((e) => setError(e instanceof Error ? e.message : "Failed to load your saved trips."))
+      .finally(() => setLoading(false));
+  }, [isLoggedIn]);
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Delete this saved trip?")) return;
+    try {
+      await apiDeleteTripPlan(id);
+      setPlans((prev) => (prev ? prev.filter((p) => p.id !== id) : prev));
+    } catch {
+      /* ignore */
+    }
+  };
+
+  if (!isLoggedIn) {
+    return (
+      <div className="max-w-2xl mx-auto text-center py-16 text-gray-500">
+        <Map size={32} className="mx-auto mb-3 opacity-40" />
+        <p className="text-sm">Sign in to see itineraries you've saved from the Trip Planner.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-2xl mx-auto flex flex-col gap-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-white">
+          My <span style={{ color: "#D4AF37" }}>Trips</span>
+        </h2>
+        <a href="/trip-planner" className="text-xs font-semibold" style={{ color: "#D4AF37" }}>
+          Plan a new trip
+        </a>
+      </div>
+
+      {loading ? (
+        <div className="flex justify-center py-12"><Loader2 className="animate-spin" style={{ color: "#D4AF37" }} /></div>
+      ) : error ? (
+        <p className="text-sm text-red-400">{error}</p>
+      ) : !plans || plans.length === 0 ? (
+        <div className="text-center py-16 text-gray-500">
+          <Map size={32} className="mx-auto mb-3 opacity-40" />
+          <p className="text-sm">No saved trips yet — build one in the Trip Planner and save it here.</p>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {plans.map((p) => {
+            const cities = p.Preferences?.cities?.length ? p.Preferences.cities.join(", ") : (p.Preferences?.destination || "Egypt");
+            return (
+              <a
+                key={p.id}
+                href={`/trip-planner?saved=${encodeURIComponent(p.id)}`}
+                className="rounded-xl border border-white/10 bg-white/5 p-4 flex items-center justify-between gap-3 hover:border-yellow-500/30 transition-colors"
+              >
+                <div className="min-w-0">
+                  <div className="text-white font-semibold text-sm truncate">{cities}</div>
+                  <div className="flex items-center gap-3 text-xs text-gray-400 mt-1">
+                    <span className="flex items-center gap-1"><Calendar size={12} /> {p.Preferences?.days || "?"} days</span>
+                    <span>{p.Preferences?.budget}</span>
+                    <span>Saved {formatTripDate(p.CreatedAt)}</span>
+                  </div>
+                </div>
+                <button
+                  onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDelete(p.id); }}
+                  className="p-2 rounded-lg text-gray-500 hover:text-red-400 hover:bg-white/5 transition-colors flex-shrink-0"
+                  title="Delete"
+                >
+                  <Trash2 size={15} />
+                </button>
+              </a>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+type MainTab = "account" | "posts" | "saved" | "trips";
 
 function TabBar({ active, onChange }: { active: MainTab; onChange: (t: MainTab) => void }) {
   const tabs: { key: MainTab; label: string; icon: React.ElementType }[] = [
     { key: "account", label: "Account", icon: User },
     { key: "posts", label: "Your Posts", icon: FileText },
     { key: "saved", label: "Saved", icon: Bookmark },
+    { key: "trips", label: "My Trips", icon: Map },
   ];
   return (
     <div className="sticky top-0 z-10 border-b border-white/10" style={{ background: "#0A0B1Ecc" }}>
@@ -1162,6 +1291,7 @@ export function Account() {
             : <GuestMode onLoggedIn={(u) => { cachedUser = u; setUser(u); }} />)}
         {tab === "posts" && <YourPostsTab isLoggedIn={!!user} username={user?.username || ""} />}
         {tab === "saved" && <SavedPostsTab isLoggedIn={!!user} username={user?.username || ""} />}
+        {tab === "trips" && <MyTripsTab isLoggedIn={!!user} />}
       </div>
     </div>
   );

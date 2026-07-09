@@ -1,7 +1,11 @@
 const rawApiBaseUrl = import.meta.env.VITE_API_URL;
 
 if (!rawApiBaseUrl) {
-  throw new Error("VITE_API_URL is required to build backend API requests.");
+  const message = "Missing VITE_API_URL. Set it to your backend base URL.";
+  if (import.meta.env.DEV) {
+    console.error(message);
+  }
+  throw new Error(message);
 }
 
 export const API_BASE_URL = rawApiBaseUrl.replace(/\/+$/, "");
@@ -10,6 +14,6 @@ export function apiUrl(path: string): string {
   return `${API_BASE_URL}${path.startsWith("/") ? path : `/${path}`}`;
 }
 
-export function apiFetch(path: string, options?: RequestInit): Promise<Response> {
-  return fetch(apiUrl(path), options);
+export function apiFetch(input: string, init?: RequestInit): Promise<Response> {
+  return fetch(apiUrl(input), init);
 }

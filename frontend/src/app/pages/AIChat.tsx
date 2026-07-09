@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
-import { Send, Bot, User, Globe, Database, MessageSquare, Loader2 } from "lucide-react";
+import { Send, Bot, User, Database, MessageSquare, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { API_BASE_URL } from "@/app/lib/api";
+import { API_BASE_URL } from "../lib/api";
 
 const API_BASE = API_BASE_URL;
 
@@ -81,7 +81,6 @@ const suggestedQuestions = [
 
 const MODE_OPTIONS: { value: Mode; label: string; icon: typeof MessageSquare; desc: string }[] = [
   { value: "Chat", label: "Chat", icon: MessageSquare, desc: "General AI chat about Egypt tourism" },
-  { value: "Web Search", label: "Web Search", icon: Globe, desc: "Searches the web for real-time answers" },
   { value: "Data", label: "Data", icon: Database, desc: "Answers based on KEMET's own data files" },
 ];
 
@@ -106,7 +105,10 @@ export function AIChat() {
 
   const [messages, setMessages] = useState<Message[]>(loadStoredMessages);
   const [input, setInput] = useState("");
-  const [mode, setMode] = useState<Mode>(() => loadStoredValue<Mode>(STORAGE_KEY_MODE, "Chat"));
+  const [mode, setMode] = useState<Mode>(() => {
+    const stored = loadStoredValue<Mode>(STORAGE_KEY_MODE, "Chat");
+    return stored === "Web Search" ? "Chat" : stored;
+  });
   const [model, setModel] = useState<Model>(() => loadStoredValue<Model>(STORAGE_KEY_MODEL, "Flash"));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");

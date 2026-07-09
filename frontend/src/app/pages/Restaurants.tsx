@@ -10,7 +10,7 @@ import {
   ArrowUpDown,
   ChevronDown,
 } from "lucide-react";
-import { API_BASE_URL } from "@/app/lib/api";
+import { API_BASE_URL } from "../lib/api";
 
 // عنوان الـ Flask backend
 const API_BASE = API_BASE_URL;

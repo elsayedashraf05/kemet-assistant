@@ -7,8 +7,8 @@ import {
   XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from "recharts";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router";
-import { API_BASE_URL } from "@/app/lib/api";
+import { askAI } from "../lib/askAI";
+import { API_BASE_URL } from "../lib/api";
 
 const API_BASE = API_BASE_URL;
 
@@ -62,7 +62,6 @@ function arrivalBarColor(millions: number) {
 }
 
 export function Dashboard() {
-  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
 
   const [data, setData] = useState<DashboardSummary | null>(null);
@@ -86,11 +85,13 @@ export function Dashboard() {
     load();
   }, []);
 
-  // بيودي لصفحة الشاتبوت، ولو فيه سؤال مكتوب في الخانة بيبعته كـ query param
-  // (?q=...) عشان صفحة الـ Chat تقرأه وتبعته أوتوماتيك زي ما هو.
-  const goToChat = () => {
+  // بيفتح الـ chat bubble العائم ويبعت السؤال المكتوب في الخانة (لو فيه)،
+  // بدل ما يودي المستخدم لصفحة تانية.
+  const askKemet = () => {
     const q = searchQuery.trim();
-    navigate(q ? `/chat?q=${encodeURIComponent(q)}` : "/chat");
+    if (!q) return;
+    askAI(q);
+    setSearchQuery("");
   };
 
   // ملخصات الطقس (أبرد/أسخن/أرطب/أجف مدينة) محسوبة من بيانات حية فعلية
@@ -135,11 +136,11 @@ export function Dashboard() {
                 placeholder="Ask KEMET to plan your trip..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && goToChat()}
+                onKeyDown={(e) => e.key === "Enter" && askKemet()}
                 className="w-full bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl pl-12 pr-6 py-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#D4AF37] focus:border-transparent transition-all hover:bg-white/15"
               />
               <button
-                onClick={goToChat}
+                onClick={askKemet}
                 className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-[#D4AF37] hover:bg-[#C9A646] text-black px-6 py-2 rounded-xl font-semibold transition-all flex items-center gap-2"
               >
                 <Sparkles size={18} />

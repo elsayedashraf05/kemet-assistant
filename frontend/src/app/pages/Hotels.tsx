@@ -6,7 +6,7 @@ import {
   MapPin,
   Loader2,
 } from "lucide-react";
-import { API_BASE_URL } from "@/app/lib/api";
+import { API_BASE_URL } from "../lib/api";
 
 // عنوان الـ Flask backend. في الإنتاج يتحط في .env كـ VITE_API_URL
 const API_BASE = API_BASE_URL;

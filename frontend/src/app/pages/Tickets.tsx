@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Clock, MapPin, ExternalLink, Search, ChevronDown, ChevronUp, Ticket } from "lucide-react";
-import { API_BASE_URL } from "@/app/lib/api";
+import { API_BASE_URL } from "../lib/api";
 
 const API_URL = `${API_BASE_URL}/api/tickets`;
 const RATES_API_URL = `${API_BASE_URL}/api/tickets/exchange-rates`;

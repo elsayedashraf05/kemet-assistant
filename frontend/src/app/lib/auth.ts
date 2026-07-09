@@ -1,7 +1,7 @@
+import { API_BASE_URL } from "./api";
+
 // مصدر واحد مشترك لكل حاجة متعلقة بالـ JWT/الحساب، بدل ما كل كومبوننت
 // (Account.tsx, TopNav.tsx, ...) يكرر نفس getToken/setToken/apiMe لوحده.
-import { API_BASE_URL } from "@/app/lib/api";
-
 const API_BASE = API_BASE_URL;
 const TOKEN_KEY = "kemet_token";
 

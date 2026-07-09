@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Shuffle, Calendar, Search } from "lucide-react";
-import { API_BASE_URL } from "@/app/lib/api";
+import { Shuffle, Calendar, Search, ChevronDown, ChevronUp } from "lucide-react";
+import { API_BASE_URL } from "../lib/api";
 
 const API_URL = `${API_BASE_URL}/api/periods`;
 
@@ -11,31 +11,22 @@ const FACTS_API_URL = `${API_BASE_URL}/api/periods/facts`;
 
 const HIEROGLYPHS = ["𓂀", "𓆣", "𓇋", "𓅓", "𓊪", "𓏏", "𓋴"];
 
-// Tracks how many columns the periods grid should have, matching the
-// md/lg Tailwind breakpoints. We need this in JS (rather than pure CSS
-// columns) so each column can be its own independent flex container —
-// expanding one card then only pushes cards below it in the SAME column,
-// instead of triggering a masonry rebalance that shuffles neighboring cards.
-function useColumnCount() {
-  const getCount = () => {
-    if (typeof window === "undefined") return 4;
-    const w = window.innerWidth;
-    if (w < 560) return 1;
-    if (w < 900) return 2;
-    if (w < 1300) return 3;
-    return 4;
-  };
-
-  const [count, setCount] = useState(getCount);
-
-  useEffect(() => {
-    const onResize = () => setCount(getCount());
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
-  return count;
-}
+// Cycled per-period accent color, since the API doesn't return one.
+// Order/values match the palette used across the other Egypt pages.
+const COLOR_PALETTE = [
+  "#D97706",
+  "#B45309",
+  "#D4AF37",
+  "#6B7280",
+  "#059669",
+  "#7C3AED",
+  "#DC2626",
+  "#4B5563",
+  "#BE185D",
+  "#0284C7",
+  "#B91C1C",
+  "#065F46",
+];
 
 interface PeriodRecord {
   name: string;
@@ -48,10 +39,16 @@ interface PeriodsResponse {
   periods: PeriodRecord[];
 }
 
-// A single period card. Clicking the card expands the description in
-// place to show the full text (and collapses again on a second click) —
-// same interaction as MonumentCard/MuseumCard.
-function PeriodCard({ period }: { period: PeriodRecord }) {
+// A single period card, positioned along the timeline. Clicking the card
+// expands it in place to show the full description and a larger image
+// (and collapses again on a second click).
+function PeriodCard({
+  period,
+  color,
+}: {
+  period: PeriodRecord;
+  color: string;
+}) {
   const [expanded, setExpanded] = useState(false);
 
   return (
@@ -62,40 +59,68 @@ function PeriodCard({ period }: { period: PeriodRecord }) {
       onKeyDown={(e) => {
         if (e.key === "Enter" || e.key === " ") setExpanded((v) => !v);
       }}
-      className="rounded-2xl overflow-hidden transition-transform hover:-translate-y-1 cursor-pointer"
+      className="w-full rounded-2xl border-l-4 border overflow-hidden transition-all duration-300 cursor-pointer hover:border-white/20"
       style={{
-        background: "#161929",
-        border: "1px solid #2c3248",
+        borderLeftColor: color,
+        borderColor: "rgba(255,255,255,0.08)",
+        background: "rgba(255,255,255,0.04)",
+        backdropFilter: "blur(8px)",
       }}
     >
-      <div className="relative h-56">
-        <img
-          src={period.img}
-          alt={period.name}
-          onError={(e) => {
-            (e.currentTarget as HTMLImageElement).src = FALLBACK_IMG;
-          }}
-          className="w-full h-full object-cover"
-        />
-        {period.from_to && (
-          <div
-            className="absolute top-3 right-3 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold"
-            style={{ background: "rgba(18,20,28,0.9)", color: "#dfb257" }}
-          >
-            <Calendar className="w-3 h-3" />
-            {period.from_to}
-          </div>
-        )}
-      </div>
+      {!expanded && (
+        <div className="relative h-40">
+          <img
+            src={period.img}
+            alt={period.name}
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = FALLBACK_IMG;
+            }}
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
+
       <div className="p-5">
-        <h3 className="text-lg font-bold text-white mb-2">{period.name}</h3>
+        <div className="flex items-start justify-between gap-2 mb-2">
+          <div>
+            {period.from_to && (
+              <span
+                className="text-xs font-semibold px-2 py-0.5 rounded-full mb-2 inline-flex items-center gap-1"
+                style={{ background: `${color}22`, color }}
+              >
+                <Calendar className="w-3 h-3" />
+                {period.from_to}
+              </span>
+            )}
+            <h3 className="text-lg font-bold text-white">{period.name}</h3>
+          </div>
+          <div className="mt-1 text-white/40 shrink-0">
+            {expanded ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+          </div>
+        </div>
+
+        {expanded && (
+          <img
+            src={period.img}
+            alt={period.name}
+            onError={(e) => {
+              (e.currentTarget as HTMLImageElement).src = FALLBACK_IMG;
+            }}
+            className="rounded-lg h-40 w-full object-cover mb-3"
+          />
+        )}
+
         <p
-          className={`text-gray-400 text-sm leading-relaxed whitespace-pre-line ${
-            expanded ? "" : "line-clamp-2"
+          className={`text-white/70 text-sm leading-relaxed whitespace-pre-line ${
+            expanded ? "" : "line-clamp-3"
           }`}
         >
           {period.desc}
         </p>
+
+        <div className="mt-3 text-xs" style={{ color }}>
+          {expanded ? "Show less" : "Read more"}
+        </div>
       </div>
     </div>
   );
@@ -185,20 +210,6 @@ export function HistoricalPeriods() {
     return data.periods.filter((p) => q === "" || p.name.toLowerCase().includes(q));
   }, [data, search]);
 
-  const columnCount = useColumnCount();
-
-  // Round-robin the filtered periods into N independent columns. Each
-  // column is rendered as its own vertical stack, so expanding a card only
-  // grows ITS column (pushing down cards below it there) — it can never
-  // move a card sideways into another column or resize unrelated columns.
-  const columns = useMemo(() => {
-    const cols: PeriodRecord[][] = Array.from({ length: columnCount }, () => []);
-    filtered.forEach((period, i) => {
-      cols[i % columnCount].push(period);
-    });
-    return cols;
-  }, [filtered, columnCount]);
-
   return (
     <div className="min-h-screen" style={{ background: "#0A0B1E" }}>
       {/* Hero */}
@@ -279,8 +290,8 @@ export function HistoricalPeriods() {
         </div>
       )}
 
-      {/* Periods grid — real data from /api/periods */}
-      <div className="max-w-[1500px] mx-auto px-8 pb-16">
+      {/* Periods timeline — real data from /api/periods */}
+      <div className="max-w-5xl mx-auto px-4 pb-16">
         {error && (
           <div
             className="rounded-2xl p-6 mb-8 text-center"
@@ -294,7 +305,7 @@ export function HistoricalPeriods() {
           </div>
         )}
 
-        <div className="mb-7 max-w-md">
+        <div className="mb-7 max-w-md mx-auto">
           <label className="text-white text-xs font-semibold mb-1.5 block">🔍 Search Period</label>
           <div className="relative">
             <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
@@ -311,25 +322,39 @@ export function HistoricalPeriods() {
         </div>
 
         {!loading && data && (
-          <p className="text-gray-400 text-sm mb-5">
+          <p className="text-gray-400 text-sm mb-5 text-center">
             Showing <span style={{ color: "#dfb257", fontWeight: 700 }}>{filtered.length}</span> period
             {filtered.length !== 1 ? "s" : ""}
           </p>
         )}
 
         {loading && (
-          <div className="flex gap-6 items-start">
-            {Array.from({ length: columnCount }, (_, colIdx) => (
-              <div key={colIdx} className="flex-1 flex flex-col gap-6">
-                {[72, 88, 64, 96, 76, 84]
-                  .filter((_, i) => i % columnCount === colIdx)
-                  .map((h, i) => (
-                    <div
-                      key={i}
-                      className="rounded-2xl animate-pulse"
-                      style={{ background: "#161929", height: `${h * 4}px` }}
-                    />
-                  ))}
+          <div className="space-y-10 relative">
+            <div
+              className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 hidden md:block"
+              style={{ background: "linear-gradient(to bottom, rgba(212,175,55,0.6), rgba(212,175,55,0.1))" }}
+            />
+            {[0, 1, 2, 3, 4, 5].map((i) => (
+              <div key={i} className="relative flex items-start gap-0 md:gap-6">
+                <div className={`hidden md:flex flex-1 ${i % 2 === 0 ? "justify-end pr-8" : "justify-end pr-8 invisible"}`}>
+                  {i % 2 === 0 && (
+                    <div className="rounded-2xl animate-pulse w-full" style={{ background: "#161929", height: "180px" }} />
+                  )}
+                </div>
+                <div className="hidden md:flex flex-col items-center z-10">
+                  <div
+                    className="w-5 h-5 rounded-full border-2 mt-4"
+                    style={{ borderColor: "#2c3248", background: "#0A0B1E" }}
+                  />
+                </div>
+                <div className={`hidden md:flex flex-1 ${i % 2 !== 0 ? "pl-8" : "pl-8 invisible"}`}>
+                  {i % 2 !== 0 && (
+                    <div className="rounded-2xl animate-pulse w-full" style={{ background: "#161929", height: "180px" }} />
+                  )}
+                </div>
+                <div className="flex md:hidden w-full">
+                  <div className="rounded-2xl animate-pulse w-full" style={{ background: "#161929", height: "180px" }} />
+                </div>
               </div>
             ))}
           </div>
@@ -340,14 +365,50 @@ export function HistoricalPeriods() {
         )}
 
         {!loading && filtered.length > 0 && (
-          <div className="flex gap-6 items-start">
-            {columns.map((col, colIdx) => (
-              <div key={colIdx} className="flex-1 flex flex-col gap-6">
-                {col.map((period) => (
-                  <PeriodCard key={period.name} period={period} />
-                ))}
-              </div>
-            ))}
+          <div className="relative">
+            {/* Center line */}
+            <div
+              className="absolute left-1/2 top-0 bottom-0 w-px -translate-x-1/2 hidden md:block"
+              style={{ background: "linear-gradient(to bottom, rgba(212,175,55,0.6), rgba(212,175,55,0.1))" }}
+            />
+
+            <div className="space-y-10">
+              {filtered.map((period, i) => {
+                const color = COLOR_PALETTE[i % COLOR_PALETTE.length];
+                const isLeft = i % 2 === 0;
+
+                return (
+                  <div key={period.name} className="relative flex items-start gap-0 md:gap-6">
+                    {/* Left side */}
+                    <div className={`hidden md:flex flex-1 ${isLeft ? "justify-end pr-8" : "justify-end pr-8 invisible"}`}>
+                      {isLeft && <PeriodCard period={period} color={color} />}
+                    </div>
+
+                    {/* Center dot */}
+                    <div className="hidden md:flex flex-col items-center z-10">
+                      <div
+                        className="w-5 h-5 rounded-full border-2 mt-4 shadow-lg"
+                        style={{
+                          borderColor: color,
+                          background: "#0A0B1E",
+                          boxShadow: `0 0 12px ${color}80`,
+                        }}
+                      />
+                    </div>
+
+                    {/* Right side */}
+                    <div className={`hidden md:flex flex-1 ${!isLeft ? "pl-8" : "pl-8 invisible"}`}>
+                      {!isLeft && <PeriodCard period={period} color={color} />}
+                    </div>
+
+                    {/* Mobile: full width */}
+                    <div className="flex md:hidden w-full">
+                      <PeriodCard period={period} color={color} />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

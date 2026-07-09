@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Send, Bot, User, Globe, Database, MessageSquare, Loader2, X } from "lucide-react";
+import { Send, Bot, User, Database, MessageSquare, Loader2, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { API_BASE_URL } from "@/app/lib/api";
+import { onAskAI } from "../lib/askAI";
+import { API_BASE_URL } from "../lib/api";
 
 const API_BASE = API_BASE_URL;
 
@@ -68,7 +69,6 @@ const MARKDOWN_COMPONENTS = {
 
 const MODE_OPTIONS: { value: Mode; icon: typeof MessageSquare; desc: string }[] = [
   { value: "Chat", icon: MessageSquare, desc: "General AI chat about Egypt tourism" },
-  { value: "Web Search", icon: Globe, desc: "Searches the web for real-time answers" },
   { value: "Data", icon: Database, desc: "Answers based on KEMET's own data files" },
 ];
 
@@ -92,7 +92,10 @@ export function ChatBubble() {
   const [open, setOpen] = useState(() => loadStoredValue(STORAGE_KEY_OPEN, "") === "1");
   const [messages, setMessages] = useState<Message[]>(loadStoredMessages);
   const [input, setInput] = useState("");
-  const [mode, setMode] = useState<Mode>(() => loadStoredValue<Mode>(STORAGE_KEY_MODE, "Chat"));
+  const [mode, setMode] = useState<Mode>(() => {
+    const stored = loadStoredValue<Mode>(STORAGE_KEY_MODE, "Chat");
+    return stored === "Web Search" ? "Chat" : stored;
+  });
   const [model, setModel] = useState<Model>(() => loadStoredValue<Model>(STORAGE_KEY_MODEL, "Flash"));
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -159,7 +162,16 @@ export function ChatBubble() {
   };
 
   const handleSend = () => runSend(input);
-  const hasUnread = !open && messages.length > 1 && messages[messages.length - 1].role === "assistant";
+
+  // Lets a button anywhere in the app (e.g. Dashboard's "Ask AI") open this
+  // bubble and send a question through it, instead of navigating away.
+  useEffect(() => {
+    return onAskAI((question) => {
+      setOpen(true);
+      runSend(question);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -306,9 +318,6 @@ export function ChatBubble() {
         style={{ background: "linear-gradient(135deg, #D4AF37, #C9A84C)" }}
       >
         {open ? <X size={22} className="text-[#1A1A2E]" /> : <MessageSquare size={22} className="text-[#1A1A2E]" />}
-        {hasUnread && (
-          <span className="absolute -top-0.5 -right-0.5 w-3.5 h-3.5 rounded-full bg-red-500 border-2 border-[#1A1A2E]" />
-        )}
       </button>
     </>
   );
