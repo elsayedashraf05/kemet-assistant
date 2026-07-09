@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Search, MapPin, Clock } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/sites`;
+const API_URL = `${API_BASE_URL}/api/sites`;
 
 const FALLBACK_IMG =
   "https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=600";

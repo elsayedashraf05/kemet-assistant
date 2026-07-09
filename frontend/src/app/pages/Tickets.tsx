@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Clock, MapPin, ExternalLink, Search, ChevronDown, ChevronUp, Ticket } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/tickets`;
-const RATES_API_URL = `${import.meta.env.VITE_API_URL}/api/tickets/exchange-rates`;
+const API_URL = `${API_BASE_URL}/api/tickets`;
+const RATES_API_URL = `${API_BASE_URL}/api/tickets/exchange-rates`;
 
 const FALLBACK_IMG =
   "https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=600";

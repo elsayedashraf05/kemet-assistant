@@ -2,8 +2,9 @@ import { useEffect, useRef, useState } from "react";
 import { Send, Bot, User, Globe, Database, MessageSquare, Loader2, X } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { API_BASE_URL } from "@/app/lib/api";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = API_BASE_URL;
 
 type Message = {
   role: "user" | "assistant";

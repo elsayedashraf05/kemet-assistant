@@ -9,8 +9,9 @@ import {
   Landmark,
   ExternalLink,
 } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/museums`;
+const API_URL = `${API_BASE_URL}/api/museums`;
 
 const FALLBACK_IMG =
   "https://images.unsplash.com/photo-1600577916048-804c9191e36c?w=600";

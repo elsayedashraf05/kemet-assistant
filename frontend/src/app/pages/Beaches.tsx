@@ -8,10 +8,10 @@ import {
   Waves,
   ChevronDown,
 } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
 // Same env var used by Hotels.tsx and the rest of the app (see .env: VITE_API_URL).
-const API_ROOT = (import.meta as any).env?.VITE_API_URL || "";
-const API_BASE = `${API_ROOT}/api/beaches`;
+const API_BASE = `${API_BASE_URL}/api/beaches`;
 
 interface Beach {
   id: string;

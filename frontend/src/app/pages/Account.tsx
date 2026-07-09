@@ -6,9 +6,10 @@ import {
   Loader2, AlertCircle,
   FileText, Bookmark, Heart, MessageCircle, Trash2,
 } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
 // عنوان الـ Flask backend
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = API_BASE_URL;
 const TOKEN_KEY = "kemet_token";
 const GUEST_NAME_KEY = "kemet_guest_name"; // shared with Community.tsx
 

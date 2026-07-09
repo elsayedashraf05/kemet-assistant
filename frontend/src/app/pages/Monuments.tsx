@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { MapPin, Clock, Search, Landmark } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/monuments`;
+const API_URL = `${API_BASE_URL}/api/monuments`;
 
 const FALLBACK_IMG =
   "https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=600";

@@ -4,9 +4,10 @@ import {
   Loader2, Hotel, Utensils, Landmark, CloudSun, Info, MessageCircle, Send,
   Bookmark, RefreshCw, Check, AlertCircle, Search, X, ChevronUp, ChevronDown,
 } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
 // عنوان الـ Flask backend - نفس الباترن المستخدم في Account.tsx
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = API_BASE_URL;
 const TOKEN_KEY = "kemet_token";
 
 function getToken(): string | null {

@@ -1,12 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Shuffle, Calendar, Search } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
-const API_URL = `${import.meta.env.VITE_API_URL}/api/periods`;
+const API_URL = `${API_BASE_URL}/api/periods`;
 
 const FALLBACK_IMG =
   "https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=600";
 
-const FACTS_API_URL = `${import.meta.env.VITE_API_URL}/api/periods/facts`;
+const FACTS_API_URL = `${API_BASE_URL}/api/periods/facts`;
 
 const HIEROGLYPHS = ["𓂀", "𓆣", "𓇋", "𓅓", "𓊪", "𓏏", "𓋴"];
 

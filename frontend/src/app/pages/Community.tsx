@@ -4,9 +4,10 @@ import {
   Search, Sparkles, Globe, Filter, Image as ImageIcon, X,
   Loader2, AlertCircle, Trash2, User as UserIcon, Trophy,
 } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
 // Same backend the Account page talks to.
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = API_BASE_URL;
 const TOKEN_KEY = "kemet_token";
 const GUEST_NAME_KEY = "kemet_guest_name";
 

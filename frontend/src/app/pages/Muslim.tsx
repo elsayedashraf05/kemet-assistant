@@ -13,8 +13,9 @@ import {
   Landmark,
   ChevronDown,
 } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
-const BASE_URL = import.meta.env.VITE_API_URL;
+const BASE_URL = API_BASE_URL;
 const PRAYER_TIMES_URL = `${BASE_URL}/api/muslim/prayer-times`;
 const PRAYER_TIMES_REFRESH_URL = `${BASE_URL}/api/muslim/prayer-times/refresh`;
 const MOSQUES_URL = `${BASE_URL}/api/muslim/mosques`;

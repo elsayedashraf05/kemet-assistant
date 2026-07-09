@@ -10,9 +10,10 @@ import {
   ArrowUpDown,
   ChevronDown,
 } from "lucide-react";
+import { API_BASE_URL } from "@/app/lib/api";
 
 // عنوان الـ Flask backend
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = API_BASE_URL;
 
 // -- الشكل اللي بيرجع من الـ backend (app/services/restaurants_service.py) --
 interface ApiRestaurant {

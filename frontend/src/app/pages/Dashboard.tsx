@@ -8,8 +8,9 @@ import {
 } from "recharts";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { API_BASE_URL } from "@/app/lib/api";
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+const API_BASE = API_BASE_URL;
 
 // -- الشكل اللي بيرجع من GET /api/dashboard/summary --
 interface WeatherCity {
