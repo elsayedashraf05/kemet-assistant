@@ -15,6 +15,7 @@ def summary():
     weather = dashboard_service.get_live_weather(force_refresh=force)
     currency = dashboard_service.get_live_currency(force_refresh=force)
     stats = dashboard_service.get_static_stats()
+    stats["arrivals_by_year"] = dashboard_service.get_live_arrivals(force_refresh=force)
     return jsonify({"weather": weather, "currency": currency, "stats": stats})
 
 
@@ -22,6 +23,12 @@ def summary():
 def weather():
     force = request.args.get("refresh") == "true"
     return jsonify({"cities": dashboard_service.get_live_weather(force_refresh=force)})
+
+
+@dashboard_bp.route("/arrivals", methods=["GET"])
+def arrivals():
+    force = request.args.get("refresh") == "true"
+    return jsonify({"arrivals_by_year": dashboard_service.get_live_arrivals(force_refresh=force)})
 
 
 @dashboard_bp.route("/currency", methods=["GET"])
