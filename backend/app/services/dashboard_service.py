@@ -17,6 +17,7 @@ missing or half-written CSV only blanks a single chart instead of 500-ing the wh
 /summary route (which also carries live weather/currency that have nothing to do with
 the Gold export).
 """
+import io
 import logging
 import os
 import time
@@ -114,30 +115,69 @@ def get_live_currency(force_refresh: bool = False):
 
 
 # =========================================================================================
-# GOLD-LAYER DATA — loaded once from CSV, cached in memory for the process lifetime.
-# Point GOLD_DATA_DIR at wherever the weekly export drops the CSVs (defaults to ../data
-# relative to this file, matching the repo's `data/` folder).
+# GOLD-LAYER DATA — loaded once per process, cached in memory for the process lifetime.
+#
+# Two ways to point this at your data:
+#
+# 1) Azure Blob / ADLS Gen2 (kemetstorage account, "gold" container, "_csv_exports"
+#    folder — matches the weekly export notebook). Set AZURE_STORAGE_CONNECTION_STRING
+#    on Railway and this reads straight from there. GOLD_CONTAINER / GOLD_BLOB_PREFIX
+#    let you point at a different container/folder without touching code.
+#
+# 2) Local folder fallback (no connection string set) — reads GOLD_DATA_DIR/{table}.csv
+#    off local disk, same as before. Handy for local dev without Azure creds.
+#
+# Needs `azure-storage-blob` in requirements.txt when using option 1.
 # =========================================================================================
+AZURE_STORAGE_CONNECTION_STRING = os.environ.get("AZURE_STORAGE_CONNECTION_STRING")
+GOLD_CONTAINER = os.environ.get("GOLD_CONTAINER", "gold")
+GOLD_BLOB_PREFIX = os.environ.get("GOLD_BLOB_PREFIX", "_csv_exports")
+
 GOLD_DATA_DIR = os.environ.get(
     "GOLD_DATA_DIR",
     os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data"),
 )
 
 _gold_cache: dict[str, pd.DataFrame] = {}
+_blob_service_client = None  # lazily created, reused across requests
+
+
+def _get_blob_service_client():
+    global _blob_service_client
+    if _blob_service_client is None:
+        from azure.storage.blob import BlobServiceClient  # imported lazily so local
+        # dev without azure-storage-blob installed doesn't need it at all.
+        _blob_service_client = BlobServiceClient.from_connection_string(AZURE_STORAGE_CONNECTION_STRING)
+    return _blob_service_client
+
+
+def _read_gold_csv_from_azure(table: str) -> pd.DataFrame:
+    blob_path = f"{GOLD_BLOB_PREFIX}/{table}.csv"
+    client = _get_blob_service_client().get_blob_client(container=GOLD_CONTAINER, blob=blob_path)
+    raw = client.download_blob().readall()
+    return pd.read_csv(io.BytesIO(raw))
 
 
 def _load_gold(table: str) -> pd.DataFrame:
-    """Loads a Gold CSV once per process and keeps it in memory — no per-request disk
-    read, no Azure/Databricks connection at request time. Never raises: a missing or
-    unreadable table just logs a warning and serves empty, so it degrades that one
-    chart instead of crashing /summary. Re-deploy (or POST /reload) to pick up a fresh
-    weekly export."""
+    """Loads a Gold CSV once per process and keeps it in memory — no per-request
+    download/disk read. Never raises: a missing or unreadable table just logs a
+    warning and serves empty, so it degrades that one chart instead of crashing
+    /summary. Call POST /reload after a fresh weekly export to pick it up without
+    a redeploy."""
     if table not in _gold_cache:
-        path = os.path.join(GOLD_DATA_DIR, f"{table}.csv")
         try:
-            _gold_cache[table] = pd.read_csv(path)
+            if AZURE_STORAGE_CONNECTION_STRING:
+                _gold_cache[table] = _read_gold_csv_from_azure(table)
+            else:
+                path = os.path.join(GOLD_DATA_DIR, f"{table}.csv")
+                _gold_cache[table] = pd.read_csv(path)
         except Exception as exc:
-            logger.warning("Gold table '%s' unavailable at %s (%s) — serving empty.", table, path, exc)
+            source = (
+                f"azure://{GOLD_CONTAINER}/{GOLD_BLOB_PREFIX}/{table}.csv"
+                if AZURE_STORAGE_CONNECTION_STRING
+                else os.path.join(GOLD_DATA_DIR, f"{table}.csv")
+            )
+            logger.warning("Gold table '%s' unavailable at %s (%s) — serving empty.", table, source, exc)
             _gold_cache[table] = pd.DataFrame()
     return _gold_cache[table]
 
