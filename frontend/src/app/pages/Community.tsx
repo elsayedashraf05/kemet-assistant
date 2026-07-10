@@ -709,15 +709,14 @@ export function Community() {
             </div>
           ) : (
             filteredPosts.map((post) => (
-              <div key={`${post.owner_username}-${post.content_index}`} className="mx-auto" style={{ width: "80%" }}>
-                <PostCard
-                  post={post}
-                  identity={identity}
-                  onChanged={updatePostInList}
-                  onDeleted={removePostFromList}
-                  requireIdentity={requireIdentity}
-                />
-              </div>
+              <PostCard
+                key={`${post.owner_username}-${post.content_index}`}
+                post={post}
+                identity={identity}
+                onChanged={updatePostInList}
+                onDeleted={removePostFromList}
+                requireIdentity={requireIdentity}
+              />
             ))
           )}
         </div>

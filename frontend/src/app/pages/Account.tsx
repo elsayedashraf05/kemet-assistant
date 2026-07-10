@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Eye, EyeOff, Mail, Lock, User,
   Check, ArrowLeft,
@@ -12,6 +12,11 @@ import { API_BASE_URL } from "../lib/api";
 const API_BASE = API_BASE_URL;
 const TOKEN_KEY = "kemet_token";
 const GUEST_NAME_KEY = "kemet_guest_name"; // shared with Community.tsx
+
+// نفس الـ Google Client ID اللي متسجل في الباك اند (GOOGLE_CLIENT_ID secret) —
+// لازم يتظبط كـ env var في الفرونت اند (VITE_GOOGLE_CLIENT_ID) عشان زرار
+// "Sign in with Google" يظهر. لو مش موجود، الزرار ببساطة مش هيظهر.
+const GOOGLE_CLIENT_ID = (import.meta as any).env?.VITE_GOOGLE_CLIENT_ID as string | undefined;
 
 interface AccountUser {
   username: string;
@@ -138,6 +143,15 @@ async function apiLogin(identifier: string, password: string) {
   const data = await apiRequest("/login", {
     method: "POST",
     body: JSON.stringify({ identifier, password }),
+  });
+  setToken(data.token);
+  return data.user as AccountUser;
+}
+
+async function apiGoogleLogin(credential: string) {
+  const data = await apiRequest("/google-login", {
+    method: "POST",
+    body: JSON.stringify({ credential }),
   });
   setToken(data.token);
   return data.user as AccountUser;
@@ -323,6 +337,89 @@ function GoldButton({ children, onClick, className = "" }: { children: React.Rea
   );
 }
 
+// --- Google Sign-In ---
+
+declare global {
+  interface Window {
+    google?: any;
+  }
+}
+
+let googleScriptPromise: Promise<void> | null = null;
+function loadGoogleScript(): Promise<void> {
+  if (window.google?.accounts?.id) return Promise.resolve();
+  if (googleScriptPromise) return googleScriptPromise;
+  googleScriptPromise = new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = () => resolve();
+    script.onerror = () => reject(new Error("Couldn't load Google sign-in."));
+    document.head.appendChild(script);
+  });
+  return googleScriptPromise;
+}
+
+// Renders Google's own "Continue with Google" button and hands the
+// resulting ID token to our backend's /google-login route, which verifies
+// it server-side and logs the user in (or creates an account the first time).
+function GoogleSignInButton({
+  onLoggedIn,
+  onError,
+}: {
+  onLoggedIn: (user: AccountUser) => void;
+  onError: (message: string) => void;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!GOOGLE_CLIENT_ID || !containerRef.current) return;
+    let cancelled = false;
+
+    loadGoogleScript()
+      .then(() => {
+        if (cancelled || !containerRef.current || !window.google?.accounts?.id) return;
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: async (response: { credential: string }) => {
+            try {
+              const user = await apiGoogleLogin(response.credential);
+              onLoggedIn(user);
+            } catch (e) {
+              onError(e instanceof Error ? e.message : "Google sign-in failed.");
+            }
+          },
+        });
+        window.google.accounts.id.renderButton(containerRef.current, {
+          theme: "filled_black",
+          size: "large",
+          shape: "pill",
+          text: "continue_with",
+          width: 320,
+        });
+      })
+      .catch((e) => onError(e instanceof Error ? e.message : "Google sign-in failed."));
+
+    return () => {
+      cancelled = true;
+    };
+  }, [onLoggedIn, onError]);
+
+  if (!GOOGLE_CLIENT_ID) return null;
+  return <div ref={containerRef} className="flex justify-center [&>div]:w-full" />;
+}
+
+function OrDivider() {
+  return (
+    <div className="flex items-center gap-3">
+      <div className="flex-1 h-px bg-white/10" />
+      <span className="text-xs text-white/40">or</span>
+      <div className="flex-1 h-px bg-white/10" />
+    </div>
+  );
+}
+
 function LoginView({ onSwitch, onLoggedIn }: { onSwitch: (v: AuthView) => void; onLoggedIn: (user: AccountUser) => void }) {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
@@ -378,6 +475,12 @@ function LoginView({ onSwitch, onLoggedIn }: { onSwitch: (v: AuthView) => void; 
       <GoldButton onClick={handleSubmit}>
         {loading ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : "Sign In"}
       </GoldButton>
+      {GOOGLE_CLIENT_ID && (
+        <>
+          <OrDivider />
+          <GoogleSignInButton onLoggedIn={onLoggedIn} onError={setError} />
+        </>
+      )}
       <p className="text-center text-sm text-white/50">
         Don't have an account?{" "}
         <button onClick={() => onSwitch("register")} className="font-semibold hover:opacity-80 transition-opacity" style={{ color: "#D4AF37" }}>
@@ -489,6 +592,12 @@ function RegisterView({ onSwitch, onLoggedIn }: { onSwitch: (v: AuthView) => voi
       <GoldButton onClick={handleSubmit}>
         {loading ? <Loader2 className="w-4 h-4 animate-spin mx-auto" /> : "Create Account"}
       </GoldButton>
+      {GOOGLE_CLIENT_ID && (
+        <>
+          <OrDivider />
+          <GoogleSignInButton onLoggedIn={onLoggedIn} onError={setError} />
+        </>
+      )}
       <p className="text-center text-sm text-white/50">
         Already have an account?{" "}
         <button onClick={() => onSwitch("login")} className="font-semibold hover:opacity-80 transition-opacity" style={{ color: "#D4AF37" }}>
@@ -653,7 +762,7 @@ function GuestMode({ onLoggedIn }: { onLoggedIn: (user: AccountUser) => void }) 
     <div className="flex" style={{ background: "#0A0B1E" }}>
       <DecorativePanel />
       <div className="flex-1 flex flex-col items-center justify-center p-6 lg:p-12">
-        <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-8">
+        <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8">
           {view === "login" && <LoginView onSwitch={setView} onLoggedIn={onLoggedIn} />}
           {view === "register" && <RegisterView onSwitch={setView} onLoggedIn={onLoggedIn} />}
           {view === "forgot" && <ForgotView onSwitch={setView} />}
@@ -1218,17 +1327,21 @@ function TabBar({ active, onChange }: { active: MainTab; onChange: (t: MainTab) 
   ];
   return (
     <div className="sticky top-0 z-10 border-b border-white/10" style={{ background: "#0A0B1Ecc" }}>
-      <div className="flex justify-end gap-1 px-4 md:px-8">
+      {/* overflow-x-auto is a safety net if labels ever wrap on a very narrow
+          device; the real fix is hiding labels below sm so all 4 tabs
+          always fit without clipping. */}
+      <div className="flex md:justify-end gap-1 px-2 sm:px-4 md:px-8 overflow-x-auto">
         {tabs.map(({ key, label, icon: Icon }) => (
           <button
             key={key}
             onClick={() => onChange(key)}
-            className={`flex items-center gap-2 px-4 py-4 text-sm font-medium border-b-2 transition-all ${
+            title={label}
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium border-b-2 whitespace-nowrap flex-shrink-0 transition-all ${
               active === key ? "border-[#D4AF37] text-[#D4AF37]" : "border-transparent text-gray-400 hover:text-white"
             }`}
           >
             <Icon size={16} />
-            {label}
+            <span className="hidden sm:inline">{label}</span>
           </button>
         ))}
       </div>

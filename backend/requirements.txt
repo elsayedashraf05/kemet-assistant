@@ -8,6 +8,7 @@ azure-storage-blob==12.20.0
 azure-cosmos==4.7.0
 bcrypt==4.2.0
 PyJWT==2.9.0
+google-auth==2.35.0
 deltalake==1.6.0
 pyarrow==17.0.0
 
