@@ -73,6 +73,26 @@ function getCurrentIdentity(): { name: string; loggedIn: boolean } {
   return { name: getGuestName(), loggedIn: false };
 }
 
+async function accountApiRequest(path: string, options: RequestInit = {}) {
+  const token = getToken();
+  const res = await fetch(`${API_BASE}/api/account${path}`, {
+    ...options,
+    headers: {
+      ...(options.body && !(options.body instanceof FormData) ? { "Content-Type": "application/json" } : {}),
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(options.headers || {}),
+    },
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || "Something went wrong.");
+  return data;
+}
+
+// Same endpoint Account.tsx uses to get the real profile_pic_url — this is
+// the authoritative source (set via avatar upload), unlike the JWT payload
+// which only carries the username.
+const apiAccountMe = () => accountApiRequest("/me").then((d) => d.user as { username: string; email: string; profile_pic_url: string });
+
 // --- API layer ---
 
 interface Comment {
@@ -531,13 +551,23 @@ export function Community() {
   // `identity` only carries {name, loggedIn} straight from the JWT — it never
   // had a profile picture. So every "this is me" avatar (composer, comment
   // box) was always falling back to initials, even for users who *do* have a
-  // profile pic, since none of the Avatar calls for "me" ever got an
-  // imageUrl. We recover it here from posts already on screen: any post
-  // authored by the current identity carries their real profile_pic_url.
-  const myProfilePicUrl = useMemo(() => {
-    const mine = posts.find((p) => p.owner_username === identity.name);
-    return mine?.profile_pic_url || null;
-  }, [posts, identity.name]);
+  // profile pic. We fetch the real one from /api/account/me — the same
+  // authoritative source Account.tsx uses (set via avatar upload) — rather
+  // than guessing from posts, since a user with no posts yet would have no
+  // way to surface their picture that way.
+  const [myProfilePicUrl, setMyProfilePicUrl] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!identity.loggedIn) {
+      setMyProfilePicUrl(null);
+      return;
+    }
+    let cancelled = false;
+    apiAccountMe()
+      .then((u) => { if (!cancelled) setMyProfilePicUrl(u.profile_pic_url || null); })
+      .catch(() => { if (!cancelled) setMyProfilePicUrl(null); });
+    return () => { cancelled = true; };
+  }, [identity.loggedIn, identity.name]);
 
   // Top 10 most active travelers, ranked purely by how many posts they've
   // shared — real data straight from what's already loaded, no fake numbers.

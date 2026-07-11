@@ -307,13 +307,17 @@ def get_reply(user_input, mode="Chat", model_choice="Flash", rate_limit_key="glo
     try:
         # الداتا المسترجعة (Data mode) أو نتايج البحث (Web Search) غالبًا بتكون
         # عربي أو خليط عربي/إنجليزي، وده كان بيخلي Gemini يرد بالعربي حتى لو
-        # سؤال المستخدم كان بالإنجليزي. بنضيف تعليمة صريحة إنه يرد بنفس لغة
-        # السؤال (مش لغة الـ context) عشان نمنع المشكلة دي في كل الـ modes.
+        # سؤال المستخدم كان بالإنجليزي. تعليمة زي "رد بنفس لغة السؤال" مش كفاية
+        # قوية أحيانًا لأن الموديل بيتأثر بلغة الـ context الغالبة. فبدل ما
+        # نسيبله يحلل هو، بنحدد لغة سؤال المستخدم إحنا (عربي/إنجليزي) على نفس
+        # منطق detect_text_direction، وبنديله أمر صريح ومباشر بيه.
+        target_language = "Arabic" if detect_text_direction(user_input) == "rtl" else "English"
         LANGUAGE_INSTRUCTION = (
-            "IMPORTANT: Reply in the SAME language the user used to ask their "
-            "question (e.g. if they asked in English, reply in English; if in "
-            "Arabic, reply in Arabic), regardless of what language the "
-            "reference data/search results below are written in."
+            f"CRITICAL INSTRUCTION — HIGHEST PRIORITY: You must write your ENTIRE reply "
+            f"in {target_language} ONLY, from the first word to the last. This overrides "
+            f"the language of any reference data, search results, or context shown below "
+            f"— even if all of it is written in a different language, translate the "
+            f"relevant information and answer in {target_language}. Do not mix languages."
         )
 
         if mode == "Data":
@@ -326,6 +330,8 @@ Answer the user's question based on the following relevant excerpts from the dat
 
 Relevant data:
 {relevant_context}
+
+{LANGUAGE_INSTRUCTION}
 
 Question: {user_input}"""
             response = _call_gemini(model=model_id, contents=prompt)
@@ -341,6 +347,8 @@ If the results don't contain the answer, say so honestly.
 
 Search Results:
 {web_context}
+
+{LANGUAGE_INSTRUCTION}
 
 Question: {user_input}"""
             response = _call_gemini(model=model_id, contents=prompt)
