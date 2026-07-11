@@ -1,9 +1,36 @@
-import { User, Menu } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { User, Menu, ChevronDown, Settings, LogOut } from "lucide-react";
 import { Link } from "react-router";
 import { useAuth } from "../AuthContext";
 
+// Same key Account.tsx signs in/out with — used here so Sign Out works
+// correctly regardless of what AuthContext itself exposes.
+const TOKEN_KEY = "kemet_token";
+
 export function TopNav({ onMenuClick }: { onMenuClick: () => void }) {
   const { user, loading } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  // Close the dropdown on any click outside it.
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [menuOpen]);
+
+  const handleSignOut = () => {
+    localStorage.removeItem(TOKEN_KEY);
+    setMenuOpen(false);
+    // Full reload (not just a client-side navigate) so every part of the
+    // app — AuthContext included — re-checks and drops to guest state.
+    window.location.href = "/";
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0F0F1E] border-b border-[#C9A84C]/20 px-4 md:px-6 py-4">
@@ -15,7 +42,8 @@ export function TopNav({ onMenuClick }: { onMenuClick: () => void }) {
           >
             <Menu size={24} />
           </button>
-          <div className="flex items-center gap-2 md:gap-3">
+
+          <Link to="/" className="flex items-center gap-2 md:gap-3">
             <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-[#C9A84C] to-[#8B7355] rounded-lg flex items-center justify-center">
               <span className="text-lg md:text-xl">𓂀</span>
             </div>
@@ -25,23 +53,51 @@ export function TopNav({ onMenuClick }: { onMenuClick: () => void }) {
               </h1>
               <p className="text-xs text-gray-400 hidden sm:block">AI Egypt Tourism Assistant</p>
             </div>
-          </div>
+          </Link>
         </div>
 
         <div className="flex items-center gap-3 md:gap-6">
-          <Link
-            to="/account"
-            className="flex items-center gap-2 px-2 md:px-3 py-2 rounded-lg bg-[#C9A84C]/10 hover:bg-[#C9A84C]/20 transition-colors"
-          >
-            {user?.profile_pic_url ? (
-              <img src={user.profile_pic_url} alt={user.username} className="w-4 h-4 md:w-[18px] md:h-[18px] rounded-full object-cover" />
-            ) : (
-              <User size={16} className="md:w-[18px] md:h-[18px] text-[#C9A84C]" />
+          <div className="relative" ref={menuRef}>
+            <button
+              onClick={() => setMenuOpen((v) => !v)}
+              className="flex items-center gap-2 px-2 md:px-3 py-2 rounded-lg bg-[#C9A84C]/10 hover:bg-[#C9A84C]/20 transition-colors"
+            >
+              {user?.profile_pic_url ? (
+                <img src={user.profile_pic_url} alt={user.username} className="w-4 h-4 md:w-[18px] md:h-[18px] rounded-full object-cover" />
+              ) : (
+                <User size={16} className="md:w-[18px] md:h-[18px] text-[#C9A84C]" />
+              )}
+              <span className="text-sm hidden sm:inline">
+                {loading ? "…" : user?.username || "Guest"}
+              </span>
+              <ChevronDown
+                size={14}
+                className={`hidden sm:block text-gray-400 transition-transform ${menuOpen ? "rotate-180" : ""}`}
+              />
+            </button>
+
+            {menuOpen && (
+              <div className="absolute right-0 mt-2 w-48 rounded-xl border border-[#C9A84C]/20 bg-[#0F0F1E] shadow-xl overflow-hidden">
+                <Link
+                  to="/account"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 px-4 py-3 text-sm text-gray-200 hover:bg-[#C9A84C]/10 transition-colors"
+                >
+                  <Settings size={15} className="text-[#C9A84C]" />
+                  My Account
+                </Link>
+                {user && (
+                  <button
+                    onClick={handleSignOut}
+                    className="w-full flex items-center gap-2 px-4 py-3 text-sm text-red-400 hover:bg-red-400/10 transition-colors border-t border-white/5"
+                  >
+                    <LogOut size={15} />
+                    Sign Out
+                  </button>
+                )}
+              </div>
             )}
-            <span className="text-sm hidden sm:inline">
-              {loading ? "…" : user?.username || "Guest"}
-            </span>
-          </Link>
+          </div>
         </div>
       </div>
     </nav>
