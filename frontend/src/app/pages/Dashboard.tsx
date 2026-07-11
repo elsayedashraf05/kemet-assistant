@@ -85,9 +85,6 @@ async function fetchSummary(forceRefresh = false): Promise<DashboardSummary> {
 }
 
 const TYPE_COLORS = ["#dfb257", "#4fc3f7", "#4caf50"];
-const REGION_BAR_COLOR = "#dfb257";
-const CUISINE_BAR_COLOR = "#e07820";
-const BEACH_BAR_COLOR = "#0070c0";
 
 // icon slug (from the backend, no emoji) -> real lucide component
 const APP_ICONS: Record<string, typeof Car> = {
@@ -211,12 +208,10 @@ export function Dashboard() {
   const humChartData = [...validHum].sort((a, b) => a.humidity! - b.humidity!);
 
   // Gold-derived chart data, sorted for readability in their chart orientation
-  const regionChartData = data ? [...data.kemet.attractions_by_governorate].sort((a, b) => a.count - b.count) : [];
-  const cuisineChartData = data ? [...data.kemet.top_cuisines].sort((a, b) => a.count - b.count) : [];
-  const beachChartData = data ? [...data.kemet.beach_ratings_by_governorate].sort((a, b) => a.rating - b.rating) : [];
+  const historyChartData = data ? [...data.kemet.historical_timeline].sort((a, b) => a.start_year - b.start_year) : [];
 
   return (
-    <div className="max-w-[1400px] mx-auto space-y-8">
+    <div className="w-full max-w-[1400px] mx-auto space-y-8 px-4 sm:px-6 lg:px-8 box-border">
 
       {/* HERO — real photo of the Giza Pyramids, no stock placeholder */}
       <div className="relative rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
@@ -227,11 +222,11 @@ export function Dashboard() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#0A0B1E]/95 via-[#0A0B1E]/85 to-[#0A0B1E]/70"></div>
         </div>
 
-        <div className="relative z-10 p-8 md:p-12">
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">
+        <div className="relative z-10 p-6 sm:p-8 md:p-12">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             Welcome to <span className="text-[#D4AF37]">KEMET</span>
           </h1>
-          <p className="text-xl text-gray-300 mb-8 max-w-2xl">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 max-w-2xl">
             Your AI-powered guide to exploring the wonders of ancient and modern Egypt —
             5,000 years of history, curated from real data and a river that never stopped flowing.
           </p>
@@ -282,7 +277,7 @@ export function Dashboard() {
               <p className="text-xs text-gray-500 mb-4">
                 Source: Ministry of Tourism, Egypt — snapshot as of {data.kemet.national_stats.snapshot_date}
               </p>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {[
                   { icon: Landmark, label: "Archaeological Sites", value: data.kemet.national_stats.archaeological_sites },
                   { icon: Building2, label: "Museums", value: data.kemet.national_stats.museums },
@@ -306,7 +301,7 @@ export function Dashboard() {
           {/* EGYPT IN NUMBERS — headline KPIs, sourced from KEMET Storage */}
           <div>
             <p className="text-xs text-gray-500 mb-3">Source: KEMET Storage</p>
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
               {[
                 { icon: Landmark, label: "Attractions", value: data.kemet.highlights.attractions },
                 { icon: Hotel, label: "Hotels", value: data.kemet.highlights.hotels },
@@ -328,45 +323,19 @@ export function Dashboard() {
           <div>
             <h3 className="text-2xl font-semibold text-gray-100 mb-1">Discover Egypt</h3>
             <p className="text-xs text-gray-500 mb-4">Source: KEMET Storage — a new pick every minute</p>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
               <SpotlightCard category={data.kemet.spotlights.beaches} />
               <SpotlightCard category={data.kemet.spotlights.ancient_sites} />
               <SpotlightCard category={data.kemet.spotlights.hotels} />
               <SpotlightCard category={data.kemet.spotlights.restaurants} />
               <SpotlightCard category={data.kemet.spotlights.monuments} />
               <SpotlightCard category={data.kemet.spotlights.museums} />
-              <SpotlightCard category={data.kemet.spotlights.historical_periods} />
             </div>
           </div>
 
-          {/* EXPLORE BY REGION + WHAT AWAITS YOU */}
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-            <div className="lg:col-span-3 bg-white/5 backdrop-blur-sm rounded-3xl p-8 border border-white/10 hover:border-[#D4AF37]/20 transition-all">
-              <h3 className="text-2xl font-semibold text-gray-100 mb-1">Explore Egypt by Region</h3>
-              <p className="text-xs text-gray-500 mb-6">Attractions curated per governorate — Source: KEMET Storage</p>
-              {regionChartData.length ? (
-                <ResponsiveContainer width="100%" height={400}>
-                  <BarChart data={regionChartData} layout="vertical" margin={{ left: 8 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-                    <XAxis type="number" stroke="#94a3b8" style={{ fontSize: "12px" }} allowDecimals={false} />
-                    <YAxis type="category" dataKey="governorate" stroke="#94a3b8" style={{ fontSize: "12px" }} width={100} />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: "#0A0B1E", border: "1px solid #D4AF37", borderRadius: "12px" }}
-                      itemStyle={{ color: "#ffffff" }}
-                      labelStyle={{ color: "#ffffff" }}
-                      formatter={(value: number) => [`${value} attractions`, ""]}
-                    />
-                    <Bar dataKey="count" radius={[0, 8, 8, 0]} fill={REGION_BAR_COLOR}>
-                      <LabelList dataKey="count" position="insideRight" style={{ fill: "#000000", fontWeight: 700, fontSize: 12 }} />
-                    </Bar>
-                  </BarChart>
-                </ResponsiveContainer>
-              ) : (
-                <p className="text-sm text-gray-500 py-16 text-center">Region data refreshing — check back after the next Gold export.</p>
-              )}
-            </div>
-
-            <div className="lg:col-span-2 bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 hover:border-[#D4AF37]/20 transition-all">
+          {/* WHAT AWAITS YOU */}
+          <div>
+            <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 hover:border-[#D4AF37]/20 transition-all max-w-xl mx-auto">
               <h3 className="text-xl font-semibold mb-1 text-gray-100">What Awaits You</h3>
               <p className="text-xs text-gray-500 mb-4">{data.kemet.highlights.attractions} curated attractions, by type — Source: KEMET Storage</p>
               {data.kemet.attraction_types.length ? (
@@ -409,54 +378,9 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* FLAVORS OF EGYPT + BEST-RATED BEACHES + HOTELS BY BUDGET */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 hover:border-[#D4AF37]/20 transition-all">
-              <h4 className="text-white font-semibold mb-1">Flavors of Egypt</h4>
-              <p className="text-xs text-gray-500 mb-4">Most common cuisines in our restaurant directory — Source: KEMET Storage</p>
-              {cuisineChartData.length ? (
-                <ResponsiveContainer width="100%" height={260}>
-                  <BarChart data={cuisineChartData} layout="vertical">
-                    <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-                    <XAxis type="number" stroke="#94a3b8" style={{ fontSize: "12px" }} allowDecimals={false} />
-                    <YAxis type="category" dataKey="cuisine" stroke="#94a3b8" style={{ fontSize: "12px" }} width={90} />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: "#0A0B1E", border: "1px solid #D4AF37", borderRadius: "12px" }}
-                      itemStyle={{ color: "#ffffff" }}
-                      labelStyle={{ color: "#ffffff" }}
-                    />
-                    <Bar dataKey="count" radius={[0, 8, 8, 0]} fill={CUISINE_BAR_COLOR} />
-                  </BarChart>
-                </ResponsiveContainer>
-              ) : (
-                <p className="text-sm text-gray-500 py-12 text-center">Data refreshing.</p>
-              )}
-            </div>
-
-            <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 hover:border-[#D4AF37]/20 transition-all">
-              <h4 className="text-white font-semibold mb-1">Best-Rated Beaches</h4>
-              <p className="text-xs text-gray-500 mb-4">Average rating by governorate — Source: KEMET Storage</p>
-              {beachChartData.length ? (
-                <ResponsiveContainer width="100%" height={260}>
-                  <BarChart data={beachChartData} layout="vertical">
-                    <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-                    <XAxis type="number" domain={[3.5, 5]} stroke="#94a3b8" style={{ fontSize: "12px" }} />
-                    <YAxis type="category" dataKey="governorate" stroke="#94a3b8" style={{ fontSize: "12px" }} width={90} />
-                    <Tooltip
-                      contentStyle={{ backgroundColor: "#0A0B1E", border: "1px solid #D4AF37", borderRadius: "12px" }}
-                      itemStyle={{ color: "#ffffff" }}
-                      labelStyle={{ color: "#ffffff" }}
-                      formatter={(value: number) => [`${value} / 5`, "Rating"]}
-                    />
-                    <Bar dataKey="rating" radius={[0, 8, 8, 0]} fill={BEACH_BAR_COLOR} />
-                  </BarChart>
-                </ResponsiveContainer>
-              ) : (
-                <p className="text-sm text-gray-500 py-12 text-center">Data refreshing.</p>
-              )}
-            </div>
-
-            <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 hover:border-[#D4AF37]/20 transition-all">
+          {/* HOTELS BY BUDGET */}
+          <div>
+            <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 hover:border-[#D4AF37]/20 transition-all max-w-xl mx-auto">
               <h4 className="text-white font-semibold mb-1">Hotels by Budget</h4>
               <p className="text-xs text-gray-500 mb-5">{data.kemet.highlights.hotels} hotels across every price range — Source: KEMET Storage</p>
               <div className="space-y-4">
@@ -481,7 +405,7 @@ export function Dashboard() {
             </div>
           </div>
 
-          {/* 5,000 YEARS OF HISTORY — horizontal timeline strip */}
+          {/* 5,000 YEARS OF HISTORY — Gantt-style horizontal timeline chart */}
           {data.kemet.historical_timeline.length > 0 && (
             <div className="bg-white/5 backdrop-blur-sm rounded-3xl p-6 border border-white/10 hover:border-[#D4AF37]/20 transition-all">
               <h3 className="text-2xl font-semibold text-gray-100 mb-1">5,000 Years of History</h3>
@@ -490,20 +414,43 @@ export function Dashboard() {
                   ? `${data.kemet.national_stats.archaeological_sites.toLocaleString()} archaeological sites and ${data.kemet.national_stats.museums} museums preserve every one of these periods`
                   : "Every era, from the Old Kingdom to the present day"}
               </p>
-              <div className="flex gap-4 overflow-x-auto pb-2 -mx-1 px-1">
-                {data.kemet.historical_timeline.map((p) => (
-                  <div
-                    key={p.period}
-                    className="flex-shrink-0 w-48 bg-white/5 rounded-2xl border border-white/10 p-4 hover:border-[#D4AF37]/40 transition-all"
-                  >
-                    <p className="text-sm font-semibold text-white mb-1">{p.period}</p>
-                    <p className="text-xs text-[#D4AF37]">
-                      {formatYear(p.start_year)} – {formatYear(p.end_year)}
-                    </p>
-                    <p className="text-[11px] text-gray-500 mt-1">{p.duration_years.toLocaleString()} years</p>
-                  </div>
-                ))}
-              </div>
+              <ResponsiveContainer width="100%" height={Math.max(300, historyChartData.length * 56)}>
+                <BarChart data={historyChartData} layout="vertical" margin={{ left: 8, right: 24 }}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+                  <XAxis
+                    type="number"
+                    domain={["dataMin", "dataMax"]}
+                    stroke="#94a3b8"
+                    style={{ fontSize: "12px" }}
+                    tickFormatter={(v: number) => formatYear(v)}
+                  />
+                  <YAxis type="category" dataKey="period" stroke="#94a3b8" style={{ fontSize: "12px" }} width={150} />
+                  <Tooltip
+                    cursor={{ fill: "rgba(255,255,255,0.04)" }}
+                    content={({ active, payload }) => {
+                      if (!active || !payload || !payload.length) return null;
+                      const p = payload[0].payload as HistoricalPeriod;
+                      return (
+                        <div className="bg-[#0A0B1E] border border-[#D4AF37] rounded-xl px-3 py-2">
+                          <p className="text-white text-xs font-semibold mb-1">{p.period}</p>
+                          <p className="text-[#D4AF37] text-xs">{formatYear(p.start_year)} – {formatYear(p.end_year)}</p>
+                          <p className="text-gray-400 text-[11px] mt-0.5">{p.duration_years.toLocaleString()} years</p>
+                        </div>
+                      );
+                    }}
+                  />
+                  {/* Invisible spacer bar pushes the visible bar out to start_year, creating the Gantt effect */}
+                  <Bar dataKey="start_year" stackId="timeline" fill="transparent" />
+                  <Bar dataKey="duration_years" stackId="timeline" radius={[0, 8, 8, 0]} fill="#dfb257">
+                    <LabelList
+                      dataKey="duration_years"
+                      position="insideRight"
+                      formatter={(v: number) => `${v.toLocaleString()} yrs`}
+                      style={{ fill: "#000000", fontWeight: 700, fontSize: 11 }}
+                    />
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           )}
 
@@ -525,7 +472,7 @@ export function Dashboard() {
             </div>
 
             {hottest && coldest && mostHumid && driest && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                 {[
                   { label: "Hottest City", value: `${hottest.temperature}°C`, sub: hottest.city, bg: "from-orange-900/40 to-orange-950/40" },
                   { label: "Coolest City", value: `${coldest.temperature}°C`, sub: coldest.city, bg: "from-sky-900/40 to-sky-950/40" },
