@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useSearchParams } from "react-router";
 import {
-  Calendar, Compass, Sparkles, ArrowLeft,
+  Calendar, Compass, Sparkles, ArrowLeft, ArrowRight,
   Loader2, Hotel, Utensils, Landmark, Info, Waves, Library, Columns,
-  Bookmark, RefreshCw, AlertCircle, Search, X, ChevronUp, ChevronDown,
+  Bookmark, RefreshCw, AlertCircle, Search, X, ChevronUp, ChevronDown, Check,
   Star, Phone, MapPin as MapPinIcon,
+  User, Heart, Users, PartyPopper,
+  Bus, Car, CarFront, Footprints,
+  Accessibility, ShieldCheck, Sun, Lightbulb, Wallet, BadgeCheck,
+  MessageCircle, Send,
 } from "lucide-react";
 import { API_BASE_URL } from "../lib/api";
 
@@ -33,10 +37,16 @@ async function api(path: string, options: RequestInit = {}) {
 
 // ── Types (mirror trip_planner_service.py) ──
 interface BudgetOption { name: string; daily: number; hotel: string; label: string }
+interface InterestOption { name: string }
+interface TravelStyleOption { name: string }
+interface TransportOption { name: string; note: string }
 
 interface Options {
   governorates: string[];
+  interests: InterestOption[];
   budgets: BudgetOption[];
+  travel_styles: TravelStyleOption[];
+  transport_modes: TransportOption[];
   defaults: Preferences;
 }
 
@@ -64,31 +74,71 @@ interface DayPlan {
   morning: string; afternoon: string; evening: string; ai_note: string;
   food: Item; transport: string;
 }
+interface BudgetEstimate { low: number; high: number; daily: number; note: string }
 interface Plan {
   preferences: Preferences;
+  summary: string;
+  budget_tier: string;
   cities: string[];
   days: DayPlan[];
+  budget: BudgetEstimate;
   sites: Item[];
   monuments: Item[];
   museums: Item[];
   beaches: Item[];
   restaurants: Item[];
   hotels: Item[];
+  transport: string;
   transport_note: string;
+  weather: string;
+  tips: string[];
+  accessibility: string;
+  sources: string[];
   restaurants_note: string;
   hotels_note: string;
   beaches_note: string;
+  rag_powered: boolean;
 }
 
 const GOLD = "#D4AF37";
 const BG = "#0A0B1E";
+
+// One-time keyframes for this page's animations — kept local rather than
+// touching the global stylesheet, since `.fade-in` etc. already come from
+// there and this only adds a few extras this page needs.
+function TripPlannerStyles() {
+  return (
+    <style>{`
+      @keyframes tp-fade-up { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes tp-fade-in { from { opacity: 0; } to { opacity: 1; } }
+      @keyframes tp-pop { 0% { opacity: 0; transform: scale(0.92); } 100% { opacity: 1; transform: scale(1); } }
+      @keyframes tp-pulse-ring { 0% { box-shadow: 0 0 0 0 rgba(212,175,55,0.45); } 100% { box-shadow: 0 0 0 14px rgba(212,175,55,0); } }
+      @keyframes tp-shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+      @keyframes tp-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+      .tp-fade-up { animation: tp-fade-up 0.5s ease both; }
+      .tp-fade-in { animation: tp-fade-in 0.4s ease both; }
+      .tp-pop { animation: tp-pop 0.35s cubic-bezier(0.34,1.56,0.64,1) both; }
+      .tp-pulse { animation: tp-pulse-ring 2s infinite; }
+      .tp-float { animation: tp-float 3s ease-in-out infinite; }
+      .tp-shimmer { background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.09) 37%, rgba(255,255,255,0.04) 63%); background-size: 800px 100%; animation: tp-shimmer 1.6s linear infinite; }
+      .tp-stagger > * { animation: tp-fade-up 0.45s ease both; }
+      .tp-stagger > *:nth-child(1) { animation-delay: 0.03s; }
+      .tp-stagger > *:nth-child(2) { animation-delay: 0.07s; }
+      .tp-stagger > *:nth-child(3) { animation-delay: 0.11s; }
+      .tp-stagger > *:nth-child(4) { animation-delay: 0.15s; }
+      .tp-stagger > *:nth-child(5) { animation-delay: 0.19s; }
+      .tp-stagger > *:nth-child(6) { animation-delay: 0.23s; }
+      .tp-stagger > *:nth-child(n+7) { animation-delay: 0.26s; }
+    `}</style>
+  );
+}
 
 function GoldButton({ children, onClick, disabled, className = "" }: { children: React.ReactNode; onClick?: () => void; disabled?: boolean; className?: string }) {
   return (
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed ${className}`}
+      className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-200 active:scale-[0.97] disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100 ${className}`}
       style={{ background: disabled ? "rgba(212,175,55,0.25)" : `linear-gradient(135deg, ${GOLD}, #C9A84C)`, color: "#0A0B1E" }}
     >
       {children}
@@ -101,7 +151,7 @@ function GhostButton({ children, onClick, disabled }: { children: React.ReactNod
     <button
       onClick={onClick}
       disabled={disabled}
-      className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border border-white/10 text-white/70 hover:bg-white/5 transition-all disabled:opacity-30"
+      className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold border border-white/10 text-white/70 hover:bg-white/5 hover:border-white/20 transition-all duration-200 active:scale-[0.97] disabled:opacity-30"
     >
       {children}
     </button>
@@ -149,9 +199,7 @@ function NumberStepper({ value, onChange, min, max }: { value: number; onChange:
   );
 }
 
-// نفس نمط sessionStorage المستخدم في ChatBubble.tsx - يخلي الصفحة تفضل زي
-// ما هي (المرحلة الحالية + الاختيارات + الخطة اللي اتعملت) لو المستخدم راح
-// صفحة تانية ورجع، بدل ما يرجع يبدأ من الأول تاني.
+// Same sessionStorage draft-persistence pattern as before, unchanged.
 const STORAGE_KEY_STEP = "kemet_trip_planner_step";
 const STORAGE_KEY_PREFS = "kemet_trip_planner_prefs";
 const STORAGE_KEY_PLAN = "kemet_trip_planner_plan";
@@ -243,6 +291,12 @@ export function TripPlanner() {
     updatePrefs({ cities: has ? prefs.cities.filter((c) => c !== city) : [...prefs.cities, city] });
   };
 
+  const toggleInterest = (name: string) => {
+    if (!prefs) return;
+    const has = prefs.interests.includes(name);
+    updatePrefs({ interests: has ? prefs.interests.filter((i) => i !== name) : [...prefs.interests, name] });
+  };
+
   const generatePlan = async () => {
     if (!prefs) return;
     setGenerating(true);
@@ -268,6 +322,7 @@ export function TripPlanner() {
   if (savedId) {
     return (
       <div className="min-h-screen p-4 md:p-8" style={{ background: BG }}>
+        <TripPlannerStyles />
         <div className="max-w-4xl mx-auto">
           <Link to="/trip-planner" className="flex items-center gap-1 text-sm text-white/50 hover:text-white/80 transition-colors mb-6 w-fit">
             <ArrowLeft size={14} /> Back to planner
@@ -282,7 +337,7 @@ export function TripPlanner() {
             </div>
           ) : savedPlan ? (
             <>
-              <div className="mb-8">
+              <div className="mb-8 tp-fade-up">
                 <h1 className="text-white font-extrabold text-3xl md:text-4xl mb-2">Saved trip</h1>
                 <p className="text-white/50">
                   {savedPlan.cities?.join(", ") || "Egypt"}
@@ -317,10 +372,14 @@ export function TripPlanner() {
 
   return (
     <div className="min-h-screen p-4 md:p-8" style={{ background: BG }}>
+      <TripPlannerStyles />
       <div className="max-w-4xl mx-auto">
-        {step === 1 && (
-          <div className="mb-8">
-            <h1 className="text-white font-extrabold text-3xl md:text-4xl mb-2">Plan your trip</h1>
+        {step === 1 && !generating && (
+          <div className="mb-8 tp-fade-up">
+            <h1 className="text-white font-extrabold text-3xl md:text-4xl mb-2 flex items-center gap-3">
+              Plan your trip
+              <Sparkles size={26} style={{ color: GOLD }} className="tp-float" />
+            </h1>
             <p className="text-white/50 max-w-2xl leading-relaxed">
               Dataset-first recommendations from KEMET's hotels, restaurants, museums, monuments, ancient sites,
               and beaches — cross-checked against our AI knowledge base.
@@ -334,6 +393,7 @@ export function TripPlanner() {
             prefs={prefs}
             updatePrefs={updatePrefs}
             toggleCity={toggleCity}
+            toggleInterest={toggleInterest}
             onGenerate={generatePlan}
             generating={generating}
             genError={genError}
@@ -347,12 +407,103 @@ export function TripPlanner() {
   );
 }
 
-// ── One merged page: destination + trip basics ──
-function TripDetailsForm({ options, prefs, updatePrefs, toggleCity, onGenerate, generating, genError }: {
+// ── Rotating, engaging status text while the AI builds the itinerary ──
+const GENERATING_MESSAGES = [
+  "Reading KEMET Storage for your destinations…",
+  "Matching hotels within your budget…",
+  "Selecting ancient sites, monuments & museums…",
+  "Curating restaurants along your route…",
+  "Asking KEMET's AI for local tips…",
+  "Building your day-by-day itinerary…",
+];
+
+function GeneratingScreen() {
+  const [msgIndex, setMsgIndex] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setMsgIndex((i) => (i + 1) % GENERATING_MESSAGES.length), 1600);
+    return () => clearInterval(id);
+  }, []);
+  return (
+    <div className="flex flex-col items-center justify-center py-24 tp-fade-in">
+      <div
+        className="relative w-20 h-20 rounded-2xl flex items-center justify-center mb-6 tp-pulse"
+        style={{ background: `linear-gradient(135deg, ${GOLD}, #C9A84C)` }}
+      >
+        <Sparkles size={30} color="#0A0B1E" className="tp-float" />
+      </div>
+      <p className="text-white font-semibold text-lg mb-2">Building your Egypt itinerary</p>
+      <p key={msgIndex} className="text-white/50 text-sm tp-fade-in">{GENERATING_MESSAGES[msgIndex]}</p>
+      <div className="w-56 h-1.5 rounded-full bg-white/10 overflow-hidden mt-6">
+        <div className="h-full rounded-full tp-shimmer" style={{ background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`, width: "60%" }} />
+      </div>
+    </div>
+  );
+}
+
+// ── Icon lookups for travel style / transport, with safe fallbacks for any
+// future options.* value the backend adds that isn't in the map yet ──
+const TRAVEL_STYLE_ICONS: Record<string, React.ElementType> = {
+  Solo: User, Couple: Heart, Family: Users, Friends: PartyPopper,
+};
+const TRANSPORT_ICONS: Record<string, React.ElementType> = {
+  "Public transport": Bus, "Ride-hailing": Car, "Private driver": CarFront, "Walking + taxis": Footprints,
+};
+
+const FORM_STEPS = [
+  { key: 1, label: "Destination", icon: Compass },
+  { key: 2, label: "Trip Basics", icon: Calendar },
+  { key: 3, label: "Style & Interests", icon: Sparkles },
+];
+
+function FormStepper({ active }: { active: number }) {
+  return (
+    <div className="flex items-center mb-8 tp-fade-up">
+      {FORM_STEPS.map((s, idx) => {
+        const done = active > s.key;
+        const current = active === s.key;
+        return (
+          <div key={s.key} className="flex items-center flex-1 last:flex-none">
+            <div className="flex flex-col items-center gap-1.5">
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all duration-300"
+                style={{
+                  borderColor: done || current ? GOLD : "rgba(255,255,255,0.15)",
+                  background: done ? GOLD : current ? "rgba(212,175,55,0.12)" : "transparent",
+                }}
+              >
+                {done ? <Check size={16} color="#0A0B1E" /> : <s.icon size={15} style={{ color: current ? GOLD : "rgba(255,255,255,0.4)" }} />}
+              </div>
+              <span
+                className="text-[11px] font-semibold whitespace-nowrap hidden sm:block"
+                style={{ color: current ? GOLD : done ? "#c8d0de" : "rgba(255,255,255,0.35)" }}
+              >
+                {s.label}
+              </span>
+            </div>
+            {idx < FORM_STEPS.length - 1 && (
+              <div className="flex-1 h-0.5 mx-2 rounded-full overflow-hidden bg-white/10">
+                <div
+                  className="h-full transition-all duration-500 ease-out"
+                  style={{ width: active > s.key ? "100%" : "0%", background: GOLD }}
+                />
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Merged 3-step form: destination → trip basics → style & interests ──
+function TripDetailsForm({ options, prefs, updatePrefs, toggleCity, toggleInterest, onGenerate, generating, genError }: {
   options: Options; prefs: Preferences; updatePrefs: (p: Partial<Preferences>) => void; toggleCity: (c: string) => void;
-  onGenerate: () => void; generating: boolean; genError: string;
+  toggleInterest: (i: string) => void; onGenerate: () => void; generating: boolean; genError: string;
 }) {
+  const [formStep, setFormStep] = useState(1);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  if (generating) return <GeneratingScreen />;
 
   const filteredGovernorates = prefs.destination
     ? options.governorates.filter(
@@ -360,114 +511,237 @@ function TripDetailsForm({ options, prefs, updatePrefs, toggleCity, onGenerate, 
       )
     : options.governorates.filter((g) => !prefs.cities.includes(g));
 
+  const canContinueStep1 = prefs.cities.length > 0;
+
   return (
-    <div className="fade-in">
-      {/* Destination */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 mb-6 relative z-20">
-        <h2 className="text-white font-bold text-xl mb-1">Where do you want to go?</h2>
-        <p className="text-white/50 text-sm mb-4">Search and pick governorates, or just type a preferred area (e.g. "Red Sea", "Nile temples") and KEMET will infer a route.</p>
+    <div>
+      <FormStepper active={formStep} />
 
-        {prefs.cities.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-3">
-            {prefs.cities.map((city) => (
-              <span
-                key={city}
-                className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full text-sm font-semibold"
-                style={{ background: "rgba(212,175,55,0.14)", color: GOLD, border: "1px solid rgba(212,175,55,0.3)" }}
-              >
-                {city}
-                <button onClick={() => toggleCity(city)} className="w-4 h-4 flex items-center justify-center rounded-full hover:bg-black/20">
-                  <X size={11} />
-                </button>
-              </span>
-            ))}
-          </div>
-        )}
+      {formStep === 1 && (
+        <div className="tp-fade-up" key="form-step-1">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 mb-6 relative z-20">
+            <h2 className="text-white font-bold text-xl mb-1">Where do you want to go?</h2>
+            <p className="text-white/50 text-sm mb-4">Search and pick governorates, or just type a preferred area (e.g. "Red Sea", "Nile temples") and KEMET will infer a route.</p>
 
-        <div className="relative">
-          <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
-          <input
-            value={prefs.destination}
-            onChange={(e) => updatePrefs({ destination: e.target.value })}
-            onFocus={() => setDropdownOpen(true)}
-            onBlur={() => setTimeout(() => setDropdownOpen(false), 150)}
-            placeholder="Search governorates (e.g. Luxor, Aswan, Red Sea...)"
-            className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-yellow-500/50 transition-colors"
-          />
-          {dropdownOpen && filteredGovernorates.length > 0 && (
-            <div className="absolute z-30 mt-2 w-full max-h-64 overflow-y-auto rounded-xl border border-white/10 bg-[#12132a] shadow-xl">
-              {filteredGovernorates.map((g) => (
-                <button
-                  key={g}
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={() => { toggleCity(g); updatePrefs({ destination: "" }); }}
-                  className="w-full text-left px-4 py-2.5 text-sm text-white/80 hover:bg-white/5 transition-colors"
-                >
-                  {g}
-                </button>
-              ))}
+            {prefs.cities.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {prefs.cities.map((city) => (
+                  <span
+                    key={city}
+                    className="flex items-center gap-1.5 pl-3 pr-2 py-1.5 rounded-full text-sm font-semibold tp-pop"
+                    style={{ background: "rgba(212,175,55,0.14)", color: GOLD, border: "1px solid rgba(212,175,55,0.3)" }}
+                  >
+                    {city}
+                    <button onClick={() => toggleCity(city)} className="w-4 h-4 flex items-center justify-center rounded-full hover:bg-black/20">
+                      <X size={11} />
+                    </button>
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <div className="relative">
+              <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/30" />
+              <input
+                value={prefs.destination}
+                onChange={(e) => updatePrefs({ destination: e.target.value })}
+                onFocus={() => setDropdownOpen(true)}
+                onBlur={() => setTimeout(() => setDropdownOpen(false), 150)}
+                placeholder="Search governorates (e.g. Luxor, Aswan, Red Sea...)"
+                className="w-full bg-white/5 border border-white/10 rounded-xl pl-10 pr-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-yellow-500/50 transition-colors"
+              />
+              {dropdownOpen && filteredGovernorates.length > 0 && (
+                <div className="absolute z-30 mt-2 w-full max-h-64 overflow-y-auto rounded-xl border border-white/10 bg-[#12132a] shadow-xl tp-fade-in">
+                  {filteredGovernorates.map((g) => (
+                    <button
+                      key={g}
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => { toggleCity(g); updatePrefs({ destination: "" }); }}
+                      className="w-full text-left px-4 py-2.5 text-sm text-white/80 hover:bg-white/5 transition-colors"
+                    >
+                      {g}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
 
-      {/* Trip basics */}
-      <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 mb-4">
-        <h2 className="text-white font-bold text-xl mb-1">Trip basics</h2>
-        <p className="text-white/50 text-sm">Set your duration, budget, and how many picks you'd like in each category.</p>
-      </div>
-
-      <SectionHeader icon={Calendar} title="Duration & budget" />
-      <div className="grid md:grid-cols-2 gap-4 mb-6">
-        <div>
-          <label className="text-white/60 text-sm block mb-2">Trip duration (days)</label>
-          <NumberStepper value={prefs.days} onChange={(v) => updatePrefs({ days: v })} min={1} max={30} />
-        </div>
-        <div className="flex gap-2 flex-wrap items-start">
-          {options.budgets.map((b) => (
-            <button
-              key={b.name}
-              onClick={() => updatePrefs({ budget: b.name })}
-              className="px-3 py-2 rounded-xl border text-sm font-semibold"
-              style={{
-                borderColor: prefs.budget === b.name ? GOLD : "rgba(255,255,255,0.1)",
-                background: prefs.budget === b.name ? "rgba(212,175,55,0.12)" : "transparent",
-                color: prefs.budget === b.name ? GOLD : "#c8d0de",
-              }}
-            >
-              {b.name}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <SectionHeader icon={Compass} title="Recommendations limit" />
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
-        <div>
-          <label className="text-white/60 text-sm block mb-2">Hotels: {prefs.num_hotels}</label>
-          <input type="range" min={2} max={10} value={prefs.num_hotels} onChange={(e) => updatePrefs({ num_hotels: Number(e.target.value) })} className="w-full accent-yellow-500" />
-        </div>
-        <div>
-          <label className="text-white/60 text-sm block mb-2">Restaurants: {prefs.num_restaurants}</label>
-          <input type="range" min={2} max={12} value={prefs.num_restaurants} onChange={(e) => updatePrefs({ num_restaurants: Number(e.target.value) })} className="w-full accent-yellow-500" />
-        </div>
-        <div>
-          <label className="text-white/60 text-sm block mb-2">Beaches: {prefs.num_beaches}</label>
-          <input type="range" min={0} max={10} value={prefs.num_beaches} onChange={(e) => updatePrefs({ num_beaches: Number(e.target.value) })} className="w-full accent-yellow-500" />
-        </div>
-      </div>
-
-      {genError && (
-        <div className="flex items-center gap-2 text-red-400 text-sm mb-4">
-          <AlertCircle size={15} /> {genError}
+          <div className="flex justify-end">
+            <GoldButton onClick={() => setFormStep(2)} disabled={!canContinueStep1}>
+              Continue <ArrowRight size={16} />
+            </GoldButton>
+          </div>
         </div>
       )}
 
-      <div className="flex justify-end">
-        <GoldButton onClick={onGenerate} disabled={generating}>
-          {generating ? <><Loader2 size={16} className="animate-spin" /> Generating…</> : <><Sparkles size={16} /> Generate itinerary</>}
-        </GoldButton>
-      </div>
+      {formStep === 2 && (
+        <div className="tp-fade-up" key="form-step-2">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 mb-6">
+            <h2 className="text-white font-bold text-xl mb-1">Trip basics</h2>
+            <p className="text-white/50 text-sm">Set your duration, budget, travel style, and how you'll get around.</p>
+          </div>
+
+          <SectionHeader icon={Calendar} title="Duration & budget" />
+          <div className="grid md:grid-cols-2 gap-4 mb-6">
+            <div>
+              <label className="text-white/60 text-sm block mb-2">Trip duration (days)</label>
+              <NumberStepper value={prefs.days} onChange={(v) => updatePrefs({ days: v })} min={1} max={30} />
+            </div>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-3 mb-8 tp-stagger">
+            {options.budgets.map((b) => (
+              <button
+                key={b.name}
+                onClick={() => updatePrefs({ budget: b.name })}
+                className="text-left px-4 py-3 rounded-xl border transition-all"
+                style={{
+                  borderColor: prefs.budget === b.name ? GOLD : "rgba(255,255,255,0.1)",
+                  background: prefs.budget === b.name ? "rgba(212,175,55,0.1)" : "transparent",
+                }}
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-semibold text-sm" style={{ color: prefs.budget === b.name ? GOLD : "#e5e7eb" }}>{b.name}</span>
+                  {prefs.budget === b.name && <Check size={14} style={{ color: GOLD }} />}
+                </div>
+                <div className="text-white/40 text-xs mb-1">{b.label}</div>
+                <div className="text-white/30 text-[11px]">{b.hotel}</div>
+                <div className="text-xs font-bold mt-2" style={{ color: GOLD }}>~{b.daily.toLocaleString()} EGP/day</div>
+              </button>
+            ))}
+          </div>
+
+          <SectionHeader icon={Users} title="Travel style" />
+          <div className="flex flex-wrap gap-3 mb-8">
+            {options.travel_styles.map((s) => {
+              const Icon = TRAVEL_STYLE_ICONS[s.name] || User;
+              const active = prefs.travel_style === s.name;
+              return (
+                <button
+                  key={s.name}
+                  onClick={() => updatePrefs({ travel_style: s.name })}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl border text-sm font-semibold transition-all"
+                  style={{
+                    borderColor: active ? GOLD : "rgba(255,255,255,0.1)",
+                    background: active ? "rgba(212,175,55,0.12)" : "transparent",
+                    color: active ? GOLD : "#c8d0de",
+                  }}
+                >
+                  <Icon size={15} /> {s.name}
+                </button>
+              );
+            })}
+          </div>
+
+          <SectionHeader icon={Car} title="Getting around" />
+          <div className="grid sm:grid-cols-2 gap-3 mb-8 tp-stagger">
+            {options.transport_modes.map((t) => {
+              const Icon = TRANSPORT_ICONS[t.name] || Car;
+              const active = prefs.transport === t.name;
+              return (
+                <button
+                  key={t.name}
+                  onClick={() => updatePrefs({ transport: t.name })}
+                  className="text-left flex items-start gap-3 px-4 py-3 rounded-xl border transition-all"
+                  style={{
+                    borderColor: active ? GOLD : "rgba(255,255,255,0.1)",
+                    background: active ? "rgba(212,175,55,0.1)" : "transparent",
+                  }}
+                >
+                  <Icon size={17} className="mt-0.5 flex-shrink-0" style={{ color: active ? GOLD : "#c8d0de" }} />
+                  <div>
+                    <div className="text-sm font-semibold" style={{ color: active ? GOLD : "#e5e7eb" }}>{t.name}</div>
+                    <div className="text-white/35 text-[11px] mt-0.5 leading-snug">{t.note}</div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          <div className="flex justify-between">
+            <GhostButton onClick={() => setFormStep(1)}><ArrowLeft size={15} /> Back</GhostButton>
+            <GoldButton onClick={() => setFormStep(3)}>Continue <ArrowRight size={16} /></GoldButton>
+          </div>
+        </div>
+      )}
+
+      {formStep === 3 && (
+        <div className="tp-fade-up" key="form-step-3">
+          <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-6 mb-6">
+            <h2 className="text-white font-bold text-xl mb-1">Style & interests</h2>
+            <p className="text-white/50 text-sm">Pick what excites you — KEMET weights your day plan and picks around this.</p>
+          </div>
+
+          <SectionHeader icon={Sparkles} title="Interests" />
+          <div className="flex flex-wrap gap-2 mb-8 tp-stagger">
+            {options.interests.map((i) => {
+              const active = prefs.interests.includes(i.name);
+              return (
+                <button
+                  key={i.name}
+                  onClick={() => toggleInterest(i.name)}
+                  className="flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border transition-all"
+                  style={{
+                    borderColor: active ? GOLD : "rgba(255,255,255,0.1)",
+                    background: active ? "rgba(212,175,55,0.14)" : "transparent",
+                    color: active ? GOLD : "#c8d0de",
+                  }}
+                >
+                  {active && <Check size={12} />} {i.name}
+                </button>
+              );
+            })}
+          </div>
+
+          <SectionHeader icon={Compass} title="Recommendations limit" />
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+            <div>
+              <label className="text-white/60 text-sm block mb-2">Hotels: {prefs.num_hotels}</label>
+              <input type="range" min={2} max={10} value={prefs.num_hotels} onChange={(e) => updatePrefs({ num_hotels: Number(e.target.value) })} className="w-full accent-yellow-500" />
+            </div>
+            <div>
+              <label className="text-white/60 text-sm block mb-2">Restaurants: {prefs.num_restaurants}</label>
+              <input type="range" min={2} max={12} value={prefs.num_restaurants} onChange={(e) => updatePrefs({ num_restaurants: Number(e.target.value) })} className="w-full accent-yellow-500" />
+            </div>
+            <div>
+              <label className="text-white/60 text-sm block mb-2">Beaches: {prefs.num_beaches}</label>
+              <input type="range" min={0} max={10} value={prefs.num_beaches} onChange={(e) => updatePrefs({ num_beaches: Number(e.target.value) })} className="w-full accent-yellow-500" />
+            </div>
+          </div>
+
+          <SectionHeader icon={Accessibility} title="Accessibility needs (optional)" />
+          <textarea
+            value={prefs.accessibility}
+            onChange={(e) => updatePrefs({ accessibility: e.target.value })}
+            placeholder="e.g. wheelchair-friendly routes, avoid long walks, traveling with young kids…"
+            rows={2}
+            className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-white/30 focus:outline-none focus:border-yellow-500/50 transition-colors mb-8 resize-none"
+          />
+
+          {/* Recap before generating */}
+          <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-5 mb-6 tp-fade-up">
+            <p className="text-white/40 text-xs uppercase tracking-wide font-semibold mb-2">Your trip at a glance</p>
+            <p className="text-white/70 text-sm leading-relaxed">
+              <span className="font-semibold text-white">{prefs.days}-day</span> {prefs.budget.toLowerCase()} trip to{" "}
+              <span className="font-semibold text-white">{prefs.cities.join(", ") || "Egypt"}</span> for a{" "}
+              {prefs.travel_style.toLowerCase()} traveler, focused on {prefs.interests.join(", ") || "the essentials"}, getting around by {prefs.transport.toLowerCase()}.
+            </p>
+          </div>
+
+          {genError && (
+            <div className="flex items-center gap-2 text-red-400 text-sm mb-4">
+              <AlertCircle size={15} /> {genError}
+            </div>
+          )}
+
+          <div className="flex justify-between">
+            <GhostButton onClick={() => setFormStep(2)}><ArrowLeft size={15} /> Back</GhostButton>
+            <GoldButton onClick={onGenerate}>
+              <Sparkles size={16} /> Generate itinerary
+            </GoldButton>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
@@ -483,9 +757,9 @@ function ItemGrid({ icon: Icon, title, items, note }: { icon: React.ElementType;
           <Info size={13} className="mt-0.5 flex-shrink-0" /> {note}
         </div>
       )}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 tp-stagger">
         {items.map((item, idx) => (
-          <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:border-yellow-500/40 transition-all">
+          <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:border-yellow-500/40 hover:-translate-y-0.5 transition-all duration-200">
             {item.url ? (
               <img src={item.url} alt={item.name} className="w-full h-32 object-cover" />
             ) : (
@@ -527,9 +801,9 @@ function RestaurantGrid({ items, note }: { items: Item[]; note?: string }) {
           <Info size={13} className="mt-0.5 flex-shrink-0" /> {note}
         </div>
       )}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 tp-stagger">
         {items.map((item, idx) => (
-          <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:border-yellow-500/40 transition-all">
+          <div key={idx} className="rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:border-yellow-500/40 hover:-translate-y-0.5 transition-all duration-200">
             <div className="relative">
               {item.url ? (
                 <img src={item.url} alt={item.name} className="w-full h-32 object-cover" />
@@ -593,6 +867,195 @@ function RestaurantGrid({ items, note }: { items: Item[]; note?: string }) {
   );
 }
 
+// ── NEW: Trip Overview — surfaces the AI summary, budget estimate, weather
+// note, tips, and data-source badges the backend already computes in
+// build_plan() but the page never showed before. ──
+function TripOverviewCard({ plan }: { plan: Plan }) {
+  const hasBudget = plan.budget && plan.budget.low > 0;
+  return (
+    <div className="rounded-2xl border border-white/10 bg-gradient-to-br from-[#1a1730] to-[#12132a] p-6 mb-8 tp-fade-up">
+      <div className="flex items-start justify-between gap-4 flex-wrap mb-4">
+        <div className="flex items-center gap-2">
+          <Sparkles size={16} style={{ color: GOLD }} />
+          <span className="text-white/40 text-xs font-semibold uppercase tracking-wide">Trip overview</span>
+        </div>
+        {plan.rag_powered && (
+          <span className="flex items-center gap-1.5 text-[11px] font-semibold px-2.5 py-1 rounded-full" style={{ background: "rgba(34,197,94,0.12)", color: "#4ade80" }}>
+            <ShieldCheck size={12} /> AI-verified against live KEMET data
+          </span>
+        )}
+      </div>
+
+      {plan.summary && <p className="text-white/80 text-sm leading-relaxed mb-5">{plan.summary}</p>}
+
+      <div className="grid sm:grid-cols-3 gap-3 mb-5">
+        {hasBudget && (
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+            <div className="flex items-center gap-1.5 text-white/40 text-[11px] font-semibold uppercase tracking-wide mb-1.5">
+              <Wallet size={12} /> Estimated budget
+            </div>
+            <div className="text-white font-bold text-sm">{plan.budget.low.toLocaleString()} – {plan.budget.high.toLocaleString()} EGP</div>
+            <div className="text-white/35 text-[11px] mt-1 leading-snug">{plan.budget.note}</div>
+          </div>
+        )}
+        {plan.weather && (
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+            <div className="flex items-center gap-1.5 text-white/40 text-[11px] font-semibold uppercase tracking-wide mb-1.5">
+              <Sun size={12} /> Weather note
+            </div>
+            <div className="text-white/70 text-xs leading-snug">{plan.weather}</div>
+          </div>
+        )}
+        {plan.accessibility && (
+          <div className="rounded-xl border border-white/10 bg-white/[0.03] p-3.5">
+            <div className="flex items-center gap-1.5 text-white/40 text-[11px] font-semibold uppercase tracking-wide mb-1.5">
+              <Accessibility size={12} /> Accessibility notes
+            </div>
+            <div className="text-white/70 text-xs leading-snug">{plan.accessibility}</div>
+          </div>
+        )}
+      </div>
+
+      {plan.tips?.length > 0 && (
+        <div className="mb-5">
+          <div className="flex items-center gap-1.5 text-white/40 text-[11px] font-semibold uppercase tracking-wide mb-2">
+            <Lightbulb size={12} /> Travel tips
+          </div>
+          <ul className="space-y-1.5">
+            {plan.tips.map((tip, idx) => (
+              <li key={idx} className="flex items-start gap-2 text-white/70 text-xs leading-relaxed">
+                <span className="mt-1 w-1 h-1 rounded-full flex-shrink-0" style={{ background: GOLD }} />
+                {tip}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      {plan.sources?.length > 0 && (
+        <div className="flex flex-wrap gap-2 pt-4 border-t border-white/10">
+          {plan.sources.map((s) => (
+            <span key={s} className="flex items-center gap-1.5 text-[11px] font-medium px-2.5 py-1 rounded-full bg-white/5 text-white/50">
+              <BadgeCheck size={11} style={{ color: GOLD }} /> {s}
+            </span>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── NEW: floating "Ask about this trip" panel — wired to the /ask endpoint,
+// which was already fully built server-side (same RAG the main chatbot
+// uses, plus the plan itself as context) but never had a UI. ──
+interface AskMessage { role: "user" | "assistant"; text: string; direction: "ltr" | "rtl" }
+
+function AskAboutTrip({ plan }: { plan: Plan }) {
+  const [open, setOpen] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<AskMessage[]>([]);
+  const [asking, setAsking] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  }, [messages, asking]);
+
+  const send = async () => {
+    const question = input.trim();
+    if (!question || asking) return;
+    setMessages((m) => [...m, { role: "user", text: question, direction: "ltr" }]);
+    setInput("");
+    setAsking(true);
+    try {
+      const data = await api("/ask", { method: "POST", body: JSON.stringify({ question, plan }) });
+      setMessages((m) => [...m, { role: "assistant", text: data.reply as string, direction: (data.direction as "ltr" | "rtl") || "ltr" }]);
+    } catch (e) {
+      setMessages((m) => [...m, { role: "assistant", text: e instanceof Error ? e.message : "Something went wrong.", direction: "ltr" }]);
+    } finally {
+      setAsking(false);
+    }
+  };
+
+  return (
+    <>
+      {/* Floating trigger */}
+      {!open && (
+        <button
+          onClick={() => setOpen(true)}
+          className="fixed bottom-6 right-6 z-40 flex items-center gap-2 pl-4 pr-5 py-3.5 rounded-full font-semibold text-sm shadow-2xl tp-pulse tp-pop"
+          style={{ background: `linear-gradient(135deg, ${GOLD}, #C9A84C)`, color: "#0A0B1E" }}
+        >
+          <MessageCircle size={18} /> Ask about this trip
+        </button>
+      )}
+
+      {/* Panel */}
+      {open && (
+        <div className="fixed bottom-6 right-6 z-40 w-[calc(100vw-3rem)] sm:w-96 h-[28rem] max-h-[70vh] rounded-2xl border border-white/10 shadow-2xl flex flex-col overflow-hidden tp-pop" style={{ background: "#12132a" }}>
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/10" style={{ background: `linear-gradient(135deg, rgba(212,175,55,0.15), transparent)` }}>
+            <div className="flex items-center gap-2">
+              <Sparkles size={15} style={{ color: GOLD }} />
+              <span className="text-white font-semibold text-sm">Ask about this trip</span>
+            </div>
+            <button onClick={() => setOpen(false)} className="text-white/40 hover:text-white transition-colors">
+              <X size={18} />
+            </button>
+          </div>
+
+          <div ref={scrollRef} className="flex-1 overflow-y-auto px-4 py-3 space-y-3">
+            {messages.length === 0 && (
+              <p className="text-white/35 text-xs text-center py-8 leading-relaxed">
+                Ask anything about this itinerary — swap a day, ask about a site, check if a restaurant fits your budget.
+              </p>
+            )}
+            {messages.map((m, idx) => (
+              <div key={idx} className={`flex ${m.role === "user" ? "justify-end" : "justify-start"} tp-fade-up`}>
+                <div
+                  dir={m.direction}
+                  className="max-w-[85%] rounded-2xl px-3.5 py-2.5 text-xs leading-relaxed"
+                  style={
+                    m.role === "user"
+                      ? { background: `linear-gradient(135deg, ${GOLD}, #C9A84C)`, color: "#0A0B1E" }
+                      : { background: "rgba(255,255,255,0.06)", color: "#e5e7eb" }
+                  }
+                >
+                  {m.text}
+                </div>
+              </div>
+            ))}
+            {asking && (
+              <div className="flex justify-start">
+                <div className="rounded-2xl px-3.5 py-2.5 bg-white/5">
+                  <Loader2 size={14} className="animate-spin text-white/40" />
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 px-3 py-3 border-t border-white/10">
+            <input
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && send()}
+              placeholder="Type a question…"
+              className="flex-1 bg-white/5 border border-white/10 rounded-xl px-3.5 py-2.5 text-white text-xs placeholder-white/30 focus:outline-none focus:border-yellow-500/50 transition-colors"
+            />
+            <button
+              onClick={send}
+              disabled={asking || !input.trim()}
+              className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 disabled:opacity-30 transition-opacity"
+              style={{ background: `linear-gradient(135deg, ${GOLD}, #C9A84C)` }}
+            >
+              <Send size={14} color="#0A0B1E" />
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 // ── Result view ──
 function ResultView({ plan, onStartOver, onAdjust, savedView }: { plan: Plan; onStartOver: () => void; onAdjust: () => void; savedView?: boolean }) {
   const [activeDay, setActiveDay] = useState(0);
@@ -616,7 +1079,9 @@ function ResultView({ plan, onStartOver, onAdjust, savedView }: { plan: Plan; on
   const day = plan.days[activeDay];
 
   return (
-    <div className="fade-in">
+    <div className="tp-fade-in">
+      <TripOverviewCard plan={plan} />
+
       {/* Day switcher */}
       <SectionHeader icon={Calendar} title="Day-by-day plan" />
       <div className="flex gap-2 overflow-x-auto pb-2 mb-4">
@@ -624,7 +1089,7 @@ function ResultView({ plan, onStartOver, onAdjust, savedView }: { plan: Plan; on
           <button
             key={d.day}
             onClick={() => setActiveDay(idx)}
-            className="px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border"
+            className="px-4 py-2 rounded-xl text-sm font-semibold whitespace-nowrap border transition-all duration-200"
             style={{
               borderColor: activeDay === idx ? GOLD : "rgba(255,255,255,0.1)",
               background: activeDay === idx ? `linear-gradient(135deg, ${GOLD}, #C9A84C)` : "transparent",
@@ -636,7 +1101,7 @@ function ResultView({ plan, onStartOver, onAdjust, savedView }: { plan: Plan; on
         ))}
       </div>
       {day && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 mb-8">
+        <div key={activeDay} className="rounded-2xl border border-white/10 bg-white/5 p-5 mb-8 tp-fade-up">
           <h3 className="text-white font-bold text-lg mb-1">{day.title}</h3>
           <p className="text-white/40 text-xs mb-4">{day.city}</p>
           <div className="space-y-3 text-sm">
@@ -693,6 +1158,8 @@ function ResultView({ plan, onStartOver, onAdjust, savedView }: { plan: Plan; on
           )}
         </div>
       )}
+
+      <AskAboutTrip plan={plan} />
     </div>
   );
 }
