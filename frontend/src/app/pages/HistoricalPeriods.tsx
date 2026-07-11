@@ -1,5 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
-import { Shuffle, Calendar, Search, ChevronDown, ChevronUp } from "lucide-react";
+import {
+  Shuffle,
+  Calendar,
+  Search,
+  ChevronDown,
+  ChevronUp,
+  ChevronLeft,
+  ChevronRight,
+  X,
+  BookOpenText,
+} from "lucide-react";
 import { API_BASE_URL } from "../lib/api";
 
 const API_URL = `${API_BASE_URL}/api/periods`;
@@ -45,9 +55,11 @@ interface PeriodsResponse {
 function PeriodCard({
   period,
   color,
+  onOpenStory,
 }: {
   period: PeriodRecord;
   color: string;
+  onOpenStory?: () => void;
 }) {
   const [expanded, setExpanded] = useState(false);
 
@@ -118,9 +130,247 @@ function PeriodCard({
           {period.desc}
         </p>
 
-        <div className="mt-3 text-xs" style={{ color }}>
-          {expanded ? "Show less" : "Read more"}
+        <div className="mt-3 flex items-center justify-between">
+          <span className="text-xs" style={{ color }}>
+            {expanded ? "Show less" : "Read more"}
+          </span>
+          {expanded && onOpenStory && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onOpenStory();
+              }}
+              className="text-xs font-semibold px-2.5 py-1 rounded-full transition-colors hover:brightness-110"
+              style={{ background: `${color}22`, color }}
+            >
+              View in Story Mode →
+            </button>
+          )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+// One-time stylesheet for the Story Mode entrance animations. Injected once
+// (not per-slide) so re-renders don't restart it or duplicate the tag.
+const STORY_KEYFRAMES = `
+@keyframes storyImgFromLeft {
+  0% { opacity: 0; transform: scale(0.55) translateX(-60px); }
+  100% { opacity: 1; transform: scale(1) translateX(0); }
+}
+@keyframes storyImgFromRight {
+  0% { opacity: 0; transform: scale(0.55) translateX(60px); }
+  100% { opacity: 1; transform: scale(1) translateX(0); }
+}
+@keyframes storyTextFromRight {
+  0% { opacity: 0; transform: translateX(48px); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes storyTextFromLeft {
+  0% { opacity: 0; transform: translateX(-48px); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: translateX(0); }
+}
+@keyframes storyBadgeIn {
+  0% { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes storyGlowPulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 0.7; }
+}
+@keyframes storyDotPop {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+.story-fade-bg { animation: storyFadeIn 0.25s ease-out; }
+@keyframes storyFadeIn { from { opacity: 0; } to { opacity: 1; } }
+`;
+
+// Full-screen, one-period-at-a-time presentation. Image and text swap sides
+// per period (mirroring the timeline's alternating layout) and animate in
+// from opposite directions — the image "grows" into place, the text slides
+// in from the other side — so advancing feels like the timeline card itself
+// expanding out into a full page.
+function PeriodStoryView({
+  periods,
+  startIndex,
+  colorFor,
+  onClose,
+}: {
+  periods: PeriodRecord[];
+  startIndex: number;
+  colorFor: (i: number) => string;
+  onClose: () => void;
+}) {
+  const [index, setIndex] = useState(startIndex);
+  const total = periods.length;
+  const period = periods[index];
+  const color = colorFor(index);
+  const isLeft = index % 2 === 0;
+
+  const go = (delta: number) => {
+    setIndex((i) => (i + delta + total) % total);
+  };
+
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") go(1);
+      if (e.key === "ArrowLeft" || e.key === "ArrowUp") go(-1);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [total]);
+
+  if (!period) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-50 story-fade-bg overflow-hidden"
+      style={{
+        background:
+          "radial-gradient(ellipse 90% 70% at 50% 0%, rgba(212,175,55,0.14) 0%, rgba(10,11,30,0) 65%), #0A0B1E",
+      }}
+    >
+      <style>{STORY_KEYFRAMES}</style>
+
+      {/* Ambient glow tied to this period's color */}
+      <div
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background: `radial-gradient(ellipse 60% 50% at ${isLeft ? "20%" : "80%"} 45%, ${color}22 0%, transparent 60%)`,
+          animation: "storyGlowPulse 4s ease-in-out infinite",
+        }}
+      />
+
+      {/* Top bar: progress + close */}
+      <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-5 md:px-8 py-5 z-20">
+        <div
+          key={`badge-${index}`}
+          className="flex items-center gap-2 text-xs font-semibold tracking-widest uppercase"
+          style={{ color, animation: "storyBadgeIn 0.4s ease-out" }}
+        >
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <span className="text-white/30">/</span>
+          <span className="text-white/40">{String(total).padStart(2, "0")}</span>
+        </div>
+        <button
+          onClick={onClose}
+          className="rounded-full p-2 text-white/60 hover:text-white hover:bg-white/10 transition-colors"
+          aria-label="Close story mode"
+        >
+          <X size={20} />
+        </button>
+      </div>
+
+      {/* Slide content */}
+      <div className="h-full w-full flex items-center justify-center px-5 md:px-16 pt-16 pb-28">
+        <div
+          key={period.name}
+          className={`w-full max-w-5xl flex flex-col ${
+            isLeft ? "md:flex-row" : "md:flex-row-reverse"
+          } items-center gap-8 md:gap-14`}
+        >
+          <div
+            className="w-full md:w-1/2 shrink-0"
+            style={{
+              animation: `${isLeft ? "storyImgFromLeft" : "storyImgFromRight"} 0.55s cubic-bezier(0.16,1,0.3,1) both`,
+            }}
+          >
+            <div
+              className="rounded-3xl overflow-hidden border"
+              style={{
+                borderColor: `${color}55`,
+                boxShadow: `0 0 0 1px rgba(255,255,255,0.04), 0 20px 60px -20px ${color}55`,
+              }}
+            >
+              <img
+                src={period.img}
+                alt={period.name}
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = FALLBACK_IMG;
+                }}
+                className="w-full h-64 md:h-[26rem] object-cover"
+              />
+            </div>
+          </div>
+
+          <div
+            className="w-full md:w-1/2"
+            style={{
+              animation: `${isLeft ? "storyTextFromRight" : "storyTextFromLeft"} 0.55s cubic-bezier(0.16,1,0.3,1) both`,
+              animationDelay: "0.08s",
+            }}
+          >
+            {period.from_to && (
+              <span
+                className="text-xs font-semibold px-2.5 py-1 rounded-full mb-3 inline-flex items-center gap-1.5"
+                style={{ background: `${color}22`, color }}
+              >
+                <Calendar className="w-3 h-3" />
+                {period.from_to}
+              </span>
+            )}
+            <h2 className="text-2xl md:text-4xl font-bold text-white mb-4 leading-tight">
+              {period.name}
+            </h2>
+            <p className="text-white/70 text-sm md:text-base leading-relaxed whitespace-pre-line max-h-[40vh] overflow-y-auto pr-2">
+              {period.desc}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom-center navigation */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-3">
+        <div className="flex items-center gap-5">
+          <button
+            onClick={() => go(-1)}
+            className="rounded-full p-3 text-white/70 hover:text-white transition-all hover:scale-110"
+            style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}
+            aria-label="Previous period"
+          >
+            <ChevronLeft size={20} />
+          </button>
+
+          <div className="flex items-center gap-1.5">
+            {periods.map((_, i) => (
+              <span
+                key={i}
+                className="rounded-full transition-all"
+                style={{
+                  width: i === index ? 18 : 6,
+                  height: 6,
+                  background: i === index ? color : "rgba(255,255,255,0.2)",
+                  animation: i === index ? "storyDotPop 0.35s ease-out" : undefined,
+                }}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={() => go(1)}
+            className="rounded-full p-3 text-white transition-all hover:scale-110"
+            style={{
+              background: color,
+              boxShadow: `0 4px 20px -4px ${color}aa`,
+            }}
+            aria-label="Next period"
+          >
+            <ChevronDown size={20} className="animate-bounce" />
+          </button>
+        </div>
+        <span className="text-white/35 text-xs tracking-wide">Next period</span>
       </div>
     </div>
   );
@@ -132,6 +382,9 @@ export function HistoricalPeriods() {
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
+
+  const [storyOpen, setStoryOpen] = useState(false);
+  const [storyStartIndex, setStoryStartIndex] = useState(0);
 
   const [facts, setFacts] = useState<string[]>([]);
   const [factIndex, setFactIndex] = useState(0);
@@ -305,20 +558,39 @@ export function HistoricalPeriods() {
           </div>
         )}
 
-        <div className="mb-7 max-w-md mx-auto">
-          <label className="text-white text-xs font-semibold mb-1.5 block">🔍 Search Period</label>
-          <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Type a period name..."
-              disabled={!data}
-              className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none"
-              style={{ background: "#1a1e30", border: "1px solid #2c3248" }}
-            />
+        <div className="mb-7 max-w-2xl mx-auto flex flex-col sm:flex-row items-stretch sm:items-end gap-3">
+          <div className="flex-1">
+            <label className="text-white text-xs font-semibold mb-1.5 block">🔍 Search Period</label>
+            <div className="relative">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+              <input
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Type a period name..."
+                disabled={!data}
+                className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm text-white placeholder-gray-500 focus:outline-none"
+                style={{ background: "#1a1e30", border: "1px solid #2c3248" }}
+              />
+            </div>
           </div>
+
+          <button
+            onClick={() => {
+              setStoryStartIndex(0);
+              setStoryOpen(true);
+            }}
+            disabled={!data || filtered.length === 0}
+            className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all hover:scale-[1.02] disabled:opacity-40 disabled:hover:scale-100 shrink-0"
+            style={{
+              background: "linear-gradient(135deg, rgba(212,175,55,0.18), rgba(212,175,55,0.08))",
+              border: "1px solid rgba(212,175,55,0.4)",
+              color: "#D4AF37",
+            }}
+          >
+            <BookOpenText size={16} />
+            Story Mode
+          </button>
         </div>
 
         {!loading && data && (
@@ -381,7 +653,16 @@ export function HistoricalPeriods() {
                   <div key={period.name} className="relative flex items-start gap-0 md:gap-6">
                     {/* Left side */}
                     <div className={`hidden md:flex flex-1 ${isLeft ? "justify-end pr-8" : "justify-end pr-8 invisible"}`}>
-                      {isLeft && <PeriodCard period={period} color={color} />}
+                      {isLeft && (
+                        <PeriodCard
+                          period={period}
+                          color={color}
+                          onOpenStory={() => {
+                            setStoryStartIndex(i);
+                            setStoryOpen(true);
+                          }}
+                        />
+                      )}
                     </div>
 
                     {/* Center dot */}
@@ -398,12 +679,28 @@ export function HistoricalPeriods() {
 
                     {/* Right side */}
                     <div className={`hidden md:flex flex-1 ${!isLeft ? "pl-8" : "pl-8 invisible"}`}>
-                      {!isLeft && <PeriodCard period={period} color={color} />}
+                      {!isLeft && (
+                        <PeriodCard
+                          period={period}
+                          color={color}
+                          onOpenStory={() => {
+                            setStoryStartIndex(i);
+                            setStoryOpen(true);
+                          }}
+                        />
+                      )}
                     </div>
 
                     {/* Mobile: full width */}
                     <div className="flex md:hidden w-full">
-                      <PeriodCard period={period} color={color} />
+                      <PeriodCard
+                        period={period}
+                        color={color}
+                        onOpenStory={() => {
+                          setStoryStartIndex(i);
+                          setStoryOpen(true);
+                        }}
+                      />
                     </div>
                   </div>
                 );
@@ -412,6 +709,15 @@ export function HistoricalPeriods() {
           </div>
         )}
       </div>
+
+      {storyOpen && filtered.length > 0 && (
+        <PeriodStoryView
+          periods={filtered}
+          startIndex={storyStartIndex}
+          colorFor={(i) => COLOR_PALETTE[i % COLOR_PALETTE.length]}
+          onClose={() => setStoryOpen(false)}
+        />
+      )}
     </div>
   );
 }
