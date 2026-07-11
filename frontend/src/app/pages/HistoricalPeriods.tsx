@@ -34,10 +34,85 @@ function sharpImg(url: string, width: number): string {
       u.searchParams.set("fit", "crop");
       return u.toString();
     }
+    // Wikimedia's Special:FilePath redirector also honors a `width` param
+    // and returns a proportionally-scaled thumbnail instead of the (often
+    // multi-megabyte) full-resolution original.
+    if (u.hostname.includes("wikimedia.org") && u.pathname.includes("Special:FilePath")) {
+      u.searchParams.set("width", String(width));
+      return u.toString();
+    }
     return url;
   } catch {
     return url;
   }
+}
+
+// Curated, high-resolution photos for each historical period, sourced from
+// Wikimedia Commons (public domain / CC-licensed, high quality) instead of
+// relying on whatever photo_url happens to be in the CSV export. Matched by
+// keyword against the period's name rather than an exact string, so this
+// still works even if the wording in the data changes slightly (e.g.
+// "New Kingdom" vs "The New Kingdom Period").
+//
+// Order matters: more specific keywords (e.g. "second intermediate") are
+// checked before shorter ones they contain (e.g. "intermediate").
+const CURATED_PERIOD_IMAGES: { keywords: string[]; url: string }[] = [
+  {
+    keywords: ["predynastic"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Jar_Decorated_with_Boats_MET_DP237640.jpg",
+  },
+  {
+    keywords: ["early dynastic"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Narmer_palette_(obverse).jpg",
+  },
+  {
+    keywords: ["old kingdom"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/All_Gizah_Pyramids.jpg",
+  },
+  {
+    keywords: ["first intermediate"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Statue_of_Nebhepetre_Mentuhotep_II_in_the_Jubilee_Garment_MET_DP302395.jpg",
+  },
+  {
+    keywords: ["second intermediate", "hyksos"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Kamose_Siegesstele_Luxor_Museum_01.jpg",
+  },
+  {
+    keywords: ["middle kingdom"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Beni_Hassan_tomb_15_wrestling_detail.jpg",
+  },
+  {
+    keywords: ["new kingdom"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Karnak_Temples.jpg",
+  },
+  {
+    keywords: ["third intermediate"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Golden_Mask_of_Psusennes_I.jpg",
+  },
+  {
+    keywords: ["late period"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Statue_of_Tasherenese,_mother_of_king_Amasis_II,_570-526_BCE,_from_Egypt,_currently_housed_in_the_British_Museum.jpg",
+  },
+  {
+    keywords: ["ptolemaic"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Temple_of_Horus_-_Edfu,_Egypt_-_Hieroglyphics.jpg",
+  },
+  {
+    keywords: ["roman"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Mummy_portrait_of_a_woman,_AD_120-150,_Roman_Egypt,_wax_encaustic_painting_on_sycamore_wood,_Liebieghaus,_Frankfurt_am_Main_(23365366636).jpg",
+  },
+  {
+    keywords: ["islamic"],
+    url: "https://commons.wikimedia.org/wiki/Special:FilePath/Mosque_of_Ibn_Tulun_00.jpg",
+  },
+];
+
+function curatedImg(period: PeriodRecord): string | null {
+  const name = period.name?.toLowerCase() ?? "";
+  for (const entry of CURATED_PERIOD_IMAGES) {
+    if (entry.keywords.some((k) => name.includes(k))) return entry.url;
+  }
+  return null;
 }
 
 const HIEROGLYPHS = ["𓂀", "𓆣", "𓇋", "𓅓", "𓊪", "𓏏", "𓋴"];
@@ -103,7 +178,7 @@ function PeriodCard({
       {!expanded && (
         <div className="relative h-40">
           <img
-            src={sharpImg(period.img, 700)}
+            src={sharpImg(curatedImg(period) ?? period.img, 700)}
             alt={period.name}
             loading="lazy"
             decoding="async"
@@ -136,7 +211,7 @@ function PeriodCard({
 
         {expanded && (
           <img
-            src={sharpImg(period.img, 900)}
+            src={sharpImg(curatedImg(period) ?? period.img, 900)}
             alt={period.name}
             loading="lazy"
             decoding="async"
@@ -355,7 +430,7 @@ function PeriodStoryView({
               }}
             >
               <img
-                src={sharpImg(period.img, 1400)}
+                src={sharpImg(curatedImg(period) ?? period.img, 1400)}
                 alt={period.name}
                 loading="eager"
                 decoding="async"
