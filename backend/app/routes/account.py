@@ -84,7 +84,11 @@ def register():
     data = request.get_json(force=True, silent=True) or {}
     try:
         success, result = accounts_service.sign_up(
-            data.get("username", ""), data.get("email", ""), data.get("password", "")
+            data.get("username", ""),
+            data.get("email", ""),
+            data.get("password", ""),
+            data.get("country", ""),
+            data.get("language", "English"),
         )
     except AccountsError as e:
         return jsonify({"error": str(e)}), 502
@@ -161,6 +165,33 @@ def me():
     if user is None:
         return jsonify({"error": "User not found."}), 404
     return jsonify({"user": user})
+
+
+@account_bp.route("/profile", methods=["POST"])
+@token_required
+def update_profile_route():
+    data = request.get_json(force=True, silent=True) or {}
+    # Only pass through fields the client actually included, so a partial
+    # save (e.g. just travel_preferences from the Overview tab) can't wipe
+    # out other fields the user didn't touch this time.
+    kwargs = {}
+    if "full_name" in data:
+        kwargs["full_name"] = data.get("full_name")
+    if "country" in data:
+        kwargs["country"] = data.get("country")
+    if "language" in data:
+        kwargs["language"] = data.get("language")
+    if "travel_preferences" in data:
+        kwargs["travel_preferences"] = data.get("travel_preferences")
+
+    try:
+        success, result = accounts_service.update_profile(request.username, **kwargs)
+    except AccountsError as e:
+        return jsonify({"error": str(e)}), 502
+
+    if not success:
+        return jsonify({"error": result}), 400
+    return jsonify({"user": result})
 
 
 @account_bp.route("/change-password", methods=["POST"])

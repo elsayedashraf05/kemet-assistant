@@ -61,11 +61,38 @@ def _verify_password(password: str, hashed: str) -> bool:
         return False
 
 
-def sign_up(username: str, email: str, password: str):
+def _user_public(user_doc: dict) -> dict:
+    """Shapes a raw Cosmos user document into what the frontend gets back.
+    Falls back gracefully for accounts created before a field existed:
+      - CreatedAt: Cosmos stamps every document with a system `_ts` (unix
+        seconds of last write) even if we never set CreatedAt ourselves, so
+        old accounts still show a reasonable "member since" instead of blank.
+    """
+    created_at = user_doc.get("CreatedAt")
+    if not created_at and user_doc.get("_ts"):
+        try:
+            created_at = datetime.datetime.utcfromtimestamp(user_doc["_ts"]).isoformat() + "Z"
+        except Exception:
+            created_at = ""
+    return {
+        "username": user_doc["Username"],
+        "email": user_doc.get("Email", ""),
+        "profile_pic_url": user_doc.get("ProfilePicUrl", ""),
+        "full_name": user_doc.get("FullName", ""),
+        "country": user_doc.get("Country", ""),
+        "language": user_doc.get("Language", "English"),
+        "travel_preferences": user_doc.get("TravelPreferences", []),
+        "created_at": created_at or "",
+    }
+
+
+def sign_up(username: str, email: str, password: str, country: str = "", language: str = "English"):
     """Returns (success: bool, message_or_user: str | dict)."""
     container_users, _ = _get_containers()
     username = (username or "").strip()
     email = (email or "").strip().lower()
+    country = (country or "").strip()[:80]
+    language = (language or "English").strip()[:40]
 
     if not username or not email or not password:
         return False, "Please fill in all fields."
@@ -98,9 +125,14 @@ def sign_up(username: str, email: str, password: str):
             "Username": username,
             "Email": email,
             "PasswordHash": _hash_password(password),
+            "Country": country,
+            "Language": language,
+            "FullName": "",
+            "TravelPreferences": [],
+            "CreatedAt": datetime.datetime.utcnow().isoformat() + "Z",
         }
         container_users.create_item(body=new_user)
-        return True, {"username": username, "email": email, "profile_pic_url": ""}
+        return True, _user_public(new_user)
     except Exception as e:
         return False, f"Error creating account: {e}"
 
@@ -139,11 +171,11 @@ def google_sign_in(email: str, name: str, google_sub: str, picture: str = ""):
                 container_users.upsert_item(body=user_doc)
             except Exception:
                 pass
-        return True, {
-            "username": user_doc["Username"],
-            "email": user_doc.get("Email", ""),
-            "profile_pic_url": user_doc.get("ProfilePicUrl") or picture or "",
-        }
+        public = _user_public(user_doc)
+        # Prefer the freshest Google avatar if we never stored one locally.
+        if not public["profile_pic_url"] and picture:
+            public["profile_pic_url"] = picture
+        return True, public
 
     # First time we've seen this Google account — create a new user.
     # Derive a username from their Google name/email, then make it unique.
@@ -169,9 +201,14 @@ def google_sign_in(email: str, name: str, google_sub: str, picture: str = ""):
             "PasswordHash": "",
             "GoogleId": google_sub,
             "ProfilePicUrl": picture or "",
+            "FullName": name or "",
+            "Country": "",
+            "Language": "English",
+            "TravelPreferences": [],
+            "CreatedAt": datetime.datetime.utcnow().isoformat() + "Z",
         }
         container_users.create_item(body=new_user)
-        return True, {"username": username, "email": email, "profile_pic_url": picture or ""}
+        return True, _user_public(new_user)
     except Exception as e:
         return False, f"Error creating account: {e}"
 
@@ -212,11 +249,7 @@ def sign_in(identifier: str, password: str):
     if not _verify_password(password, user_doc.get("PasswordHash", "")):
         return False, "Incorrect password."
 
-    return True, {
-        "username": user_doc["Username"],
-        "email": user_doc.get("Email", ""),
-        "profile_pic_url": user_doc.get("ProfilePicUrl", ""),
-    }
+    return True, _user_public(user_doc)
 
 
 def get_user(username: str):
@@ -225,11 +258,7 @@ def get_user(username: str):
         user_doc = container_users.read_item(item=username, partition_key=username)
     except exceptions.CosmosResourceNotFoundError:
         return None
-    return {
-        "username": user_doc["Username"],
-        "email": user_doc.get("Email", ""),
-        "profile_pic_url": user_doc.get("ProfilePicUrl", ""),
-    }
+    return _user_public(user_doc)
 
 
 def change_password(username: str, old_password: str, new_password: str):
@@ -299,6 +328,40 @@ def update_profile_picture(username: str, file_bytes: bytes, file_name: str):
         return True, image_url
     except Exception as e:
         return False, f"Error saving profile picture: {e}"
+
+
+def update_profile(username: str, full_name=None, country=None, language=None, travel_preferences=None):
+    """Partial update — only fields that are not None get touched, so the
+    frontend can send just the section the user edited (e.g. only
+    travel_preferences from the Overview tab) without clobbering the rest.
+    Username and email are intentionally not editable here: username is the
+    Cosmos partition key and the public @handle referenced by every post the
+    user has made, so renaming it would silently orphan their content.
+    """
+    container_users, _ = _get_containers()
+    try:
+        user_doc = container_users.read_item(item=username, partition_key=username)
+    except exceptions.CosmosResourceNotFoundError:
+        return False, "User not found."
+    except Exception as e:
+        return False, f"Error: {e}"
+
+    if full_name is not None:
+        user_doc["FullName"] = str(full_name).strip()[:80]
+    if country is not None:
+        user_doc["Country"] = str(country).strip()[:80]
+    if language is not None:
+        user_doc["Language"] = str(language).strip()[:40] or "English"
+    if travel_preferences is not None:
+        if not isinstance(travel_preferences, list):
+            return False, "Travel preferences must be a list."
+        user_doc["TravelPreferences"] = [str(p).strip()[:40] for p in travel_preferences if str(p).strip()][:20]
+
+    try:
+        container_users.upsert_item(body=user_doc)
+    except Exception as e:
+        return False, f"Error updating profile: {e}"
+    return True, _user_public(user_doc)
 
 
 def get_user_by_email(email: str):

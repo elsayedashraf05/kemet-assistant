@@ -5,6 +5,8 @@ import {
   LogOut, Camera,
   Loader2, AlertCircle,
   FileText, Bookmark, Heart, MessageCircle, Trash2, Map, Calendar,
+  ChevronDown, Search, Edit, Plane, Settings as SettingsIcon,
+  MapPin, Users, Plus,
 } from "lucide-react";
 import { API_BASE_URL } from "../lib/api";
 
@@ -22,6 +24,11 @@ interface AccountUser {
   username: string;
   email: string;
   profile_pic_url: string;
+  full_name: string;
+  country: string;
+  language: string;
+  travel_preferences: string[];
+  created_at: string;
 }
 
 function getToken(): string | null {
@@ -130,10 +137,10 @@ interface TripPlanSummary {
 const apiTripPlans = () => tripsApiRequest("/plans").then((d) => d.plans as TripPlanSummary[]);
 const apiDeleteTripPlan = (id: string) => tripsApiRequest(`/plans/${id}`, { method: "DELETE" });
 
-async function apiRegister(username: string, email: string, password: string) {
+async function apiRegister(username: string, email: string, password: string, country: string, language: string) {
   const data = await apiRequest("/register", {
     method: "POST",
-    body: JSON.stringify({ username, email, password }),
+    body: JSON.stringify({ username, email, password, country, language }),
   });
   setToken(data.token);
   return data.user as AccountUser;
@@ -197,6 +204,14 @@ async function apiResetPassword(token: string, newPassword: string): Promise<str
   return data.message as string;
 }
 
+async function apiUpdateProfile(updates: Partial<{ full_name: string; country: string; language: string; travel_preferences: string[] }>) {
+  const data = await apiRequest("/profile", {
+    method: "POST",
+    body: JSON.stringify(updates),
+  });
+  return data.user as AccountUser;
+}
+
 async function apiUploadAvatar(file: File): Promise<string> {
   const formData = new FormData();
   formData.append("file", file);
@@ -229,10 +244,387 @@ function timeAgo(iso: string): string {
 
 type AuthView = "login" | "register" | "forgot" | "reset";
 
-const NATIONALITIES = [
-  "United States", "United Kingdom", "Germany", "France", "Canada",
-  "Australia", "Japan", "Brazil", "India", "Egypt"
+interface CountryOption {
+  name: string;
+  code: string;
+}
+
+// ISO 3166-1 country list (name + alpha-2 code) — used for the registration
+// "Country" field and shown as a flag + code on the profile header.
+const COUNTRIES: CountryOption[] = [
+  { name: "Afghanistan", code: "AF" },
+  { name: "Albania", code: "AL" },
+  { name: "Algeria", code: "DZ" },
+  { name: "American Samoa", code: "AS" },
+  { name: "Andorra", code: "AD" },
+  { name: "Angola", code: "AO" },
+  { name: "Anguilla", code: "AI" },
+  { name: "Antigua and Barbuda", code: "AG" },
+  { name: "Argentina", code: "AR" },
+  { name: "Armenia", code: "AM" },
+  { name: "Aruba", code: "AW" },
+  { name: "Australia", code: "AU" },
+  { name: "Austria", code: "AT" },
+  { name: "Azerbaijan", code: "AZ" },
+  { name: "Bahamas", code: "BS" },
+  { name: "Bahrain", code: "BH" },
+  { name: "Bangladesh", code: "BD" },
+  { name: "Barbados", code: "BB" },
+  { name: "Belarus", code: "BY" },
+  { name: "Belgium", code: "BE" },
+  { name: "Belize", code: "BZ" },
+  { name: "Benin", code: "BJ" },
+  { name: "Bermuda", code: "BM" },
+  { name: "Bhutan", code: "BT" },
+  { name: "Bolivia, Plurinational State of", code: "BO" },
+  { name: "Bonaire, Sint Eustatius and Saba", code: "BQ" },
+  { name: "Bosnia and Herzegovina", code: "BA" },
+  { name: "Botswana", code: "BW" },
+  { name: "Brazil", code: "BR" },
+  { name: "British Indian Ocean Territory", code: "IO" },
+  { name: "Brunei Darussalam", code: "BN" },
+  { name: "Bulgaria", code: "BG" },
+  { name: "Burkina Faso", code: "BF" },
+  { name: "Burundi", code: "BI" },
+  { name: "Cabo Verde", code: "CV" },
+  { name: "Cambodia", code: "KH" },
+  { name: "Cameroon", code: "CM" },
+  { name: "Canada", code: "CA" },
+  { name: "Cayman Islands", code: "KY" },
+  { name: "Central African Republic", code: "CF" },
+  { name: "Chad", code: "TD" },
+  { name: "Chile", code: "CL" },
+  { name: "China", code: "CN" },
+  { name: "Christmas Island", code: "CX" },
+  { name: "Cocos (Keeling) Islands", code: "CC" },
+  { name: "Colombia", code: "CO" },
+  { name: "Comoros", code: "KM" },
+  { name: "Congo", code: "CG" },
+  { name: "Congo, The Democratic Republic of the", code: "CD" },
+  { name: "Cook Islands", code: "CK" },
+  { name: "Costa Rica", code: "CR" },
+  { name: "Croatia", code: "HR" },
+  { name: "Cuba", code: "CU" },
+  { name: "Curaçao", code: "CW" },
+  { name: "Cyprus", code: "CY" },
+  { name: "Czechia", code: "CZ" },
+  { name: "Côte d'Ivoire", code: "CI" },
+  { name: "Denmark", code: "DK" },
+  { name: "Djibouti", code: "DJ" },
+  { name: "Dominica", code: "DM" },
+  { name: "Dominican Republic", code: "DO" },
+  { name: "Ecuador", code: "EC" },
+  { name: "Egypt", code: "EG" },
+  { name: "El Salvador", code: "SV" },
+  { name: "Equatorial Guinea", code: "GQ" },
+  { name: "Eritrea", code: "ER" },
+  { name: "Estonia", code: "EE" },
+  { name: "Eswatini", code: "SZ" },
+  { name: "Ethiopia", code: "ET" },
+  { name: "Falkland Islands (Malvinas)", code: "FK" },
+  { name: "Faroe Islands", code: "FO" },
+  { name: "Fiji", code: "FJ" },
+  { name: "Finland", code: "FI" },
+  { name: "France", code: "FR" },
+  { name: "French Guiana", code: "GF" },
+  { name: "French Polynesia", code: "PF" },
+  { name: "Gabon", code: "GA" },
+  { name: "Gambia", code: "GM" },
+  { name: "Georgia", code: "GE" },
+  { name: "Germany", code: "DE" },
+  { name: "Ghana", code: "GH" },
+  { name: "Gibraltar", code: "GI" },
+  { name: "Greece", code: "GR" },
+  { name: "Greenland", code: "GL" },
+  { name: "Grenada", code: "GD" },
+  { name: "Guadeloupe", code: "GP" },
+  { name: "Guam", code: "GU" },
+  { name: "Guatemala", code: "GT" },
+  { name: "Guernsey", code: "GG" },
+  { name: "Guinea", code: "GN" },
+  { name: "Guinea-Bissau", code: "GW" },
+  { name: "Guyana", code: "GY" },
+  { name: "Haiti", code: "HT" },
+  { name: "Holy See (Vatican City State)", code: "VA" },
+  { name: "Honduras", code: "HN" },
+  { name: "Hong Kong", code: "HK" },
+  { name: "Hungary", code: "HU" },
+  { name: "Iceland", code: "IS" },
+  { name: "India", code: "IN" },
+  { name: "Indonesia", code: "ID" },
+  { name: "Iran, Islamic Republic of", code: "IR" },
+  { name: "Iraq", code: "IQ" },
+  { name: "Ireland", code: "IE" },
+  { name: "Isle of Man", code: "IM" },
+  { name: "Israel", code: "IL" },
+  { name: "Italy", code: "IT" },
+  { name: "Jamaica", code: "JM" },
+  { name: "Japan", code: "JP" },
+  { name: "Jersey", code: "JE" },
+  { name: "Jordan", code: "JO" },
+  { name: "Kazakhstan", code: "KZ" },
+  { name: "Kenya", code: "KE" },
+  { name: "Kiribati", code: "KI" },
+  { name: "Korea, Democratic People's Republic of", code: "KP" },
+  { name: "Korea, Republic of", code: "KR" },
+  { name: "Kuwait", code: "KW" },
+  { name: "Kyrgyzstan", code: "KG" },
+  { name: "Lao People's Democratic Republic", code: "LA" },
+  { name: "Latvia", code: "LV" },
+  { name: "Lebanon", code: "LB" },
+  { name: "Lesotho", code: "LS" },
+  { name: "Liberia", code: "LR" },
+  { name: "Libya", code: "LY" },
+  { name: "Liechtenstein", code: "LI" },
+  { name: "Lithuania", code: "LT" },
+  { name: "Luxembourg", code: "LU" },
+  { name: "Macao", code: "MO" },
+  { name: "Madagascar", code: "MG" },
+  { name: "Malawi", code: "MW" },
+  { name: "Malaysia", code: "MY" },
+  { name: "Maldives", code: "MV" },
+  { name: "Mali", code: "ML" },
+  { name: "Malta", code: "MT" },
+  { name: "Marshall Islands", code: "MH" },
+  { name: "Martinique", code: "MQ" },
+  { name: "Mauritania", code: "MR" },
+  { name: "Mauritius", code: "MU" },
+  { name: "Mayotte", code: "YT" },
+  { name: "Mexico", code: "MX" },
+  { name: "Micronesia, Federated States of", code: "FM" },
+  { name: "Moldova, Republic of", code: "MD" },
+  { name: "Monaco", code: "MC" },
+  { name: "Mongolia", code: "MN" },
+  { name: "Montenegro", code: "ME" },
+  { name: "Montserrat", code: "MS" },
+  { name: "Morocco", code: "MA" },
+  { name: "Mozambique", code: "MZ" },
+  { name: "Myanmar", code: "MM" },
+  { name: "Namibia", code: "NA" },
+  { name: "Nauru", code: "NR" },
+  { name: "Nepal", code: "NP" },
+  { name: "Netherlands", code: "NL" },
+  { name: "New Caledonia", code: "NC" },
+  { name: "New Zealand", code: "NZ" },
+  { name: "Nicaragua", code: "NI" },
+  { name: "Niger", code: "NE" },
+  { name: "Nigeria", code: "NG" },
+  { name: "Niue", code: "NU" },
+  { name: "Norfolk Island", code: "NF" },
+  { name: "North Macedonia", code: "MK" },
+  { name: "Northern Mariana Islands", code: "MP" },
+  { name: "Norway", code: "NO" },
+  { name: "Oman", code: "OM" },
+  { name: "Pakistan", code: "PK" },
+  { name: "Palau", code: "PW" },
+  { name: "Palestine, State of", code: "PS" },
+  { name: "Panama", code: "PA" },
+  { name: "Papua New Guinea", code: "PG" },
+  { name: "Paraguay", code: "PY" },
+  { name: "Peru", code: "PE" },
+  { name: "Philippines", code: "PH" },
+  { name: "Pitcairn", code: "PN" },
+  { name: "Poland", code: "PL" },
+  { name: "Portugal", code: "PT" },
+  { name: "Puerto Rico", code: "PR" },
+  { name: "Qatar", code: "QA" },
+  { name: "Romania", code: "RO" },
+  { name: "Russian Federation", code: "RU" },
+  { name: "Rwanda", code: "RW" },
+  { name: "Réunion", code: "RE" },
+  { name: "Saint Barthélemy", code: "BL" },
+  { name: "Saint Helena, Ascension and Tristan da Cunha", code: "SH" },
+  { name: "Saint Kitts and Nevis", code: "KN" },
+  { name: "Saint Lucia", code: "LC" },
+  { name: "Saint Martin (French part)", code: "MF" },
+  { name: "Saint Pierre and Miquelon", code: "PM" },
+  { name: "Saint Vincent and the Grenadines", code: "VC" },
+  { name: "Samoa", code: "WS" },
+  { name: "San Marino", code: "SM" },
+  { name: "Sao Tome and Principe", code: "ST" },
+  { name: "Saudi Arabia", code: "SA" },
+  { name: "Senegal", code: "SN" },
+  { name: "Serbia", code: "RS" },
+  { name: "Seychelles", code: "SC" },
+  { name: "Sierra Leone", code: "SL" },
+  { name: "Singapore", code: "SG" },
+  { name: "Sint Maarten (Dutch part)", code: "SX" },
+  { name: "Slovakia", code: "SK" },
+  { name: "Slovenia", code: "SI" },
+  { name: "Solomon Islands", code: "SB" },
+  { name: "Somalia", code: "SO" },
+  { name: "South Africa", code: "ZA" },
+  { name: "South Sudan", code: "SS" },
+  { name: "Spain", code: "ES" },
+  { name: "Sri Lanka", code: "LK" },
+  { name: "Sudan", code: "SD" },
+  { name: "Suriname", code: "SR" },
+  { name: "Svalbard and Jan Mayen", code: "SJ" },
+  { name: "Sweden", code: "SE" },
+  { name: "Switzerland", code: "CH" },
+  { name: "Syrian Arab Republic", code: "SY" },
+  { name: "Taiwan, Province of China", code: "TW" },
+  { name: "Tajikistan", code: "TJ" },
+  { name: "Tanzania, United Republic of", code: "TZ" },
+  { name: "Thailand", code: "TH" },
+  { name: "Timor-Leste", code: "TL" },
+  { name: "Togo", code: "TG" },
+  { name: "Tokelau", code: "TK" },
+  { name: "Tonga", code: "TO" },
+  { name: "Trinidad and Tobago", code: "TT" },
+  { name: "Tunisia", code: "TN" },
+  { name: "Turkmenistan", code: "TM" },
+  { name: "Turks and Caicos Islands", code: "TC" },
+  { name: "Tuvalu", code: "TV" },
+  { name: "Türkiye", code: "TR" },
+  { name: "Uganda", code: "UG" },
+  { name: "Ukraine", code: "UA" },
+  { name: "United Arab Emirates", code: "AE" },
+  { name: "United Kingdom", code: "GB" },
+  { name: "United States", code: "US" },
+  { name: "Uruguay", code: "UY" },
+  { name: "Uzbekistan", code: "UZ" },
+  { name: "Vanuatu", code: "VU" },
+  { name: "Venezuela, Bolivarian Republic of", code: "VE" },
+  { name: "Viet Nam", code: "VN" },
+  { name: "Virgin Islands, British", code: "VG" },
+  { name: "Virgin Islands, U.S.", code: "VI" },
+  { name: "Wallis and Futuna", code: "WF" },
+  { name: "Western Sahara", code: "EH" },
+  { name: "Yemen", code: "YE" },
+  { name: "Zambia", code: "ZM" },
+  { name: "Zimbabwe", code: "ZW" },
+  { name: "Åland Islands", code: "AX" },
 ];
+
+// Common world languages, used for the registration + settings "Language" field.
+const LANGUAGES: string[] = [
+  "English", "Arabic", "Mandarin Chinese", "Spanish", "French", "German",
+  "Hindi", "Portuguese", "Bengali", "Russian", "Japanese", "Urdu",
+  "Indonesian", "Italian", "Turkish", "Vietnamese", "Korean", "Persian (Farsi)",
+  "Swahili", "Thai", "Polish", "Ukrainian", "Dutch", "Greek", "Hebrew",
+  "Romanian", "Hungarian", "Czech", "Swedish", "Danish", "Finnish",
+  "Norwegian", "Malay", "Filipino (Tagalog)", "Punjabi", "Tamil", "Telugu",
+  "Marathi", "Gujarati", "Amharic", "Somali", "Hausa", "Yoruba", "Zulu",
+  "Serbian", "Croatian", "Bulgarian", "Slovak", "Slovenian", "Lithuanian",
+  "Latvian", "Estonian", "Albanian", "Georgian", "Armenian", "Azerbaijani",
+  "Kazakh", "Uzbek", "Mongolian", "Nepali", "Sinhala", "Burmese", "Khmer",
+  "Lao", "Pashto", "Kurdish", "Icelandic", "Irish", "Welsh",
+];
+
+// Turns an ISO alpha-2 country code into its flag emoji by mapping each
+// letter to a Unicode "regional indicator symbol" (A -> 🇦, B -> 🇧, ...).
+function flagEmoji(code: string): string {
+  if (!code || code.length !== 2) return "🌍";
+  const base = 127397; // codepoint offset between 'A' and the regional indicator symbols
+  return String.fromCodePoint(...[...code.toUpperCase()].map((c) => c.charCodeAt(0) + base));
+}
+
+function findCountry(name: string): CountryOption | undefined {
+  return COUNTRIES.find((c) => c.name === name);
+}
+
+// Injects the KEMET-themed thin gold scrollbar used inside dropdown lists
+// (SearchableSelect's option panel). Safe to render more than once — the
+// class name is the same everywhere, so duplicate <style> tags just repeat
+// the same rule with no visual difference.
+function KemetScrollbarStyle() {
+  return (
+    <style>{`
+      .kemet-scrollbar { scrollbar-width: thin; scrollbar-color: rgba(212,175,55,0.4) transparent; }
+      .kemet-scrollbar::-webkit-scrollbar { width: 6px; }
+      .kemet-scrollbar::-webkit-scrollbar-track { background: transparent; }
+      .kemet-scrollbar::-webkit-scrollbar-thumb { background-color: rgba(212,175,55,0.4); border-radius: 9999px; }
+      .kemet-scrollbar::-webkit-scrollbar-thumb:hover { background-color: rgba(212,175,55,0.7); }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+    `}</style>
+  );
+}
+
+// A searchable, scrollable dropdown — used for Country and Language pickers
+// where a plain <select> would bury the right option under 200+ others.
+// Type to filter; click (or Enter) to choose; click outside to close.
+function SearchableSelect({
+  label, value, onChange, options, placeholder, renderOption,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  options: string[];
+  placeholder?: string;
+  renderOption?: (opt: string) => React.ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
+  const [query, setQuery] = useState("");
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const onClickOutside = (e: MouseEvent) => {
+      if (rootRef.current && !rootRef.current.contains(e.target as Node)) {
+        setOpen(false);
+        setQuery("");
+      }
+    };
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
+  }, []);
+
+  const filtered = query
+    ? options.filter((o) => o.toLowerCase().includes(query.toLowerCase()))
+    : options;
+
+  return (
+    <div ref={rootRef} className="relative">
+      <KemetScrollbarStyle />
+      <label className="block text-sm text-white/60 mb-1">{label}</label>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        className="w-full flex items-center justify-between gap-2 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-left text-white focus:outline-none focus:border-yellow-500/50 transition-colors hover:border-white/20"
+      >
+        <span className={value ? "" : "text-white/30"}>
+          {value ? (renderOption ? renderOption(value) : value) : (placeholder || "Select…")}
+        </span>
+        <ChevronDown size={15} className={`text-white/40 flex-shrink-0 transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
+
+      {open && (
+        <div className="absolute z-30 mt-2 w-full bg-[#12152B] border border-[#D4AF37]/30 rounded-xl shadow-2xl shadow-black/50 overflow-hidden animate-[fadeIn_0.15s_ease-out]">
+          <div className="p-2 border-b border-white/10">
+            <div className="relative">
+              <Search size={14} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-white/30" />
+              <input
+                autoFocus
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search…"
+                className="w-full bg-white/5 border border-white/10 rounded-lg pl-8 pr-3 py-2 text-sm text-white placeholder-white/30 focus:outline-none focus:border-yellow-500/40"
+              />
+            </div>
+          </div>
+          <div className="kemet-scrollbar max-h-56 overflow-y-auto py-1">
+            {filtered.length === 0 ? (
+              <p className="text-sm text-white/30 text-center py-4">No matches.</p>
+            ) : (
+              filtered.map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => { onChange(opt); setOpen(false); setQuery(""); }}
+                  className={`w-full text-left px-4 py-2 text-sm flex items-center gap-2 transition-colors ${
+                    opt === value ? "bg-[#D4AF37]/15 text-[#D4AF37]" : "text-white/80 hover:bg-white/5"
+                  }`}
+                >
+                  {renderOption ? renderOption(opt) : opt}
+                </button>
+              ))
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function getPasswordStrength(password: string): number {
   if (password.length === 0) return 0;
@@ -507,7 +899,8 @@ function LoginView({ onSwitch, onLoggedIn }: { onSwitch: (v: AuthView) => void; 
 function RegisterView({ onSwitch, onLoggedIn }: { onSwitch: (v: AuthView) => void; onLoggedIn: (user: AccountUser) => void }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [nationality, setNationality] = useState("");
+  const [country, setCountry] = useState("");
+  const [language, setLanguage] = useState("English");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -525,6 +918,10 @@ function RegisterView({ onSwitch, onLoggedIn }: { onSwitch: (v: AuthView) => voi
       setError("Please fill in all required fields.");
       return;
     }
+    if (!country) {
+      setError("Please select your country.");
+      return;
+    }
     if (password !== confirm) {
       setError("Passwords do not match.");
       return;
@@ -535,7 +932,7 @@ function RegisterView({ onSwitch, onLoggedIn }: { onSwitch: (v: AuthView) => voi
     }
     setLoading(true);
     try {
-      const user = await apiRegister(derivedUsername, email, password);
+      const user = await apiRegister(derivedUsername, email, password, country, language);
       onLoggedIn(user);
     } catch (e) {
       setError(e instanceof Error ? e.message : "Registration failed.");
@@ -558,20 +955,24 @@ function RegisterView({ onSwitch, onLoggedIn }: { onSwitch: (v: AuthView) => voi
         <InputField label="First Name" value={firstName} onChange={setFirstName} placeholder="Sarah" icon={User} />
         <InputField label="Last Name" value={lastName} onChange={setLastName} placeholder="Ahmed" icon={User} />
       </div>
-      <div>
-        <label className="block text-sm text-white/60 mb-1">Nationality</label>
-        <select
-          value={nationality}
-          onChange={(e) => setNationality(e.target.value)}
-          className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-yellow-500/50 transition-colors"
-          style={{ colorScheme: "dark" }}
-        >
-          <option value="" disabled style={{ background: "#12152B" }}>Select nationality</option>
-          {NATIONALITIES.map((n) => (
-            <option key={n} value={n} style={{ background: "#12152B" }}>{n}</option>
-          ))}
-        </select>
-      </div>
+      <SearchableSelect
+        label="Country"
+        value={country}
+        onChange={setCountry}
+        options={COUNTRIES.map((c) => c.name)}
+        placeholder="Search for your country…"
+        renderOption={(name) => {
+          const c = findCountry(name);
+          return <span className="flex items-center gap-2"><span>{c ? flagEmoji(c.code) : "🌍"}</span>{name}</span>;
+        }}
+      />
+      <SearchableSelect
+        label="Language"
+        value={language}
+        onChange={setLanguage}
+        options={LANGUAGES}
+        placeholder="Search for your language…"
+      />
       <InputField label="Email" type="email" value={email} onChange={setEmail} placeholder="you@example.com" icon={Mail} />
       <div>
         <InputField label="Password" type={showPass ? "text" : "password"} value={password} onChange={setPassword} placeholder="••••••••" icon={Lock}>
@@ -773,6 +1174,7 @@ function GuestMode({ onLoggedIn }: { onLoggedIn: (user: AccountUser) => void }) 
 
   return (
     <div className="flex overflow-x-hidden" style={{ background: "#0A0B1E" }}>
+      <KemetScrollbarStyle />
       <DecorativePanel />
       <div className="flex-1 flex flex-col items-center justify-center p-6 lg:p-12">
         <div className="w-full max-w-md bg-white/5 border border-white/10 rounded-2xl p-6 sm:p-8">
@@ -789,6 +1191,26 @@ function GuestMode({ onLoggedIn }: { onLoggedIn: (user: AccountUser) => void }) 
 // --- Logged-in profile settings ---
 
 function SettingsTab({ user, onUserUpdate, onSignOut }: { user: AccountUser; onUserUpdate: (u: AccountUser) => void; onSignOut: () => void }) {
+  const [fullName, setFullName] = useState(user.full_name);
+  const [country, setCountry] = useState(user.country);
+  const [language, setLanguage] = useState(user.language || "English");
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [profileMessage, setProfileMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+
+  const handleSaveProfile = async () => {
+    setProfileMessage(null);
+    setProfileLoading(true);
+    try {
+      const updated = await apiUpdateProfile({ full_name: fullName, country, language });
+      onUserUpdate(updated);
+      setProfileMessage({ type: "success", text: "Profile updated." });
+    } catch (e) {
+      setProfileMessage({ type: "error", text: e instanceof Error ? e.message : "Failed to update profile." });
+    } finally {
+      setProfileLoading(false);
+    }
+  };
+
   const [oldPw, setOldPw] = useState("");
   const [newPw, setNewPw] = useState("");
   const [confirmPw, setConfirmPw] = useState("");
@@ -858,27 +1280,7 @@ function SettingsTab({ user, onUserUpdate, onSignOut }: { user: AccountUser; onU
   };
 
   return (
-    <div className="flex flex-col gap-6 max-w-xl">
-      {/* Profile header */}
-      <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
-          {user.profile_pic_url ? (
-            <img src={user.profile_pic_url} alt={user.username} className="w-20 h-20 rounded-full object-cover flex-shrink-0" />
-          ) : (
-            <div
-              className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0"
-              style={{ background: "linear-gradient(135deg, #D4AF37, #C9A84C)", color: "#0A0B1E" }}
-            >
-              {getInitials(user.username)}
-            </div>
-          )}
-          <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-bold text-white mb-1">{user.username}</h2>
-            <p className="text-sm" style={{ color: "#D4AF37" }}>{user.email}</p>
-          </div>
-        </div>
-      </div>
-
+    <div className="flex flex-col gap-6 max-w-xl mx-auto animate-[fadeIn_0.2s_ease-out]">
       {/* Profile info + avatar */}
       <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col gap-4">
         <h3 className="text-white font-semibold flex items-center gap-2">
@@ -892,7 +1294,7 @@ function SettingsTab({ user, onUserUpdate, onSignOut }: { user: AccountUser; onU
               className="w-14 h-14 rounded-full flex items-center justify-center text-lg font-bold"
               style={{ background: "linear-gradient(135deg, #D4AF37, #C9A84C)", color: "#0A0B1E" }}
             >
-              {getInitials(user.username)}
+              {getInitials(user.full_name || user.username)}
             </div>
           )}
           <label className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 text-sm text-white/70 hover:bg-white/10 transition-all cursor-pointer">
@@ -902,8 +1304,37 @@ function SettingsTab({ user, onUserUpdate, onSignOut }: { user: AccountUser; onU
           </label>
         </div>
         {avatarError && <p className="text-sm text-red-400">{avatarError}</p>}
-        <InputField label="Username" value={user.username} onChange={() => {}} icon={User} />
-        <InputField label="Email" value={user.email} onChange={() => {}} icon={Mail} />
+
+        <InputField label="Full Name" value={fullName} onChange={setFullName} placeholder="Sarah Ahmed" icon={User} />
+        <div>
+          <InputField label="Username" value={user.username} onChange={() => {}} icon={User} />
+          <p className="text-xs text-white/30 mt-1">Your username is your public @handle and can't be changed.</p>
+        </div>
+        <div>
+          <InputField label="Email" value={user.email} onChange={() => {}} icon={Mail} />
+          <p className="text-xs text-white/30 mt-1">Email can't be changed here.</p>
+        </div>
+        <SearchableSelect
+          label="Country"
+          value={country}
+          onChange={setCountry}
+          options={COUNTRIES.map((c) => c.name)}
+          placeholder="Search for your country…"
+          renderOption={(name) => {
+            const c = findCountry(name);
+            return <span className="flex items-center gap-2"><span>{c ? flagEmoji(c.code) : "🌍"}</span>{name}</span>;
+          }}
+        />
+        <SearchableSelect label="Language" value={language} onChange={setLanguage} options={LANGUAGES} placeholder="Search for your language…" />
+
+        {profileMessage && (
+          <p className={`text-sm ${profileMessage.type === "success" ? "text-green-400" : "text-red-400"}`}>
+            {profileMessage.text}
+          </p>
+        )}
+        <GoldButton className="!w-auto self-end px-6" onClick={handleSaveProfile}>
+          {profileLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Changes"}
+        </GoldButton>
       </div>
 
       {/* Change password */}
@@ -947,17 +1378,6 @@ function SettingsTab({ user, onUserUpdate, onSignOut }: { user: AccountUser; onU
           className="self-end px-6 py-2.5 rounded-xl text-sm font-semibold bg-red-500/20 border border-red-500/40 text-red-400 hover:bg-red-500/30 transition-all"
         >
           {deleteLoading ? <Loader2 className="w-4 h-4 animate-spin" /> : "Permanently Delete My Account"}
-        </button>
-      </div>
-
-      {/* Sign out */}
-      <div className="flex justify-center pb-4">
-        <button
-          onClick={onSignOut}
-          className="flex items-center gap-2 px-6 py-3 rounded-xl border border-red-500/20 text-red-400/70 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/40 transition-all text-sm"
-        >
-          <LogOut size={16} />
-          Sign Out
         </button>
       </div>
     </div>
@@ -1329,34 +1749,350 @@ function MyTripsTab({ isLoggedIn }: { isLoggedIn: boolean }) {
   );
 }
 
-type MainTab = "account" | "posts" | "saved" | "trips";
+type MainTab = "overview" | "trips" | "posts" | "saved" | "settings";
 
-function TabBar({ active, onChange }: { active: MainTab; onChange: (t: MainTab) => void }) {
+// --- Profile header: avatar, name, country flag + code, member-since, real stats ---
+
+function ProfileHeader({
+  user, tripsCount, postsCount, savedCount, onEditProfile,
+}: {
+  user: AccountUser;
+  tripsCount: number | null;
+  postsCount: number | null;
+  savedCount: number | null;
+  onEditProfile: () => void;
+}) {
+  const country = findCountry(user.country);
+  const memberSince = user.created_at
+    ? new Date(user.created_at).toLocaleDateString(undefined, { year: "numeric", month: "short" })
+    : "";
+
+  const stats: { value: string; label: string }[] = [
+    { value: tripsCount === null ? "–" : String(tripsCount), label: "Trips Planned" },
+    { value: postsCount === null ? "–" : String(postsCount), label: "Posts" },
+    { value: savedCount === null ? "–" : String(savedCount), label: "Saved Posts" },
+  ];
+
+  return (
+    <div className="bg-white/5 border border-white/10 rounded-2xl p-6 animate-[fadeIn_0.2s_ease-out]">
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
+        {user.profile_pic_url ? (
+          <img src={user.profile_pic_url} alt={user.username} className="w-20 h-20 rounded-full object-cover flex-shrink-0" />
+        ) : (
+          <div
+            className="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold flex-shrink-0"
+            style={{ background: "linear-gradient(135deg, #D4AF37, #C9A84C)", color: "#0A0B1E" }}
+          >
+            {getInitials(user.full_name || user.username)}
+          </div>
+        )}
+        <div className="flex-1 min-w-0">
+          <div className="flex flex-wrap items-center gap-3 mb-1">
+            <h2 className="text-xl font-bold text-white truncate">{user.full_name || user.username}</h2>
+            {country && (
+              <span className="text-sm text-white/40 flex items-center gap-1 flex-shrink-0">
+                <span>{flagEmoji(country.code)}</span>{country.code}
+              </span>
+            )}
+          </div>
+          <p className="text-sm truncate" style={{ color: "#D4AF37" }}>@{user.username}</p>
+          {memberSince && <p className="text-xs text-white/40 mt-1">Member since {memberSince}</p>}
+        </div>
+        <button
+          onClick={onEditProfile}
+          className="flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10 text-sm text-white/70 hover:bg-white/10 transition-all flex-shrink-0"
+        >
+          <Edit size={14} />
+          Edit Profile
+        </button>
+      </div>
+      <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/10">
+        {stats.map(({ value, label }) => (
+          <div key={label} className="text-center">
+            <p className="text-xl font-bold" style={{ color: "#D4AF37" }}>{value}</p>
+            <p className="text-xs text-white/50 mt-0.5">{label}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// --- Tab navigation (pill style) ---
+
+function TabsNav({ active, onChange }: { active: MainTab; onChange: (t: MainTab) => void }) {
   const tabs: { key: MainTab; label: string; icon: React.ElementType }[] = [
-    { key: "account", label: "Account", icon: User },
-    { key: "posts", label: "Your Posts", icon: FileText },
-    { key: "saved", label: "Saved", icon: Bookmark },
-    { key: "trips", label: "My Trips", icon: Map },
+    { key: "overview", label: "Overview", icon: Map },
+    { key: "trips", label: "My Trips", icon: Plane },
+    { key: "posts", label: "My Posts", icon: FileText },
+    { key: "saved", label: "Saved Posts", icon: Bookmark },
+    { key: "settings", label: "Settings", icon: SettingsIcon },
   ];
   return (
-    <div className="sticky top-0 z-10 border-b border-white/10" style={{ background: "#0A0B1Ecc" }}>
-      {/* overflow-x-auto is a safety net if labels ever wrap on a very narrow
-          device; the real fix is hiding labels below sm so all 4 tabs
-          always fit without clipping. */}
-      <div className="flex md:justify-end gap-1 px-2 sm:px-4 md:px-8 overflow-x-auto">
-        {tabs.map(({ key, label, icon: Icon }) => (
+    <div className="flex gap-1 bg-white/5 border border-white/10 rounded-xl p-1 overflow-x-auto">
+      {tabs.map(({ key, label, icon: Icon }) => (
+        <button
+          key={key}
+          onClick={() => onChange(key)}
+          title={label}
+          className={`flex items-center gap-2 px-3 sm:px-4 py-2.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap transition-all flex-1 justify-center ${
+            active === key ? "text-[#0A0B1E]" : "text-white/50 hover:text-white/80"
+          }`}
+          style={active === key ? { background: "linear-gradient(135deg, #D4AF37, #C9A84C)" } : {}}
+        >
+          <Icon size={14} />
+          <span className="hidden sm:inline">{label}</span>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+// --- Overview tab: recent activity + next trip + editable travel preferences,
+// all built from real data (posts, saved posts, saved trip plans, profile). ---
+
+const PREFERENCE_TAGS = [
+  "History", "Beaches", "Luxury", "Photography", "Adventure", "Food & Cuisine",
+  "Diving", "Desert Safari", "Culture", "Nightlife", "Family", "Shopping",
+  "Nature", "Wellness",
+];
+
+function OverviewTab({
+  user, onUserUpdate, trips, posts, savedPosts,
+}: {
+  user: AccountUser;
+  onUserUpdate: (u: AccountUser) => void;
+  trips: TripPlanSummary[] | null;
+  posts: PostSummary[] | null;
+  savedPosts: PostSummary[] | null;
+}) {
+  const sortedTrips = trips ? [...trips].sort((a, b) => new Date(b.CreatedAt).getTime() - new Date(a.CreatedAt).getTime()) : null;
+  const sortedPosts = posts ? [...posts].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()) : null;
+  const sortedSaved = savedPosts ? [...savedPosts].sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()) : null;
+  const nextTrip = sortedTrips && sortedTrips[0];
+
+  type ActivityItem = { icon: React.ElementType; text: string; time: string; ts: number; color: string };
+  const activity: ActivityItem[] = [];
+  if (sortedTrips && sortedTrips[0]) {
+    const t = sortedTrips[0];
+    const dest = t.Preferences?.cities?.length ? t.Preferences.cities.join(", ") : (t.Preferences?.destination || "Egypt");
+    activity.push({ icon: Plane, text: `Planned a trip to ${dest}`, time: formatTripDate(t.CreatedAt), ts: new Date(t.CreatedAt).getTime() || 0, color: "#D4AF37" });
+  }
+  if (sortedPosts && sortedPosts[0]) {
+    const p = sortedPosts[0];
+    const preview = p.text ? `Posted: "${p.text.slice(0, 50)}${p.text.length > 50 ? "…" : ""}"` : "Shared a new post";
+    activity.push({ icon: FileText, text: preview, time: timeAgo(p.timestamp), ts: new Date(p.timestamp).getTime() || 0, color: "#C9A84C" });
+  }
+  if (sortedSaved && sortedSaved[0]) {
+    const s = sortedSaved[0];
+    activity.push({ icon: Bookmark, text: `Saved a post by @${s.owner_username}`, time: timeAgo(s.timestamp), ts: new Date(s.timestamp).getTime() || 0, color: "#60a5fa" });
+  }
+  if (user.created_at) {
+    activity.push({ icon: Users, text: "Joined the KEMET Community", time: timeAgo(user.created_at), ts: new Date(user.created_at).getTime() || 0, color: "#22c55e" });
+  }
+  activity.sort((a, b) => b.ts - a.ts);
+
+  const [editingPrefs, setEditingPrefs] = useState(false);
+  const [prefs, setPrefs] = useState<string[]>(user.travel_preferences);
+  const [prefsSaving, setPrefsSaving] = useState(false);
+
+  const togglePref = (tag: string) => {
+    setPrefs((prev) => (prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag]));
+  };
+
+  const savePrefs = async () => {
+    setPrefsSaving(true);
+    try {
+      const updated = await apiUpdateProfile({ travel_preferences: prefs });
+      onUserUpdate(updated);
+      setEditingPrefs(false);
+    } catch {
+      /* keep the editor open so they can retry */
+    } finally {
+      setPrefsSaving(false);
+    }
+  };
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="lg:col-span-2 flex flex-col gap-6">
+        {/* Recent Activity */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+          <h3 className="text-white font-semibold mb-4">Recent Activity</h3>
+          {activity.length === 0 ? (
+            <p className="text-sm text-white/40">Nothing yet — plan a trip or share a post to get started.</p>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {activity.map(({ icon: Icon, text, time, color }, i) => (
+                <div key={i} className="flex items-start gap-3">
+                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: `${color}20`, border: `1px solid ${color}30` }}>
+                    <Icon size={14} style={{ color }} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm text-white/80 break-words">{text}</p>
+                    <p className="text-xs text-white/40 mt-0.5">{time}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Travel Preferences (editable) */}
+        <div className="bg-white/5 border border-white/10 rounded-2xl p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-white font-semibold">Travel Preferences</h3>
+            <button
+              onClick={() => { setPrefs(user.travel_preferences); setEditingPrefs((v) => !v); }}
+              className="text-xs flex items-center gap-1 text-white/50 hover:text-white transition-colors"
+            >
+              <Edit size={12} /> {editingPrefs ? "Cancel" : "Change"}
+            </button>
+          </div>
+          {editingPrefs ? (
+            <div className="flex flex-col gap-4 animate-[fadeIn_0.15s_ease-out]">
+              <div className="flex flex-wrap gap-2">
+                {PREFERENCE_TAGS.map((tag) => {
+                  const isActive = prefs.includes(tag);
+                  return (
+                    <button
+                      key={tag}
+                      type="button"
+                      onClick={() => togglePref(tag)}
+                      className="text-sm px-3 py-1.5 rounded-full border transition-all flex items-center gap-1"
+                      style={isActive
+                        ? { background: "#D4AF3720", borderColor: "#D4AF3760", color: "#D4AF37" }
+                        : { background: "transparent", borderColor: "rgba(255,255,255,0.15)", color: "rgba(255,255,255,0.5)" }}
+                    >
+                      {isActive ? <Check size={12} /> : <Plus size={12} />}
+                      {tag}
+                    </button>
+                  );
+                })}
+              </div>
+              <GoldButton className="!w-auto self-end px-6" onClick={savePrefs}>
+                {prefsSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : "Save Preferences"}
+              </GoldButton>
+            </div>
+          ) : user.travel_preferences.length === 0 ? (
+            <p className="text-sm text-white/40">No preferences set yet — tap "Change" to add some.</p>
+          ) : (
+            <div className="flex flex-wrap gap-2">
+              {user.travel_preferences.map((tag) => (
+                <span key={tag} className="text-sm px-3 py-1.5 rounded-full border" style={{ background: "#D4AF3720", borderColor: "#D4AF3740", color: "#D4AF37" }}>
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Next Trip */}
+      <div className="bg-white/5 border border-white/10 rounded-2xl p-6 flex flex-col gap-4 h-fit">
+        <h3 className="text-white font-semibold">Next Trip</h3>
+        {nextTrip ? (
+          <>
+            <div className="rounded-xl h-28 flex items-center justify-center" style={{ background: "linear-gradient(135deg, #D4AF3720, #0A0B1E)" }}>
+              <Plane size={28} style={{ color: "#D4AF3760" }} />
+            </div>
+            <div>
+              <p className="text-white font-semibold">
+                {nextTrip.Preferences?.cities?.length ? nextTrip.Preferences.cities.join(", ") : (nextTrip.Preferences?.destination || "Egypt")}
+              </p>
+              <div className="flex items-center gap-1 mt-1">
+                <Calendar size={12} style={{ color: "#D4AF37" }} />
+                <p className="text-xs text-white/50">Saved {formatTripDate(nextTrip.CreatedAt)}</p>
+              </div>
+            </div>
+            {(nextTrip.Preferences?.days || nextTrip.Preferences?.budget) && (
+              <div className="flex items-center gap-2 text-xs text-white/50">
+                <MapPin size={12} style={{ color: "#D4AF37" }} />
+                <span>
+                  {nextTrip.Preferences?.days ? `${nextTrip.Preferences.days} days` : ""}
+                  {nextTrip.Preferences?.days && nextTrip.Preferences?.budget ? " · " : ""}
+                  {nextTrip.Preferences?.budget || ""}
+                </span>
+              </div>
+            )}
+            <a
+              href={`/trip-planner?saved=${encodeURIComponent(nextTrip.id)}`}
+              className="w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all hover:opacity-90"
+              style={{ background: "linear-gradient(135deg, #D4AF37, #C9A84C)", color: "#0A0B1E" }}
+            >
+              View Plan
+            </a>
+          </>
+        ) : (
+          <>
+            <div className="rounded-xl h-28 bg-white/5 flex items-center justify-center">
+              <Plane size={28} className="text-white/20" />
+            </div>
+            <p className="text-sm text-white/40">No trips planned yet.</p>
+            <a
+              href="/trip-planner"
+              className="w-full py-2.5 rounded-xl text-sm font-semibold text-center transition-all hover:opacity-90"
+              style={{ background: "linear-gradient(135deg, #D4AF37, #C9A84C)", color: "#0A0B1E" }}
+            >
+              Plan a Trip
+            </a>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// --- Logged-in shell: header + tabs + content, shared across all logged-in views ---
+
+function LoggedInShell({
+  user, onUserUpdate, onSignOut,
+}: {
+  user: AccountUser;
+  onUserUpdate: (u: AccountUser) => void;
+  onSignOut: () => void;
+}) {
+  const [tab, setTab] = useState<MainTab>("overview");
+  const [trips, setTrips] = useState<TripPlanSummary[] | null>(null);
+  const [posts, setPosts] = useState<PostSummary[] | null>(null);
+  const [savedPosts, setSavedPosts] = useState<PostSummary[] | null>(null);
+
+  useEffect(() => {
+    apiTripPlans().then(setTrips).catch(() => setTrips([]));
+    apiMyPosts().then(setPosts).catch(() => setPosts([]));
+    apiSavedPosts().then(setSavedPosts).catch(() => setSavedPosts([]));
+  }, [user.username]);
+
+  return (
+    <div className="min-h-screen overflow-x-hidden p-4 md:p-8" style={{ background: "#0A0B1E" }}>
+      <KemetScrollbarStyle />
+      <div className="max-w-5xl mx-auto flex flex-col gap-6">
+        <ProfileHeader
+          user={user}
+          tripsCount={trips ? trips.length : null}
+          postsCount={posts ? posts.length : null}
+          savedCount={savedPosts ? savedPosts.length : null}
+          onEditProfile={() => setTab("settings")}
+        />
+        <TabsNav active={tab} onChange={setTab} />
+
+        <div className="animate-[fadeIn_0.2s_ease-out]">
+          {tab === "overview" && <OverviewTab user={user} onUserUpdate={onUserUpdate} trips={trips} posts={posts} savedPosts={savedPosts} />}
+          {tab === "trips" && <MyTripsTab isLoggedIn />}
+          {tab === "posts" && <YourPostsTab isLoggedIn username={user.username} />}
+          {tab === "saved" && <SavedPostsTab isLoggedIn username={user.username} />}
+          {tab === "settings" && <SettingsTab user={user} onUserUpdate={onUserUpdate} onSignOut={onSignOut} />}
+        </div>
+
+        <div className="flex justify-center pt-2 pb-8">
           <button
-            key={key}
-            onClick={() => onChange(key)}
-            title={label}
-            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-3 sm:py-4 text-xs sm:text-sm font-medium border-b-2 whitespace-nowrap flex-shrink-0 transition-all ${
-              active === key ? "border-[#D4AF37] text-[#D4AF37]" : "border-transparent text-gray-400 hover:text-white"
-            }`}
+            onClick={onSignOut}
+            className="flex items-center gap-2 px-6 py-3 rounded-xl border border-red-500/20 text-red-400/70 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/40 transition-all text-sm"
           >
-            <Icon size={16} />
-            <span className="hidden sm:inline">{label}</span>
+            <LogOut size={16} />
+            Sign Out
           </button>
-        ))}
+        </div>
       </div>
     </div>
   );
@@ -1369,7 +2105,6 @@ let cachedUser: AccountUser | null | undefined = undefined; // undefined = not c
 export function Account() {
   const [user, setUser] = useState<AccountUser | null>(cachedUser ?? null);
   const [checkingSession, setCheckingSession] = useState(cachedUser === undefined);
-  const [tab, setTab] = useState<MainTab>("account");
 
   useEffect(() => {
     const token = getToken();
@@ -1396,7 +2131,6 @@ export function Account() {
     clearToken();
     cachedUser = null;
     setUser(null);
-    setTab("account");
   };
 
   if (checkingSession) {
@@ -1407,18 +2141,7 @@ export function Account() {
     );
   }
 
-  return (
-    <div className="min-h-screen overflow-x-hidden" style={{ background: "#0A0B1E" }}>
-      <TabBar active={tab} onChange={setTab} />
-      <div className="p-4 md:p-8">
-        {tab === "account" &&
-          (user
-            ? <SettingsTab user={user} onUserUpdate={(u) => { cachedUser = u; setUser(u); }} onSignOut={handleSignOut} />
-            : <GuestMode onLoggedIn={(u) => { cachedUser = u; setUser(u); }} />)}
-        {tab === "posts" && <YourPostsTab isLoggedIn={!!user} username={user?.username || ""} />}
-        {tab === "saved" && <SavedPostsTab isLoggedIn={!!user} username={user?.username || ""} />}
-        {tab === "trips" && <MyTripsTab isLoggedIn={!!user} />}
-      </div>
-    </div>
-  );
+  return user
+    ? <LoggedInShell user={user} onUserUpdate={(u) => { cachedUser = u; setUser(u); }} onSignOut={handleSignOut} />
+    : <GuestMode onLoggedIn={(u) => { cachedUser = u; setUser(u); }} />;
 }
