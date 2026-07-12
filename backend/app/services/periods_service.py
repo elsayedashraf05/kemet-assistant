@@ -86,14 +86,27 @@ def _build_records(df: pd.DataFrame) -> list[dict]:
             if pd.notna(row.get("photo_url"))
             else "https://images.unsplash.com/photo-1568322445389-f64ac2515020?w=600"
         )
+        # start_year drives the chronological sort below (negative = BC,
+        # matching the sign convention already used by /api/dashboard/kemet's
+        # historical_timeline, which the frontend sorts the same way). Rows
+        # with a missing/unparseable start_year sort last rather than
+        # crashing the whole listing.
+        try:
+            start_year = float(row.get("start_year"))
+        except (TypeError, ValueError):
+            start_year = float("inf")
         records.append(
             {
                 "name": name,
                 "from_to": from_to,
                 "desc": first_para,
                 "img": img,
+                "start_year": start_year,
             }
         )
+    records.sort(key=lambda r: r["start_year"])
+    for r in records:
+        del r["start_year"]  # internal sort key only - not part of the public PeriodRecord shape
     return records
 
 
