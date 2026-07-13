@@ -4,7 +4,7 @@
 
 **An AI-powered platform for Egyptian tourism, heritage & trip planning — built on a cloud-native Medallion data pipeline and a Galaxy Schema analytics layer.**
 
-[![Live App](https://img.shields.io/badge/Live-kemet.app-C9A24B?style=for-the-badge)]([https://kemet.app](https://kemet-assistant-inky.vercel.app/)
+[![Live App](https://img.shields.io/badge/Live-kemet.app-C9A24B?style=for-the-badge)]([(https://kemet-assistant-inky.vercel.app/)]
 [![React](https://img.shields.io/badge/Frontend-React-0D1B2A?style=for-the-badge&logo=react)](#)
 [![Flask](https://img.shields.io/badge/Backend-Flask-0D1B2A?style=for-the-badge&logo=flask)](#)
 [![Azure Databricks](https://img.shields.io/badge/Data-Azure%20Databricks-0D1B2A?style=for-the-badge&logo=databricks)](#)
