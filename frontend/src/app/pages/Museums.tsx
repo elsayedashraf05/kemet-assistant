@@ -264,6 +264,27 @@ export function Museums() {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#0A0B1E" }}>
+      {/* Custom slim, themed scrollbar — matches the sidebar's kemet-scrollbar */}
+      <style>{`
+        .kemet-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(201, 168, 76, 0.35) transparent;
+        }
+        .kemet-scrollbar::-webkit-scrollbar {
+          width: 5px;
+        }
+        .kemet-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .kemet-scrollbar::-webkit-scrollbar-thumb {
+          background-color: rgba(201, 168, 76, 0.35);
+          border-radius: 9999px;
+        }
+        .kemet-scrollbar::-webkit-scrollbar-thumb:hover {
+          background-color: rgba(201, 168, 76, 0.6);
+        }
+      `}</style>
+
       {/* Hero */}
       <div className="relative h-[440px] overflow-hidden">
         <img
@@ -326,7 +347,7 @@ export function Museums() {
             >
               <div className="lg:flex lg:items-stretch">
                 <FeaturedCarousel images={data.featured.images} name={data.featured.name} />
-                <div className="lg:w-7/12 p-8 lg:h-[560px] lg:overflow-y-auto">
+                <div className="kemet-scrollbar lg:w-7/12 p-8 lg:h-[560px] lg:overflow-y-auto">
                   <div
                     className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-4"
                     style={{ background: "rgba(212,175,55,0.15)", color: "#D4AF37" }}
